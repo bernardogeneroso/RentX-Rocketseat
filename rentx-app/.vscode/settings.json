@@ -1,0 +1,4 @@
+{
+  "cSpell.ignoreWords": ["arrow", "iphone", "parens", "rentx", "swiper"],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
+}
