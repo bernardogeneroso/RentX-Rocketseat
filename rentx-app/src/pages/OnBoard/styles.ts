@@ -1,6 +1,8 @@
 import styled, { css } from 'styled-components/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
+import { theme } from '../../global/styles/theme'
+
 interface ContainerOnboardProps {
   lastView?: boolean
 }
@@ -55,9 +57,10 @@ export const Header = styled.View<HeaderProps>`
 `
 
 export const Numbering = styled.Text`
+  font-family: ${theme.fonts.text400};
+  color: ${theme.colors.grey100};
   font-size: 68px;
   font-weight: bold;
-  color: #ebebf0;
 `
 
 export const Content = styled.View`
@@ -66,9 +69,10 @@ export const Content = styled.View`
 `
 
 export const Title = styled.Text<TitleProps>`
+  font-family: ${theme.fonts.title700};
+  color: ${theme.colors.grey700};
   font-size: 42px;
   font-weight: bold;
-  color: #47474d;
   line-height: 42px;
   ${(props) =>
     props.lastView &&
@@ -79,9 +83,10 @@ export const Title = styled.Text<TitleProps>`
 `
 
 export const Subtitle = styled.Text<SubtitleProps>`
+  font-family: ${theme.fonts.text400};
+  color: ${theme.colors.grey300};
   font-size: 15px;
   font-weight: 400;
-  color: #7a7a80;
   line-height: 25px;
   margin-top: ${(props) => (props.lastView ? 10 : 26)}px;
   ${(props) =>
@@ -129,21 +134,22 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
     props.second
       ? css`
           background-color: #29292e;
-          margin-left: 16px;
+          margin-left: 8px;
         `
       : css`
           background-color: #dc1637;
+          margin-right: 8px;
         `}
 `
 
 export const ButtonText = styled.Text`
   text-align: center;
-  color: #fff;
+  color: ${theme.colors.grey50};
 `
 
 export const ButtonGoBack = styled.TouchableOpacity``
 
 export const ButtonGoBackText = styled.Text`
   margin-top: 26px;
-  color: #fff;
+  color: ${theme.colors.grey50};
 `

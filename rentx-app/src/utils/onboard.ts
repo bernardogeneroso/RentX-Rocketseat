@@ -6,22 +6,21 @@ export const onboard = [
   {
     id: '1',
     image: calendar,
-    title: 'Primeiro,\nescolha a\ndata',
+    title: 'First,\nchose the\ndate',
     subtitle:
-      'Você é quem define um\nperíodo, e nós mostraremos\nos carros disponíveis.',
+      'You are the one who sets\na period, and we show\nyou the available cars.',
   },
   {
     id: '2',
     image: car,
-    title: 'Depois,\nescolha o\ncarro',
+    title: 'Then,\nchoose the\ncar',
     subtitle:
-      'Vários modelos para você\ndirigir seguro, com conforto\ne segurança.',
+      'Several models for you\nto drive safely, comfortably\nand safely.',
   },
   {
     id: '3',
     image: rentx,
-    title: 'Seja\nBem vindo',
-    subtitle: 'O que você deseja fazer?',
-    auth: true,
+    title: `You're welcome!`,
+    subtitle: 'What do you want to do?',
   },
 ]

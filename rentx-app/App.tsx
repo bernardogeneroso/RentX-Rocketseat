@@ -14,7 +14,6 @@ import {
 } from '@expo-google-fonts/archivo'
 
 import { Routes } from './src/routes'
-import { OnBoard } from './src/pages/OnBoard'
 
 export default function App() {
   let [fontsLoaded] = useFonts({

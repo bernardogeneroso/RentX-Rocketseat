@@ -47,7 +47,7 @@ export function OnBoard() {
         initialPage={0}
       >
         {onboard.map((item, index) =>
-          index !== 2 ? (
+          index !== onboard.length - 1 ? (
             <ContainerOnboard key={item.id}>
               <Header>
                 <Image source={item.image} />
@@ -69,7 +69,9 @@ export function OnBoard() {
                   <Dot active={index === 1} />
                 </PagesContainer>
 
-                <TouchableOpacity onPress={() => setPage((index + 1) % 3)}>
+                <TouchableOpacity
+                  onPress={() => setPage((index + 1) % onboard.length)}
+                >
                   <Feather name="chevron-right" size={24} color="#AEAEB3" />
                 </TouchableOpacity>
               </Footer>
@@ -89,11 +91,11 @@ export function OnBoard() {
               <Footer lastView>
                 <FooterContent>
                   <Button onPress={handleNavigateToSignIn}>
-                    <ButtonText>Login</ButtonText>
+                    <ButtonText>Sign In</ButtonText>
                   </Button>
 
                   <Button second>
-                    <ButtonText>Cadastro</ButtonText>
+                    <ButtonText>Sign Up</ButtonText>
                   </Button>
                 </FooterContent>
 

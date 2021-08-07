@@ -1,4 +1,13 @@
 {
-  "cSpell.ignoreWords": ["arrow", "iphone", "parens", "rentx", "swiper"],
+  "cSpell.ignoreWords": [
+    "archivo",
+    "arrow",
+    "bold",
+    "iphone",
+    "parens",
+    "rentx",
+    "swiper",
+    "unform"
+  ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
