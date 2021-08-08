@@ -18,7 +18,10 @@ export const Container = styled.View`
   justify-content: space-around;
 `
 
-export const Header = styled.View``
+export const Header = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`
 
 export const ButtonGoBack = styled.TouchableOpacity``
 
@@ -40,44 +43,3 @@ export const Subtitle = styled.Text`
 `
 
 export const Form = styled.View``
-
-export const ContentOptions = styled.View`
-  margin-top: 34px;
-  margin-bottom: 32px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`
-
-export const Remember = styled.View`
-  flex-direction: row;
-  align-items: center;
-`
-
-export const RememberText = styled.Text`
-  font-family: ${theme.fonts.text400};
-  color: ${theme.colors.grey500};
-  margin-left: 12px;
-`
-
-export const CheckBox = styled(BouncyCheckbox).attrs<IBouncyCheckboxProps>({
-  size: 25,
-  fillColor: 'red',
-  unfillColor: '#FFFFFF',
-  disableText: true,
-  iconImageStyle: {
-    width: 8,
-    height: 8,
-    backgroundColor: '#fff',
-  },
-})``
-
-export const ButtonForgetMyPassword = styled.TouchableOpacity``
-
-export const ForgetMyPasswordText = styled.Text.attrs({
-  activeOpacity: 0.7,
-})<TextInputProps>`
-  font-family: ${theme.fonts.text400};
-  color: ${theme.colors.grey500};
-  font-size: 13px;
-`

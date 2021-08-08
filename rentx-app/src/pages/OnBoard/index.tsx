@@ -37,6 +37,11 @@ export function OnBoard() {
     navigation.navigate('SignIn')
   }
 
+  function handleNavigateToSignUp() {
+    // @ts-ignore
+    navigation.navigate('SignUp')
+  }
+
   return (
     <Container>
       <PagerView
@@ -94,7 +99,7 @@ export function OnBoard() {
                     <ButtonText>Sign In</ButtonText>
                   </Button>
 
-                  <Button second>
+                  <Button onPress={handleNavigateToSignUp} second>
                     <ButtonText>Sign Up</ButtonText>
                   </Button>
                 </FooterContent>

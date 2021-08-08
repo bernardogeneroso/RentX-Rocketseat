@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { FieldError } from 'react-hook-form'
 import { TextInputProps } from 'react-native'
 
+import NameIcon from '../../assets/name.svg'
 import EmailIcon from '../../assets/email.svg'
 import PasswordIcon from '../../assets/password.svg'
 import EyeIcon from '../../assets/eye.svg'
@@ -43,6 +44,8 @@ export default function Input({
         <Icon>
           {name === 'email' ? (
             <EmailIcon width="24" height="24" fill="#7A7A80" />
+          ) : name === 'name' ? (
+            <NameIcon width="24" height="24" fill="#7A7A80" />
           ) : (
             <PasswordIcon width="24" height="24" fill="#7A7A80" />
           )}
