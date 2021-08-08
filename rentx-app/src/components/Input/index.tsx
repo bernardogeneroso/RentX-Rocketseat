@@ -1,34 +1,36 @@
-import React, { useRef, useState, useCallback } from 'react'
-import { TextInput as TextInputNative, TextInputProps } from 'react-native'
+import React, { useState, useCallback } from 'react'
+import { FieldError } from 'react-hook-form'
+import { TextInputProps } from 'react-native'
 
 import EmailIcon from '../../assets/email.svg'
 import PasswordIcon from '../../assets/password.svg'
 import EyeIcon from '../../assets/eye.svg'
 import EyeHideIcon from '../../assets/eyeHide.svg'
 
-import { Container, TextInput, Content, Icon, ErrorText } from './styles'
+import {
+  Container,
+  TextInput,
+  Content,
+  ContentInput,
+  Icon,
+  ErrorText,
+} from './styles'
 
 interface InputProps extends TextInputProps {
-  defaultValue: string
+  name: string
+  defaultValue?: string
   placeholder: string
-  error: string
-  iconName: 'email' | 'password'
-}
-
-interface InputReference extends TextInputNative {
-  value: string
+  error: FieldError | undefined
 }
 
 export default function Input({
-  iconName,
+  name,
   placeholder,
   onChangeText,
-  defaultValue,
+  defaultValue = '',
   error,
-  onBlur,
   ...rest
 }: InputProps) {
-  const inputRef = useRef<InputReference>(null)
   const [eyeSecurity, setEyeSecurity] = useState(false)
 
   const handleViewPassword = useCallback(() => {
@@ -37,53 +39,46 @@ export default function Input({
 
   return (
     <Container>
-      <Icon>
-        {iconName === 'email' ? (
-          <EmailIcon width="24" height="24" fill="#7A7A80" />
-        ) : (
-          <PasswordIcon width="24" height="24" fill="#7A7A80" />
-        )}
-      </Icon>
-
       <Content>
-        <TextInput
-          ref={inputRef}
-          onChangeText={onChangeText}
-          defaultValue={defaultValue}
-          onBlur={onBlur}
-          placeholder={placeholder}
-          autoCompleteType={iconName}
-          autoCapitalize="none"
-          keyboardType={
-            iconName === 'email'
-              ? 'email-address'
-              : iconName === 'password'
-              ? 'visible-password'
-              : 'default'
-          }
-          secureTextEntry={iconName === 'password' && !eyeSecurity}
-          {...rest}
-        />
+        <Icon>
+          {name === 'email' ? (
+            <EmailIcon width="24" height="24" fill="#7A7A80" />
+          ) : (
+            <PasswordIcon width="24" height="24" fill="#7A7A80" />
+          )}
+        </Icon>
 
-        {iconName === 'password' && eyeSecurity && (
-          <EyeIcon
-            width="24"
-            height="24"
-            fill="#AEAEB3"
-            onPress={handleViewPassword}
+        <ContentInput>
+          <TextInput
+            onChangeText={onChangeText}
+            placeholder={placeholder}
+            autoCompleteType={name === 'email' ? 'email' : 'name'}
+            autoCapitalize="none"
+            keyboardType={name === 'email' ? 'email-address' : 'default'}
+            secureTextEntry={name === 'password' && !eyeSecurity}
+            {...rest}
           />
-        )}
-        {iconName === 'password' && !eyeSecurity && (
-          <EyeHideIcon
-            width="24"
-            height="24"
-            fill="#AEAEB3"
-            onPress={handleViewPassword}
-          />
-        )}
+
+          {name === 'password' && !eyeSecurity && (
+            <EyeIcon
+              width="24"
+              height="24"
+              fill="#AEAEB3"
+              onPress={handleViewPassword}
+            />
+          )}
+          {name === 'password' && eyeSecurity && (
+            <EyeHideIcon
+              width="24"
+              height="24"
+              fill="#AEAEB3"
+              onPress={handleViewPassword}
+            />
+          )}
+        </ContentInput>
       </Content>
 
-      {error && <ErrorText>{error}</ErrorText>}
+      {error && <ErrorText>{error.message}</ErrorText>}
     </Container>
   )
 }

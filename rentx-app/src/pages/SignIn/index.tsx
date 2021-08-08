@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useState, useCallback } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   KeyboardAvoidingView,
@@ -8,8 +8,12 @@ import {
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { useForm, Controller } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 import Input from '../../components/Input'
+import { Button } from '../../components/Button'
+import { theme } from '../../global/styles/theme'
 
 import {
   Container,
@@ -23,25 +27,56 @@ import {
   Remember,
   RememberText,
   CheckBox,
+  ButtonForgetMyPassword,
+  ForgetMyPasswordText,
 } from './styles'
+
+interface FormData {
+  email: string
+  password: string
+}
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email('E-mail must be a valid')
+    .required('E-mail is a required field'),
+  password: yup
+    .string()
+    .min(6, 'Password must be at least 6 characters')
+    .required('Password is a required field'),
+})
 
 export function SignIn() {
   const navigation = useNavigation()
   const {
     control,
-    handleSubmit: onSubmit,
+    handleSubmit,
     formState: { errors },
-  } = useForm()
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
+  })
 
-  function handleNavigateToOnBoard() {
+  const [checkboxRemember, setCheckboxRemember] = useState(false)
+  const [messageLeave, setMessageLeave] = useState(false)
+
+  const handleChangeCheckbox = useCallback(() => {
+    setCheckboxRemember((state) => !state)
+  }, [])
+
+  const handleChangeMessageLeave = useCallback(() => {
+    setMessageLeave((state) => !state)
+  }, [])
+
+  const handleNavigateToOnBoard = useCallback(() => {
     // @ts-ignore
     navigation.navigate('OnBoard')
-  }
+  }, [])
 
-  function handleSubmit(data: any) {
+  const handleOnSubmit = useCallback((data: FormData) => {
     console.log(data)
     // { email: 'test@example.com', password: '123456' }
-  }
+  }, [])
 
   return (
     <KeyboardAvoidingView
@@ -49,6 +84,7 @@ export function SignIn() {
       style={{
         flex: 1,
       }}
+      onLayout={handleChangeMessageLeave}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container>
@@ -59,7 +95,8 @@ export function SignIn() {
           </Header>
 
           <Information>
-            <Title>We are{'\n'}almost there.</Title>
+            {messageLeave && <Title>We are{'\n'}almost there.</Title>}
+
             <Subtitle>
               Login to get started{'\n'}an amazing experience.
             </Subtitle>
@@ -71,48 +108,62 @@ export function SignIn() {
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <Input
-                  iconName="email"
+                  name={name}
+                  placeholder="E-mail"
+                  error={errors.email}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  error={errors.email}
-                  placeholder="E-mail"
-                  defaultValue=""
                 />
               )}
               name="email"
+              defaultValue=""
             />
             <Controller
               control={control}
               rules={{
                 required: true,
               }}
-              render={({ field: { onChange, onBlur, value } }) => (
+              render={({ field: { onChange, onBlur, value, name } }) => (
                 <Input
-                  iconName="password"
+                  name={name}
+                  placeholder="Password"
+                  error={errors.password}
                   onBlur={onBlur}
                   onChangeText={onChange}
                   value={value}
-                  error={errors.password}
-                  placeholder="Password"
-                  defaultValue=""
                 />
               )}
               name="password"
+              defaultValue=""
             />
 
             <ContentOptions>
               <Remember>
                 <CheckBox
-                  onPress={(isChecked: boolean) => {
-                    console.log(isChecked)
+                  onPress={handleChangeCheckbox}
+                  isChecked={checkboxRemember}
+                  disableBuiltInState
+                  iconStyle={{
+                    backgroundColor: checkboxRemember
+                      ? theme.colors.background
+                      : theme.colors.grey100,
+                    borderRadius: 0,
+                    borderColor: '#fff',
                   }}
                 />
+
                 <RememberText>Remember</RememberText>
               </Remember>
+
+              <ButtonForgetMyPassword>
+                <ForgetMyPasswordText>Forget my password!</ForgetMyPasswordText>
+              </ButtonForgetMyPassword>
             </ContentOptions>
+
+            <Button text="Login" onPress={handleSubmit(handleOnSubmit)} />
           </Form>
         </Container>
       </TouchableWithoutFeedback>

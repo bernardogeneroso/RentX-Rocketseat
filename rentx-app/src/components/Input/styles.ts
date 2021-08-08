@@ -4,8 +4,7 @@ import { theme } from '../../global/styles/theme'
 
 export const Container = styled.View`
   width: 100%;
-  height: 56px;
-  flex-direction: row;
+  flex-direction: column;
   margin-bottom: 12px;
 `
 
@@ -19,6 +18,11 @@ export const Icon = styled.View`
 `
 
 export const Content = styled.View`
+  height: 56px;
+  flex-direction: row;
+`
+
+export const ContentInput = styled.View`
   flex: 1;
   flex-direction: row;
   align-items: center;
@@ -31,4 +35,8 @@ export const TextInput = styled.TextInput`
   flex: 1;
 `
 
-export const ErrorText = styled.Text``
+export const ErrorText = styled.Text`
+  margin-top: 2px;
+  font-family: ${theme.fonts.text400};
+  color: ${theme.colors.primary};
+`

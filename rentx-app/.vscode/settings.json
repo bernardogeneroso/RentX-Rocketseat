@@ -3,10 +3,13 @@
     "archivo",
     "arrow",
     "bold",
+    "color",
+    "hookform",
     "iphone",
     "parens",
     "rentx",
     "swiper",
+    "unfill",
     "unform"
   ],
   "typescript.tsdk": "node_modules\\typescript\\lib"

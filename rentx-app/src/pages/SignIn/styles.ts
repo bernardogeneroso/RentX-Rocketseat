@@ -9,12 +9,12 @@ import { theme } from '../../global/styles/theme'
 export const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.white};
-  padding-top: ${getStatusBarHeight() + 8}px;
+  padding-top: ${getStatusBarHeight() - 10}px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 `
 
 export const Header = styled.View``
@@ -42,6 +42,10 @@ export const Form = styled.View``
 
 export const ContentOptions = styled.View`
   margin-top: 34px;
+  margin-bottom: 32px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `
 
 export const Remember = styled.View`
@@ -60,14 +64,17 @@ export const CheckBox = styled(BouncyCheckbox).attrs<IBouncyCheckboxProps>({
   fillColor: 'red',
   unfillColor: '#FFFFFF',
   disableText: true,
-  iconStyle: {
-    backgroundColor: '#1B1B1F',
-    borderRadius: 0,
-    borderColor: '#fff',
-  },
   iconImageStyle: {
     width: 8,
     height: 8,
     backgroundColor: '#fff',
   },
 })``
+
+export const ButtonForgetMyPassword = styled.TouchableOpacity``
+
+export const ForgetMyPasswordText = styled.Text`
+  font-family: ${theme.fonts.text400};
+  color: ${theme.colors.grey500};
+  font-size: 13px;
+`
