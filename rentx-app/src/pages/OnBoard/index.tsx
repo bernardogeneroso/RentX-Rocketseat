@@ -24,7 +24,15 @@ import {
   ButtonGoBackText,
 } from './styles'
 
-export function OnBoard() {
+interface OnBoardProps {
+  route: {
+    params: {
+      page?: number
+    }
+  }
+}
+
+export function OnBoard({ route }: OnBoardProps) {
   const pagerViewRef = useRef<PagerView>(null)
   const navigation = useNavigation()
 
@@ -49,7 +57,7 @@ export function OnBoard() {
         style={{
           flex: 1,
         }}
-        initialPage={0}
+        initialPage={route.params.page || 0}
       >
         {onboard.map((item, index) =>
           index !== onboard.length - 1 ? (

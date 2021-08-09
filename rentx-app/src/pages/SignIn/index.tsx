@@ -70,7 +70,9 @@ export function SignIn() {
 
   const handleNavigateToOnBoard = useCallback(() => {
     // @ts-ignore
-    navigation.navigate('OnBoard')
+    navigation.navigate('OnBoard', {
+      page: 2,
+    })
   }, [])
 
   const handleOnSubmit = useCallback((data: FormData) => {

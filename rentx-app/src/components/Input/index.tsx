@@ -58,26 +58,31 @@ export default function Input({
             autoCompleteType={name === 'email' ? 'email' : 'name'}
             autoCapitalize="none"
             keyboardType={name === 'email' ? 'email-address' : 'default'}
-            secureTextEntry={name === 'password' && !eyeSecurity}
+            secureTextEntry={
+              (name === 'password' || name === 'password_confirmation') &&
+              !eyeSecurity
+            }
             {...rest}
           />
 
-          {name === 'password' && !eyeSecurity && (
-            <EyeIcon
-              width="24"
-              height="24"
-              fill="#AEAEB3"
-              onPress={handleViewPassword}
-            />
-          )}
-          {name === 'password' && eyeSecurity && (
-            <EyeHideIcon
-              width="24"
-              height="24"
-              fill="#AEAEB3"
-              onPress={handleViewPassword}
-            />
-          )}
+          {(name === 'password' || name === 'password_confirmation') &&
+            !eyeSecurity && (
+              <EyeIcon
+                width="24"
+                height="24"
+                fill="#AEAEB3"
+                onPress={handleViewPassword}
+              />
+            )}
+          {(name === 'password' || name === 'password_confirmation') &&
+            eyeSecurity && (
+              <EyeHideIcon
+                width="24"
+                height="24"
+                fill="#AEAEB3"
+                onPress={handleViewPassword}
+              />
+            )}
         </ContentInput>
       </Content>
 

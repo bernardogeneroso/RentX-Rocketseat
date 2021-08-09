@@ -1,16 +1,12 @@
 import styled from 'styled-components/native'
-import { TextInputProps } from 'react-native'
-import BouncyCheckbox, {
-  IBouncyCheckboxProps,
-} from 'react-native-bouncy-checkbox'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
 import { theme } from '../../global/styles/theme'
 
 export const Container = styled.View`
-  flex: 1;
+  height: 100%;
   background-color: ${theme.colors.white};
-  padding-top: ${getStatusBarHeight() - 10}px;
+  padding-top: ${getStatusBarHeight() + 20}px;
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 20px;
@@ -43,3 +39,10 @@ export const Subtitle = styled.Text`
 `
 
 export const Form = styled.View``
+
+export const FormTitle = styled.Text`
+  font-family: ${theme.fonts.title600};
+  color: ${theme.colors.grey600};
+  font-size: 20px;
+  margin-bottom: 24px;
+`
