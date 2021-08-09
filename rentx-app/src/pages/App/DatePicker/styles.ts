@@ -5,6 +5,7 @@ import { theme } from '../../../global/styles/theme'
 
 export const Container = styled.View`
   flex: 1;
+  flex-direction: column;
   background-color: ${theme.colors.white};
 `
 
@@ -54,4 +55,10 @@ export const DateText = styled.Text`
   font-family: ${theme.fonts.text500};
   color: ${theme.colors.white};
   font-size: 15px;
+`
+export const Content = styled.View`
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px;
 `
