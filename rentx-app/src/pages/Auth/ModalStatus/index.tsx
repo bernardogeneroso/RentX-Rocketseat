@@ -2,9 +2,9 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StatusBar } from 'react-native'
 
-import Union from '../../assets/union.svg'
-import Done from '../../assets/done.svg'
-import Error from '../../assets/error.svg'
+import Union from '../../../assets/union.svg'
+import Done from '../../../assets/done.svg'
+import Error from '../../../assets/error.svg'
 
 import {
   Container,

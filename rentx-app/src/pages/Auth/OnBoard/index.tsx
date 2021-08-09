@@ -4,7 +4,7 @@ import { Image, TouchableOpacity } from 'react-native'
 import PagerView from 'react-native-pager-view'
 import { Feather } from '@expo/vector-icons'
 
-import { onboard } from '../../utils/onboard'
+import { onboard } from '../../../utils/onboard'
 
 import {
   Container,

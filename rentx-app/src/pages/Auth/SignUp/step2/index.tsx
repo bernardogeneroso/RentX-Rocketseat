@@ -5,9 +5,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
-import { TextAnimation } from '../../../components/TextAnimation'
-import Input from '../../../components/Input'
-import { Button } from '../../../components/Button'
+import { TextAnimation } from '../../../../components/TextAnimation'
+import Input from '../../../../components/Input'
+import { Button } from '../../../../components/Button'
 
 import { FormDataStep1 } from '..'
 import { Dot, PagesContainer, Subtitle, Title } from '../../OnBoard/styles'

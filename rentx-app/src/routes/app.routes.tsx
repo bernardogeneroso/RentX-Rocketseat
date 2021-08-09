@@ -1,23 +1,19 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { OnBoard } from '../pages/Auth/OnBoard'
-import { SignIn } from '../pages/Auth/SignIn'
-import { SignUp } from '../pages/Auth/SignUp'
+import { DatePicker } from '../pages/App/DatePicker'
 import { ModalStatus } from '../pages/Auth/ModalStatus'
 
 const Stack = createStackNavigator()
 
-export function AuthRoutes() {
+export function AppRoutes() {
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen name="OnBoard" component={OnBoard} />
-      <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="DatePicker" component={DatePicker} />
       <Stack.Screen
         name="ModalStatus"
         component={ModalStatus}
