@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react'
+import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import { TextAnimation } from '../../../components/TextAnimation'
 import Input from '../../../components/Input'
 import { Button } from '../../../components/Button'
 
@@ -72,9 +73,13 @@ export function Step1({
         </PagesContainer>
       </Header>
       <Information>
-        {messageLeave && <Title>We are{'\n'}almost there.</Title>}
+        <TextAnimation isVisible={messageLeave}>
+          <Title>We are{'\n'}almost there.</Title>
+        </TextAnimation>
 
-        <Subtitle>Login to get started{'\n'}an amazing experience.</Subtitle>
+        <TextAnimation>
+          <Subtitle>Login to get started{'\n'}an amazing experience.</Subtitle>
+        </TextAnimation>
       </Information>
       <Form>
         <FormTitle>01. Data</FormTitle>

@@ -14,9 +14,9 @@ export function AuthRoutes() {
         headerShown: false,
       }}
     >
+      <Stack.Screen name="OnBoard" component={OnBoard} />
       <Stack.Screen name="SignIn" component={SignIn} />
       <Stack.Screen name="SignUp" component={SignUp} />
-      <Stack.Screen name="OnBoard" component={OnBoard} />
     </Stack.Navigator>
   )
 }

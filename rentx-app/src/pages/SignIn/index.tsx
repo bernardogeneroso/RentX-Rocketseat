@@ -11,6 +11,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import { TextAnimation } from '../../components/TextAnimation'
 import Input from '../../components/Input'
 import { Button } from '../../components/Button'
 import { theme } from '../../global/styles/theme'
@@ -97,11 +98,15 @@ export function SignIn() {
           </Header>
 
           <Information>
-            {messageLeave && <Title>We are{'\n'}almost there.</Title>}
+            <TextAnimation isVisible={messageLeave}>
+              <Title>We are{'\n'}almost there.</Title>
+            </TextAnimation>
 
-            <Subtitle>
-              Login to get started{'\n'}an amazing experience.
-            </Subtitle>
+            <TextAnimation>
+              <Subtitle>
+                Login to get started{'\n'}an amazing experience.
+              </Subtitle>
+            </TextAnimation>
           </Information>
 
           <Form>

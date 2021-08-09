@@ -30,6 +30,7 @@ interface OnBoardProps {
       page?: number
     }
   }
+  navigation: any
 }
 
 export function OnBoard({ route }: OnBoardProps) {
@@ -57,7 +58,7 @@ export function OnBoard({ route }: OnBoardProps) {
         style={{
           flex: 1,
         }}
-        initialPage={route.params.page || 0}
+        initialPage={0}
       >
         {onboard.map((item, index) =>
           index !== onboard.length - 1 ? (

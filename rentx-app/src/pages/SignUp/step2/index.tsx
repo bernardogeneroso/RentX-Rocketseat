@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import { TextAnimation } from '../../../components/TextAnimation'
 import Input from '../../../components/Input'
 import { Button } from '../../../components/Button'
 
@@ -76,9 +77,13 @@ export function Step2({ messageLeave, dataStep1, setPage }: Step2Props) {
         </PagesContainer>
       </Header>
       <Information>
-        {messageLeave && <Title>We are{'\n'}almost there.</Title>}
+        <TextAnimation isVisible={messageLeave}>
+          <Title>We are{'\n'}almost there.</Title>
+        </TextAnimation>
 
-        <Subtitle>Login to get started{'\n'}an amazing experience.</Subtitle>
+        <TextAnimation>
+          <Subtitle>Login to get started{'\n'}an amazing experience.</Subtitle>
+        </TextAnimation>
       </Information>
       <Form>
         <FormTitle>02. Password</FormTitle>
