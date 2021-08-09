@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import {
   KeyboardAvoidingView,
@@ -48,7 +48,15 @@ const schema = yup.object().shape({
     .required('Password is a required field'),
 })
 
-export function SignIn() {
+interface SignInProps {
+  route: {
+    params: {
+      correctTitle?: boolean
+    }
+  }
+}
+
+export function SignIn({ route }: SignInProps) {
   const navigation = useNavigation()
   const {
     control,
@@ -60,6 +68,10 @@ export function SignIn() {
 
   const [checkboxRemember, setCheckboxRemember] = useState(false)
   const [messageLeave, setMessageLeave] = useState(false)
+
+  useEffect(() => {
+    if (route.params?.correctTitle) handleChangeMessageLeave()
+  }, [route.params?.correctTitle])
 
   const handleChangeCheckbox = useCallback(() => {
     setCheckboxRemember((state) => !state)

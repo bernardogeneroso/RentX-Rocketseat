@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import { Feather } from '@expo/vector-icons'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -43,6 +44,7 @@ const schema = yup.object().shape({
 })
 
 export function Step2({ messageLeave, dataStep1, setPage }: Step2Props) {
+  const navigation = useNavigation()
   const {
     control,
     handleSubmit,
@@ -58,6 +60,19 @@ export function Step2({ messageLeave, dataStep1, setPage }: Step2Props) {
     }
 
     console.log(userData)
+
+    const navigateToSignIn = () => {
+      // @ts-ignore
+      navigation.navigate('SignIn')
+    }
+
+    // @ts-ignore
+    navigation.navigate('ModalStatus', {
+      option: 'signIn',
+      title: 'Account has\nbeen created!',
+      subtitle: 'Now just login and enjoy.',
+      actionOne: navigateToSignIn(),
+    })
   }
 
   function handleChangePageToFirst() {

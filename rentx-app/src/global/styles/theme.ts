@@ -12,6 +12,7 @@ export const theme = {
     grey700: '#47474D',
     grey600: '#3D3D4D',
     grey500: '#737380',
+    grey450: '#A8A8B3',
     grey400: '#A0A0B3',
     grey300: '#7A7A80',
     grey200: '#AEAEB3',
