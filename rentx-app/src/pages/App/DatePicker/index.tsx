@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { StatusBar } from 'react-native'
 import { format, isSameDay } from 'date-fns'
 import { Octicons } from '@expo/vector-icons'
 import Calendar from 'react-native-calendar-picker'
+import { useNavigation } from '@react-navigation/native'
 
 import { Button } from '../../../components/Button'
 import Arrow from '../../../assets/arrow.svg'
@@ -20,6 +20,8 @@ import {
 } from './styles'
 
 export function DatePicker() {
+  const navigation = useNavigation()
+
   const [inDate, setInDate] = useState<Date | null>(null)
   const [toDate, setToDate] = useState<Date | null>(null)
 
@@ -34,115 +36,119 @@ export function DatePicker() {
     }
   }
 
+  function handleRedirectToApp() {
+    // @ts-ignore
+    navigation.navigate('App', {
+      screen: 'Home',
+      params: { inDate, toDate },
+    })
+  }
+
   return (
-    <>
-      <StatusBar
-        backgroundColor="transparent"
-        barStyle="light-content"
-        translucent
-      />
+    <Container>
+      <Header>
+        <Title>
+          Choose the{'\n'}date and find{'\n'}a car.
+        </Title>
 
-      <Container>
-        <Header>
-          <Title>
-            Choose the{'\n'}date and find{'\n'}a car.
-          </Title>
+        <ContentHeader>
+          <ContentDate>
+            <DateTitle>In</DateTitle>
 
-          <ContentHeader>
-            <ContentDate>
-              <DateTitle>In</DateTitle>
+            {inDate ? (
+              <DateText>{format(new Date(inDate), 'd LLLL yyyy')}</DateText>
+            ) : (
+              <DateView />
+            )}
+          </ContentDate>
 
-              {inDate ? (
-                <DateText>{format(new Date(inDate), 'd LLLL yyyy')}</DateText>
-              ) : (
-                <DateView />
-              )}
-            </ContentDate>
+          <Arrow />
 
-            <Arrow />
+          <ContentDate>
+            <DateTitle>To</DateTitle>
 
-            <ContentDate>
-              <DateTitle>To</DateTitle>
+            {toDate ? (
+              <DateText>{format(new Date(toDate), 'd LLLL yyyy')}</DateText>
+            ) : (
+              <DateView />
+            )}
+          </ContentDate>
+        </ContentHeader>
+      </Header>
 
-              {toDate ? (
-                <DateText>{format(new Date(toDate), 'd LLLL yyyy')}</DateText>
-              ) : (
-                <DateView />
-              )}
-            </ContentDate>
-          </ContentHeader>
-        </Header>
+      <Content>
+        <Calendar
+          // @ts-ignore
+          onDateChange={handleWithDateChange}
+          minDate={new Date()}
+          showDayStragglers
+          allowRangeSelection
+          headingLevel={24}
+          dayLabelsWrapper={{
+            borderBottomColor: '#EBEBF0',
+            borderBottomWidth: 1,
+            borderTopWidth: 0,
+            paddingBottom: 17,
+          }}
+          todayTextStyle={{
+            fontSize: 20,
+            color: '#fff',
+          }}
+          todayBackgroundColor="#fff"
+          disabledDatesTextStyle={{
+            color: '#AEAEB3',
+            fontSize: 15,
+          }}
+          selectedRangeStartTextStyle={{
+            color: '#fff',
+          }}
+          selectedRangeEndStyle={{
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
+            backgroundColor: '#DC1637',
+          }}
+          selectedDayTextStyle={{
+            color: '#DC1637',
+          }}
+          selectedRangeStartStyle={{
+            borderTopLeftRadius: 0,
+            borderBottomLeftRadius: 0,
+            backgroundColor: '#DC1637',
+          }}
+          selectedRangeStyle={{
+            backgroundColor: '#FDEDEF',
+          }}
+          selectedRangeEndTextStyle={{
+            color: '#fff',
+          }}
+          monthTitleStyle={{
+            fontFamily: 'Archivo_600SemiBold',
+            fontSize: 20,
+            color: '#47474D',
+          }}
+          yearTitleStyle={{
+            fontFamily: 'Archivo_600SemiBold',
+            fontSize: 20,
+            color: '#47474D',
+          }}
+          textStyle={{
+            fontFamily: 'Inter_500Medium',
+            color: '#47474D',
+          }}
+          nextComponent={
+            <Octicons name="chevron-right" size={24} color="#7A7A80" />
+          }
+          previousComponent={
+            <Octicons name="chevron-left" size={24} color="#7A7A80" />
+          }
+        />
 
-        <Content>
-          <Calendar
-            // @ts-ignore
-            onDateChange={handleWithDateChange}
-            minDate={new Date()}
-            showDayStragglers
-            allowRangeSelection
-            headingLevel={24}
-            dayLabelsWrapper={{
-              borderBottomColor: '#EBEBF0',
-              borderBottomWidth: 1,
-              borderTopWidth: 0,
-              paddingBottom: 17,
-            }}
-            todayTextStyle={{
-              fontSize: 20,
-              color: '#fff',
-            }}
-            todayBackgroundColor="#fff"
-            disabledDatesTextStyle={{
-              color: '#AEAEB3',
-              fontSize: 15,
-            }}
-            selectedRangeStartTextStyle={{
-              color: '#fff',
-            }}
-            selectedRangeEndStyle={{
-              borderTopRightRadius: 0,
-              borderBottomRightRadius: 0,
-              backgroundColor: '#DC1637',
-            }}
-            selectedDayTextStyle={{
-              color: '#DC1637',
-            }}
-            selectedRangeStartStyle={{
-              borderTopLeftRadius: 0,
-              borderBottomLeftRadius: 0,
-              backgroundColor: '#DC1637',
-            }}
-            selectedRangeStyle={{
-              backgroundColor: '#FDEDEF',
-            }}
-            selectedRangeEndTextStyle={{
-              color: '#fff',
-            }}
-            monthTitleStyle={{
-              fontFamily: 'Archivo_600SemiBold',
-              fontSize: 20,
-              color: '#47474D',
-            }}
-            yearTitleStyle={{
-              fontFamily: 'Archivo_600SemiBold',
-              fontSize: 20,
-              color: '#47474D',
-            }}
-            textStyle={{
-              fontFamily: 'Inter_500Medium',
-              color: '#47474D',
-            }}
-            nextComponent={
-              <Octicons name="chevron-right" size={24} color="#7A7A80" />
-            }
-            previousComponent={
-              <Octicons name="chevron-left" size={24} color="#7A7A80" />
-            }
-          />
-
-          <Button text="Confirm" disabled={!inDate || !toDate} />
-        </Content>
-      </Container>
-    </>
+        <Button
+          text="Confirm"
+          onPress={handleRedirectToApp}
+          disabled={!inDate || !toDate}
+        />
+      </Content>
+    </Container>
   )
 }
