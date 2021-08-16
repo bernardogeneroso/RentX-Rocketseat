@@ -1,9 +1,13 @@
 import styled from 'styled-components/native'
+import { FlatList } from 'react-native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
+import { Cars } from '../../../utils/cars'
 import { theme } from '../../../global/styles/theme'
 
-export const Container = styled.View``
+export const Container = styled.View`
+  background-color: ${theme.colors.white};
+`
 
 export const Header = styled.View`
   background-color: ${theme.colors.background};
@@ -20,3 +24,10 @@ export const Header = styled.View`
 export const ButtonArrowDown = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })``
+
+export const Content = styled.View``
+
+export const CarList = styled(FlatList as new () => FlatList<Cars>)`
+  padding-left: 16px;
+  padding-right: 16px;
+`

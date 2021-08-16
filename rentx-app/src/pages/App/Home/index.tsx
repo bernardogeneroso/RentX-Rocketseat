@@ -2,10 +2,14 @@ import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
 
-import { ContentDate, DateText, DateTitle } from '../DatePicker/styles'
-import { Container, Header, ButtonArrowDown } from './styles'
+import { cars } from '../../../utils/cars'
+
+import { Car } from '../../../components/Car'
+import { CarListHeader } from './CarListHeader'
 
 import ArrowDown from '../../../assets/arrow-down.svg'
+import { ContentDate, DateText, DateTitle } from '../DatePicker/styles'
+import { Container, Header, ButtonArrowDown, Content, CarList } from './styles'
 
 interface HomeProps {
   route: {
@@ -46,6 +50,15 @@ export function Home({ route }: HomeProps) {
           <DateText>{format(new Date(toDate), 'd LLLL yyyy')}</DateText>
         </ContentDate>
       </Header>
+
+      <Content>
+        <CarList
+          data={cars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Car key={item.id} car={item} />}
+          ListHeaderComponent={() => <CarListHeader />}
+        />
+      </Content>
     </Container>
   )
 }
