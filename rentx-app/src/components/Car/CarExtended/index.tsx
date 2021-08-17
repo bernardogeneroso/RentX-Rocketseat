@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 // @ts-ignore
 import { FlatListSlider } from 'react-native-flatlist-slider'
 
-import { Cars } from '../../utils/cars'
-import { formatCurrent } from '../../utils/formatCurrency'
+import { Cars } from '../../../utils/cars'
+import { formatCurrent } from '../../../utils/formatCurrency'
 
-import Electric from '../../assets/electric.svg'
-import Gasoline from '../../assets/gasoline.svg'
+import Electric from '../../../assets/electric.svg'
+import Gasoline from '../../../assets/gasoline.svg'
 
-import { Dot } from '../../pages/Auth/OnBoard/styles'
+import { Dot } from '../../../pages/Auth/OnBoard/styles'
 import {
   Container,
   Header,
@@ -22,29 +22,21 @@ import {
   CarFuel,
   ContainerSlider,
 } from './styles'
-import {
-  TouchableOpacity,
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Platform,
-} from 'react-native'
 
-interface CarProps {
+interface CarExtendedProps {
   car: Cars
 }
 
-export function Car({ car }: CarProps) {
+export function CarExtended({ car }: CarExtendedProps) {
   const carImages = car.images.map((item) => ({
     image: item,
   }))
 
   const [dotIndexFlatListSlider, setDotIndexFlatListSlider] = useState(0)
 
-  const handleFlatListSliderIndex = (number: number) => {
+  const handleFlatListSliderIndex = useCallback((number: number) => {
     setDotIndexFlatListSlider(number)
-  }
+  }, [])
 
   return (
     <Container>

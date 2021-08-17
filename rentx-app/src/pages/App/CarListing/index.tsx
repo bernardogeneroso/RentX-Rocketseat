@@ -1,16 +1,44 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+
+import { cars } from '../../../utils/cars'
+import { CarSimplified } from '../../../components/Car/CarSimplified'
+import { Search } from './Search'
+
+import {
+  Container,
+  Header,
+  Details,
+  HeaderTitle,
+  CarInfo,
+  ContentSearch,
+  Content,
+  CarList,
+} from './styles'
 
 export function CarListing() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>CarListing</Text>
-    </View>
+    <Container>
+      <Header>
+        <Details>
+          <HeaderTitle>Listing</HeaderTitle>
+
+          <CarInfo>{`${cars.length} ${
+            cars.length === 1 ? 'car' : 'cars'
+          }`}</CarInfo>
+        </Details>
+
+        <ContentSearch>
+          <Search />
+        </ContentSearch>
+      </Header>
+
+      <Content>
+        <CarList
+          data={cars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <CarSimplified key={item.id} car={item} />}
+        />
+      </Content>
+    </Container>
   )
 }

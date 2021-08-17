@@ -1,12 +1,16 @@
 import styled from 'styled-components/native'
-import { FlatList } from 'react-native'
 
-import { theme } from '../../global/styles/theme'
+import { theme } from '../../../global/styles/theme'
 
 export const Container = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })`
-  height: 240px;
+  flex-direction: column;
+`
+
+export const ContentInfo = styled.View`
+  flex-direction: row;
+  height: 136px;
   padding: 24px;
   margin-top: 16px;
   background-color: ${theme.colors.white150};
@@ -14,14 +18,20 @@ export const Container = styled.TouchableOpacity.attrs({
   border-bottom-color: ${theme.colors.grey100};
 `
 
-export const Header = styled.View`
-  flex-direction: row;
+export const Details = styled.View`
+  flex-direction: column;
   justify-content: space-between;
   margin-bottom: 14px;
 `
 
 export const CarDetails = styled.View`
   flex-direction: column;
+`
+
+export const ContentPerDay = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 16px;
 `
 
 export const CarText = styled.Text`
@@ -34,22 +44,13 @@ export const CarText = styled.Text`
 export const CarModel = styled.Text`
   font-family: ${theme.fonts.title500};
   color: ${theme.colors.grey700};
-  font-size: 20px;
-  text-align: center;
+  font-size: 15px;
 `
 
 export const CarPrice = styled.Text`
   font-family: ${theme.fonts.title500};
   color: ${theme.colors.primary};
-  font-size: 20px;
-`
-
-export const Content = styled.View`
-  flex: 1;
-`
-
-export const CarImage = styled.Image`
-  flex: 1;
+  font-size: 15px;
 `
 
 export const Footer = styled.View`
@@ -57,8 +58,22 @@ export const Footer = styled.View`
   justify-content: space-between;
 `
 
-export const CarFuel = styled.View``
+export const CarFuel = styled.View`
+  margin-left: 14px;
+`
 
-export const ContainerSlider = styled.View`
-  flex-direction: row;
+export const CarImage = styled.Image`
+  flex: 1;
+`
+
+export const ContentSchedules = styled.View`
+  height: 40px;
+  margin-top: 2px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${theme.colors.ok.background};
+`
+
+export const ScheduleTimeText = styled.Text`
+  color: ${theme.colors.ok.text};
 `

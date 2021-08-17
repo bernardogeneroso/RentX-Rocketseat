@@ -1,16 +1,33 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+
+import { cars } from '../../../utils/cars'
+import { CarSimplified } from '../../../components/Car/CarSimplified'
+
+import {
+  Container,
+  Header,
+  HeaderTitle,
+  PeriodsText,
+  Content,
+  CarList,
+} from './styles'
 
 export function Schedules() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Schedules</Text>
-    </View>
+    <Container>
+      <Header>
+        <HeaderTitle>Schedules</HeaderTitle>
+
+        <PeriodsText>5 periods</PeriodsText>
+      </Header>
+
+      <Content>
+        <CarList
+          data={cars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <CarSimplified key={item.id} car={item} />}
+        />
+      </Content>
+    </Container>
   )
 }

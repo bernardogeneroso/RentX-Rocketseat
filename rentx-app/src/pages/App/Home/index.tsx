@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 
 import { cars } from '../../../utils/cars'
 
-import { Car } from '../../../components/Car'
+import { CarExtended } from '../../../components/Car/CarExtended'
 import { CarListHeader } from './CarListHeader'
 
 import ArrowDown from '../../../assets/arrow-down.svg'
@@ -55,7 +55,7 @@ export function Home({ route }: HomeProps) {
         <CarList
           data={cars}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <Car key={item.id} car={item} />}
+          renderItem={({ item }) => <CarExtended key={item.id} car={item} />}
           ListHeaderComponent={() => <CarListHeader />}
         />
       </Content>
