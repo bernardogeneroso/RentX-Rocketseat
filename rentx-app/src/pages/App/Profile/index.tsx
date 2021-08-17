@@ -1,16 +1,42 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+
+import EditIcon from '../../../assets/edit.svg'
+import PowerIcon from '../../../assets/power.svg'
+
+import {
+  Container,
+  Header,
+  ContentActions,
+  ButtonIcon,
+  PerfilTitle,
+  ContentPerfilImage,
+  PerfilImage,
+} from './styles'
 
 export function Profile() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Profile</Text>
-    </View>
+    <Container>
+      <Header>
+        <ContentActions>
+          <ButtonIcon>
+            <EditIcon />
+          </ButtonIcon>
+
+          <PerfilTitle>Perfil</PerfilTitle>
+
+          <ButtonIcon>
+            <PowerIcon />
+          </ButtonIcon>
+        </ContentActions>
+
+        <ContentPerfilImage>
+          <PerfilImage
+            source={{
+              uri: 'https://avatars.githubusercontent.com/u/58465456?v=4',
+            }}
+          />
+        </ContentPerfilImage>
+      </Header>
+    </Container>
   )
 }
