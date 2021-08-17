@@ -5,8 +5,7 @@ import { theme } from '../../../../global/styles/theme'
 export const Container = styled.View`
   padding-left: 25px;
   padding-right: 25px;
-  padding-top: 24px;
-  padding-bottom: 14px;
+  padding-top: 20px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

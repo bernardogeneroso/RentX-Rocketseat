@@ -33,9 +33,12 @@ export const PeriodsText = styled.Text`
   font-size: 13px;
 `
 
-export const Content = styled.View``
+export const Content = styled.View`
+  flex: 1;
+`
 
 export const CarList = styled(FlatList as new () => FlatList<Cars>)`
+  flex: 1;
   padding-left: 16px;
   padding-right: 16px;
 `

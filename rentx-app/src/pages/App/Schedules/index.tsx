@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { cars } from '../../../utils/cars'
+import { carsSchedules } from '../../../utils/cars'
 import { CarSimplified } from '../../../components/Car/CarSimplified'
 
 import {
@@ -23,9 +23,11 @@ export function Schedules() {
 
       <Content>
         <CarList
-          data={cars}
+          data={carsSchedules}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <CarSimplified key={item.id} car={item} />}
+          bounces={true}
+          scrollEventThrottle={16}
         />
       </Content>
     </Container>

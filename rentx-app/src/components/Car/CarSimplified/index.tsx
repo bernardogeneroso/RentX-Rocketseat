@@ -1,10 +1,12 @@
 import React from 'react'
+import { format, isBefore } from 'date-fns'
 
 import { Cars } from '../../../utils/cars'
 import { formatCurrent } from '../../../utils/formatCurrency'
 
 import Electric from '../../../assets/electric.svg'
 import Gasoline from '../../../assets/gasoline.svg'
+import ArrowRightSmallIcon from '../../../assets/arrow-right-small.svg'
 
 import {
   Container,
@@ -19,6 +21,10 @@ import {
   CarFuel,
   ContentSchedules,
   ScheduleTimeText,
+  TimeText,
+  ContentTime,
+  StartTimeText,
+  EndTimeText,
 } from './styles'
 
 interface CarSimplifiedProps {
@@ -61,9 +67,30 @@ export function CarSimplified({ car }: CarSimplifiedProps) {
         />
       </ContentInfo>
 
-      <ContentSchedules>
-        <ScheduleTimeText>Using until June 17, 2020</ScheduleTimeText>
-      </ContentSchedules>
+      {car.start_date && car.end_date && isBefore(new Date(), car.end_date) && (
+        <ContentSchedules>
+          <ScheduleTimeText>
+            Using until {format(new Date(car.end_date), 'LLLL d, yyyy')}
+          </ScheduleTimeText>
+        </ContentSchedules>
+      )}
+      {car.start_date && car.end_date && !isBefore(new Date(), car.end_date) && (
+        <ContentSchedules timeMode>
+          <TimeText>Time</TimeText>
+
+          <ContentTime>
+            <StartTimeText>
+              {format(new Date(car.start_date), ' d LLLL yyyy')}
+            </StartTimeText>
+
+            <ArrowRightSmallIcon />
+
+            <EndTimeText>
+              {format(new Date(car.end_date), ' d LLLL yyyy')}
+            </EndTimeText>
+          </ContentTime>
+        </ContentSchedules>
+      )}
     </Container>
   )
 }

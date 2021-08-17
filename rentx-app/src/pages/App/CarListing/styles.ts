@@ -46,9 +46,12 @@ export const ContentSearch = styled.View`
   padding-right: 16px;
 `
 
-export const Content = styled.View``
+export const Content = styled.View`
+  flex: 1;
+`
 
 export const CarList = styled(FlatList as new () => FlatList<Cars>)`
+  flex: 1;
   padding-left: 16px;
   padding-right: 16px;
   margin-top: 16px;

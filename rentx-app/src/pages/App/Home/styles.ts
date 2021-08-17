@@ -6,6 +6,7 @@ import { Cars } from '../../../utils/cars'
 import { theme } from '../../../global/styles/theme'
 
 export const Container = styled.View`
+  flex: 1;
   background-color: ${theme.colors.white};
 `
 
@@ -25,9 +26,12 @@ export const ButtonArrowDown = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })``
 
-export const Content = styled.View``
+export const Content = styled.View`
+  flex: 1;
+`
 
 export const CarList = styled(FlatList as new () => FlatList<Cars>)`
+  flex: 1;
   padding-left: 16px;
   padding-right: 16px;
 `
