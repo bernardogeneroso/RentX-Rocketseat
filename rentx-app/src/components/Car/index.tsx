@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+// @ts-ignore
+import { FlatListSlider } from 'react-native-flatlist-slider'
 
 import { Cars } from '../../utils/cars'
 import { formatCurrent } from '../../utils/formatCurrency'
@@ -20,13 +22,29 @@ import {
   CarFuel,
   ContainerSlider,
 } from './styles'
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Platform,
+} from 'react-native'
 
 interface CarProps {
   car: Cars
 }
 
 export function Car({ car }: CarProps) {
-  const carImages = car.images
+  const carImages = car.images.map((item) => ({
+    image: item,
+  }))
+
+  const [dotIndexFlatListSlider, setDotIndexFlatListSlider] = useState(0)
+
+  const handleFlatListSliderIndex = (number: number) => {
+    setDotIndexFlatListSlider(number)
+  }
 
   return (
     <Container>
@@ -44,7 +62,11 @@ export function Car({ car }: CarProps) {
         </CarDetails>
       </Header>
       <Content>
-        <CarImage source={{ uri: carImages[0] }} resizeMode="contain" />
+        <FlatListSlider
+          data={carImages}
+          indicator={false}
+          onChangeFlatlistSlider={handleFlatListSliderIndex}
+        />
       </Content>
       <Footer>
         <CarFuel>
@@ -52,10 +74,9 @@ export function Car({ car }: CarProps) {
         </CarFuel>
 
         <ContainerSlider>
-          <Dot active />
-          <Dot />
-          <Dot />
-          <Dot />
+          {carImages.map((item, index) => (
+            <Dot key={index} active={dotIndexFlatListSlider === index} />
+          ))}
         </ContainerSlider>
       </Footer>
     </Container>

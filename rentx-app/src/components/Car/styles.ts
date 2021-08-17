@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { FlatList } from 'react-native'
 
 import { theme } from '../../global/styles/theme'
 
