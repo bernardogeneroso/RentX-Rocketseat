@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Modal from 'react-native-modal'
 
 import { QuickButton } from '../../../../components/QuickButton'
 import { DayPrice } from './DayPrice'
+import { Combustion } from './Combustion'
+import { Transmission } from './Transmission'
 
 import {
   ContainerModal,
@@ -14,6 +16,7 @@ import {
   TitleFilter,
   CleanFillText,
   Content,
+  ButtonConfirm,
 } from './styles'
 
 interface FilterProps {
@@ -22,6 +25,12 @@ interface FilterProps {
 }
 
 export function Filter({ modal, handleToggleModal }: FilterProps) {
+  const [cleanMode, setCleanMode] = useState(false)
+
+  function handleCleanAllFields() {
+    setCleanMode((value) => !value)
+  }
+
   return (
     <ContainerModal>
       <Modal
@@ -44,14 +53,18 @@ export function Filter({ modal, handleToggleModal }: FilterProps) {
             <ContentHeader>
               <TitleFilter>Filter</TitleFilter>
 
-              <QuickButton>
+              <QuickButton onPress={handleCleanAllFields}>
                 <CleanFillText>Clean all fields</CleanFillText>
               </QuickButton>
             </ContentHeader>
           </Header>
 
           <Content>
-            <DayPrice />
+            <DayPrice {...{ cleanMode }} />
+            <Combustion {...{ cleanMode }} />
+            <Transmission {...{ cleanMode }} />
+
+            <ButtonConfirm text="Confirm" />
           </Content>
         </Container>
       </Modal>

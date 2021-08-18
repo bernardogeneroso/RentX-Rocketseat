@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { Button } from '../../../../components/Button'
 
 import { theme } from '../../../../global/styles/theme'
 
@@ -30,7 +31,7 @@ export const Header = styled.View`
 export const ContentLine = styled.View`
   justify-content: center;
   align-items: center;
-  margin-bottom: 29px;
+  margin-bottom: 14px;
 `
 
 export const LineCloseModal = styled.View`
@@ -60,4 +61,8 @@ export const CleanFillText = styled.Text`
 
 export const Content = styled.View`
   flex: 1;
+`
+
+export const ButtonConfirm = styled(Button)`
+  margin-top: 40px;
 `

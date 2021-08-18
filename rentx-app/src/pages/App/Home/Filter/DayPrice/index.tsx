@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import Slider from 'react-native-sliders'
 
@@ -6,8 +6,16 @@ import SliderImage from '../../../../../assets/slider.png'
 
 import { Container, Header, DayPriceText, PricesText, Content } from './styles'
 
-export function DayPrice() {
+interface DayPriceProps {
+  cleanMode: boolean
+}
+
+export function DayPrice({ cleanMode }: DayPriceProps) {
   const [slider, setSlider] = useState([160, 380])
+
+  useEffect(() => {
+    setSlider([160, 380])
+  }, [cleanMode])
 
   function handleChangeSliderValues(value: number[]) {
     setSlider(value)
