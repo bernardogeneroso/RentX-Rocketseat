@@ -8,6 +8,7 @@ import { theme } from '../../../global/styles/theme'
 export const Container = styled.View`
   flex: 1;
   background-color: ${theme.colors.white};
+  position: relative;
 `
 
 export const Header = styled.View`

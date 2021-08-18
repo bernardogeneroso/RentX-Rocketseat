@@ -43,3 +43,60 @@ export const PerfilImage = styled.Image`
   height: 180px;
   border-radius: 90px;
 `
+
+export const UserNameText = styled.Text`
+  margin-top: 114px;
+  font-family: ${theme.fonts.title600};
+  color: ${theme.colors.grey600};
+  font-size: 30px;
+  text-align: center;
+`
+
+export const Content = styled.View`
+  margin-top: 64px;
+  padding-left: 24px;
+  padding-right: 24px;
+`
+
+export const AppointmentsContent = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 19px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${theme.colors.grey150};
+`
+
+export const AppointmentsCompletedText = styled.Text`
+  font-family: ${theme.fonts.text400};
+  color: ${theme.colors.grey300};
+  font-size: 15px;
+`
+
+export const AppointmentsCompletedInfoText = styled.Text`
+  font-family: ${theme.fonts.title500};
+  color: ${theme.colors.grey700};
+  font-size: 15px;
+`
+
+export const ContentFavoriteCar = styled.View`
+  margin-top: 27px;
+`
+
+export const HeaderFavoriteCar = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
+export const FavoriteCarText = styled.Text`
+  font-family: ${theme.fonts.text400};
+  color: ${theme.colors.grey300};
+  font-size: 15px;
+`
+
+export const CarUsedTimesText = styled.Text`
+  font-family: ${theme.fonts.title500};
+  color: ${theme.colors.grey700};
+  font-size: 15px;
+`

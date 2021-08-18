@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
 
 import { cars } from '../../../utils/cars'
 
+import { Filter } from './Filter'
 import { CarExtended } from '../../../components/Car/CarExtended'
 import { CarListHeader } from './CarListHeader'
 
@@ -23,12 +24,21 @@ interface HomeProps {
 export function Home({ route }: HomeProps) {
   const navigation = useNavigation()
 
+  const [modal, setModal] = useState(false)
   const [inDate] = useState<Date>(route.params.inDate)
   const [toDate] = useState<Date>(route.params.toDate)
+
+  const handleToggleModal = useCallback(() => {
+    setModal((value) => !value)
+  }, [])
 
   function handleToRedirectDatePicker() {
     // @ts-ignore
     navigation.navigate('DatePicker')
+  }
+
+  function handleOpenFilter() {
+    handleToggleModal()
   }
 
   return (
@@ -56,9 +66,13 @@ export function Home({ route }: HomeProps) {
           data={cars}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <CarExtended key={item.id} car={item} />}
-          ListHeaderComponent={() => <CarListHeader />}
+          ListHeaderComponent={() => (
+            <CarListHeader {...{ handleOpenFilter }} />
+          )}
         />
       </Content>
+
+      <Filter {...{ modal, handleToggleModal }} />
     </Container>
   )
 }
