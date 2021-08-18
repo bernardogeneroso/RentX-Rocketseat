@@ -38,7 +38,7 @@ export function DatePicker() {
 
   function handleRedirectToApp() {
     // @ts-ignore
-    navigation.navigate('AppTabMenu', {
+    navigation.navigate('TabMenu', {
       screen: 'Home',
       params: { inDate, toDate },
     })
