@@ -58,4 +58,6 @@ export const CleanFillText = styled.Text`
   font-size: 15px;
 `
 
-export const Content = styled.View``
+export const Content = styled.View`
+  flex: 1;
+`
