@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 
 import { CarSimplified } from '../../../../components/Car/CarSimplified'
 import { cars } from '../../../../utils/cars'
@@ -26,11 +27,18 @@ import {
 } from './styles'
 
 export function Profile() {
+  const navigation = useNavigation()
+
+  function handleRedirectToEditPerfil() {
+    // @ts-ignore
+    navigation.navigate('EditPerfil')
+  }
+
   return (
     <Container>
       <Header>
         <ContentActions>
-          <ButtonIcon>
+          <ButtonIcon onPress={handleRedirectToEditPerfil}>
             <EditIcon />
           </ButtonIcon>
 

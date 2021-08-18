@@ -1,37 +1,58 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
+
+import { TabsPerfil } from './TabsPerfil'
 
 import ArrowLeftIcon from '../../../assets/arrow-left.svg'
+import CameraIcon from '../../../assets/camera.svg'
 
-import { Container } from './styles'
+import { Header, ButtonIcon, PerfilImage } from '../TabMenu/Profile/styles'
 import {
-  Header,
+  Container,
   ContentActions,
-  ButtonIcon,
-  PerfilTitle,
-  ContentPerfilImage,
-  PerfilImage,
-} from '../TabMenu/Profile/styles'
+  ContentEditPerfil,
+  EditPerfilTitle,
+  ContentEditPerfilImage,
+  SubContentEditPerfilImage,
+  ContentCamera,
+} from './styles'
 
 export function EditPerfil() {
+  const navigation = useNavigation()
+
+  function handleRedirectBack() {
+    navigation.goBack()
+  }
+
   return (
     <Container>
       <Header>
         <ContentActions>
-          <ButtonIcon>
+          <ButtonIcon onPress={handleRedirectBack}>
             <ArrowLeftIcon />
           </ButtonIcon>
 
-          <PerfilTitle>Edit perfil</PerfilTitle>
+          <ContentEditPerfil>
+            <EditPerfilTitle>Edit perfil</EditPerfilTitle>
+          </ContentEditPerfil>
         </ContentActions>
+      </Header>
 
-        <ContentPerfilImage>
+      <ContentEditPerfilImage>
+        <SubContentEditPerfilImage>
           <PerfilImage
             source={{
               uri: 'https://avatars.githubusercontent.com/u/58465456?v=4',
             }}
           />
-        </ContentPerfilImage>
-      </Header>
+
+          <ContentCamera>
+            <CameraIcon />
+          </ContentCamera>
+        </SubContentEditPerfilImage>
+      </ContentEditPerfilImage>
+
+      <TabsPerfil />
     </Container>
   )
 }
