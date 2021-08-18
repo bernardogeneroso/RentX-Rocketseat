@@ -8,7 +8,7 @@ import { Filter } from './Filter'
 import { CarExtended } from '../../../../components/Car/CarExtended'
 import { CarListHeader } from './CarListHeader'
 
-import ArrowDown from '../../../assets/arrow-down.svg'
+import ArrowDown from '../../../../assets/arrow-down.svg'
 import { ContentDate, DateText, DateTitle } from '../../DatePicker/styles'
 import { Container, Header, ButtonArrowDown, Content, CarList } from './styles'
 

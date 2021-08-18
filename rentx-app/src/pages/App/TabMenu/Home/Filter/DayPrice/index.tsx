@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import Slider from 'react-native-sliders'
 
-import SliderImage from '../../../../../assets/slider.png'
+import SliderImage from '../../../../../../assets/slider.png'
 
 import { Container, Header, DayPriceText, PricesText, Content } from './styles'
 

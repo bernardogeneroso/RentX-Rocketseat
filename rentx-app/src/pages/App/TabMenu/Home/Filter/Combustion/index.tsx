@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 
-import Gasoline from '../../../../../assets/gasoline.svg'
-import Electric from '../../../../../assets/electric.svg'
-import Alcohol from '../../../../../assets/alcohol.svg'
+import Gasoline from '../../../../../../assets/gasoline.svg'
+import Electric from '../../../../../../assets/electric.svg'
+import Alcohol from '../../../../../../assets/alcohol.svg'
 
 import {
   Container,

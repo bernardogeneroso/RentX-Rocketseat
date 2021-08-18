@@ -2,8 +2,9 @@ import React from 'react'
 
 import { CarSimplified } from '../../../../components/Car/CarSimplified'
 import { cars } from '../../../../utils/cars'
-import EditIcon from '../../../assets/edit.svg'
-import PowerIcon from '../../../assets/power.svg'
+
+import EditIcon from '../../../../assets/edit.svg'
+import PowerIcon from '../../../../assets/power.svg'
 
 import {
   Container,
