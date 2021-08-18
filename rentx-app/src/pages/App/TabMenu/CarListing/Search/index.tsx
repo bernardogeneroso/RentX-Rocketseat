@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react'
 
-import { capitalize } from '../../../../utils/capitalize'
+import { capitalize } from '../../../../../utils/capitalize'
 import SearchIcon from '../../../../assets/search.svg'
 
 import {

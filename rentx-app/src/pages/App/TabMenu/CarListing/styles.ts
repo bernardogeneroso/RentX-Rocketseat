@@ -2,8 +2,8 @@ import styled from 'styled-components/native'
 import { FlatList } from 'react-native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
-import { theme } from '../../../global/styles/theme'
-import { Cars } from '../../../utils/cars'
+import { theme } from '../../../../global/styles/theme'
+import { Cars } from '../../../../utils/cars'
 
 export const Container = styled.View`
   flex: 1;

@@ -2,14 +2,14 @@ import React, { useCallback, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
 
-import { cars } from '../../../utils/cars'
+import { cars } from '../../../../utils/cars'
 
 import { Filter } from './Filter'
-import { CarExtended } from '../../../components/Car/CarExtended'
+import { CarExtended } from '../../../../components/Car/CarExtended'
 import { CarListHeader } from './CarListHeader'
 
 import ArrowDown from '../../../assets/arrow-down.svg'
-import { ContentDate, DateText, DateTitle } from '../DatePicker/styles'
+import { ContentDate, DateText, DateTitle } from '../../DatePicker/styles'
 import { Container, Header, ButtonArrowDown, Content, CarList } from './styles'
 
 interface HomeProps {

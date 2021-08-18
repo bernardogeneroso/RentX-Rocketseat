@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
-import { Button } from '../../../../components/Button'
+import { Button } from '../../../../../components/Button'
 
-import { theme } from '../../../../global/styles/theme'
+import { theme } from '../../../../../global/styles/theme'
 
 export const ContainerModal = styled.View`
   flex: 1;

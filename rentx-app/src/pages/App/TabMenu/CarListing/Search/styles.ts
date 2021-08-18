@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native'
 
-import { theme } from '../../../../global/styles/theme'
+import { theme } from '../../../../../global/styles/theme'
 
 interface ContentInputProps {
   searchMode: boolean

@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { OnBoard } from '../pages/Auth/OnBoard'
 import { SignIn } from '../pages/Auth/SignIn'
 import { SignUp } from '../pages/Auth/SignUp'
-import { ModalStatus } from '../pages/Auth/ModalStatus'
+import { ModalStatus } from '../pages/ModalStatus'
 
 const Stack = createStackNavigator()
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Modal from 'react-native-modal'
 
-import { QuickButton } from '../../../../components/QuickButton'
+import { QuickButton } from '../../../../../components/QuickButton'
 import { DayPrice } from './DayPrice'
 import { Combustion } from './Combustion'
 import { Transmission } from './Transmission'

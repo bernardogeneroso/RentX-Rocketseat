@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { cars } from '../../../utils/cars'
-import { CarSimplified } from '../../../components/Car/CarSimplified'
+import { cars } from '../../../../utils/cars'
+import { CarSimplified } from '../../../../components/Car/CarSimplified'
 import { Search } from './Search'
 
 import {

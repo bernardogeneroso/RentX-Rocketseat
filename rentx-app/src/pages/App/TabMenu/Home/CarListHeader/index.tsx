@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { cars } from '../../../../utils/cars'
+import { cars } from '../../../../../utils/cars'
 
 import Filter from '../../../../assets/filter.svg'
 

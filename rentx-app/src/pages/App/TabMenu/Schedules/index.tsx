@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { carsSchedules } from '../../../utils/cars'
-import { CarSimplified } from '../../../components/Car/CarSimplified'
+import { carsSchedules } from '../../../../utils/cars'
+import { CarSimplified } from '../../../../components/Car/CarSimplified'
 
 import {
   Container,

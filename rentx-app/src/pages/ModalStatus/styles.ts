@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
-import { theme } from '../../../global/styles/theme'
+import { theme } from '../../global/styles/theme'
 
 interface ContentButtonProps {
   isTwoButton: boolean

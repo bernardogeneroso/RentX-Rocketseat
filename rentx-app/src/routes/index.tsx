@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native'
 import { NativeBaseProvider } from 'native-base'
 
 // import { AuthRoutes } from './auth.routes'
-import { ManageAppRoutes } from './manage.app.routes'
+import { App } from './app.routes'
 
 export function Routes() {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-        <ManageAppRoutes />
+        <App />
       </NativeBaseProvider>
     </NavigationContainer>
   )

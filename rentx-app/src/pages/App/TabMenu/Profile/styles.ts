@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
-import { theme } from '../../../global/styles/theme'
+import { theme } from '../../../../global/styles/theme'
 
 export const Container = styled.View`
   flex: 1;
