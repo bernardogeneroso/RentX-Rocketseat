@@ -12,9 +12,9 @@ import {
   Header,
   ContentActions,
   ButtonIcon,
-  PerfilTitle,
-  ContentPerfilImage,
-  PerfilImage,
+  ProfileTitle,
+  ContentProfileImage,
+  ProfileImage,
   UserNameText,
   Content,
   AppointmentsContent,
@@ -29,33 +29,33 @@ import {
 export function Profile() {
   const navigation = useNavigation()
 
-  function handleRedirectToEditPerfil() {
+  function handleRedirectToEditProfile() {
     // @ts-ignore
-    navigation.navigate('EditPerfil')
+    navigation.navigate('EditProfile')
   }
 
   return (
     <Container>
       <Header>
         <ContentActions>
-          <ButtonIcon onPress={handleRedirectToEditPerfil}>
+          <ButtonIcon onPress={handleRedirectToEditProfile}>
             <EditIcon />
           </ButtonIcon>
 
-          <PerfilTitle>Perfil</PerfilTitle>
+          <ProfileTitle>Profile</ProfileTitle>
 
           <ButtonIcon>
             <PowerIcon />
           </ButtonIcon>
         </ContentActions>
 
-        <ContentPerfilImage>
-          <PerfilImage
+        <ContentProfileImage>
+          <ProfileImage
             source={{
               uri: 'https://avatars.githubusercontent.com/u/58465456?v=4',
             }}
           />
-        </ContentPerfilImage>
+        </ContentProfileImage>
       </Header>
 
       <UserNameText>Bernardo{'\n'}Generoso</UserNameText>

@@ -1,27 +1,30 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-import { TabsPerfil } from './TabsPerfil'
+import { TabsProfile } from './TabsProfile'
 
 import ArrowLeftIcon from '../../../assets/arrow-left.svg'
 import CameraIcon from '../../../assets/camera.svg'
 
-import { Header, ButtonIcon, PerfilImage } from '../TabMenu/Profile/styles'
+import { Header, ButtonIcon, ProfileImage } from '../TabMenu/Profile/styles'
 import {
   Container,
   ContentActions,
-  ContentEditPerfil,
-  EditPerfilTitle,
-  ContentEditPerfilImage,
-  SubContentEditPerfilImage,
+  ContentEditProfile,
+  EditProfileTitle,
+  ContentEditProfileImage,
+  SubContentEditProfileImage,
   ContentCamera,
 } from './styles'
 
-export function EditPerfil() {
+export function EditProfile() {
   const navigation = useNavigation()
 
   function handleRedirectBack() {
-    navigation.goBack()
+    // @ts-ignore
+    navigation.navigate('TabMenu', {
+      screen: 'Profile',
+    })
   }
 
   return (
@@ -32,15 +35,15 @@ export function EditPerfil() {
             <ArrowLeftIcon />
           </ButtonIcon>
 
-          <ContentEditPerfil>
-            <EditPerfilTitle>Edit perfil</EditPerfilTitle>
-          </ContentEditPerfil>
+          <ContentEditProfile>
+            <EditProfileTitle>Edit profile</EditProfileTitle>
+          </ContentEditProfile>
         </ContentActions>
       </Header>
 
-      <ContentEditPerfilImage>
-        <SubContentEditPerfilImage>
-          <PerfilImage
+      <ContentEditProfileImage>
+        <SubContentEditProfileImage>
+          <ProfileImage
             source={{
               uri: 'https://avatars.githubusercontent.com/u/58465456?v=4',
             }}
@@ -49,10 +52,10 @@ export function EditPerfil() {
           <ContentCamera>
             <CameraIcon />
           </ContentCamera>
-        </SubContentEditPerfilImage>
-      </ContentEditPerfilImage>
+        </SubContentEditProfileImage>
+      </ContentEditProfileImage>
 
-      <TabsPerfil />
+      <TabsProfile />
     </Container>
   )
 }

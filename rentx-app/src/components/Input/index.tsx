@@ -21,7 +21,7 @@ interface InputProps extends TextInputProps {
   name: string
   defaultValue?: string
   placeholder: string
-  error: FieldError | undefined
+  error?: FieldError
 }
 
 export default function Input({

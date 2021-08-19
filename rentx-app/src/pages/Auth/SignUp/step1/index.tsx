@@ -7,12 +7,12 @@ import * as yup from 'yup'
 
 import { TextAnimation } from '../../../../components/TextAnimation'
 import Input from '../../../../components/Input'
-import { Button } from '../../../../components/Button'
 
 import { FormDataStep1 } from '..'
 import { Dot, PagesContainer, Subtitle, Title } from '../../OnBoard/styles'
 import {
   ButtonGoBack,
+  ButtonSubmit,
   Container,
   Form,
   FormTitle,
@@ -121,13 +121,7 @@ export function Step1({
           defaultValue=""
         />
 
-        <Button
-          text="Next"
-          style={{
-            marginTop: 32,
-          }}
-          onPress={handleSubmit(handleOnSubmit)}
-        />
+        <ButtonSubmit text="Next" onPress={handleSubmit(handleOnSubmit)} />
       </Form>
     </Container>
   )

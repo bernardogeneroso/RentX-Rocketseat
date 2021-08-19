@@ -7,12 +7,12 @@ import * as yup from 'yup'
 
 import { TextAnimation } from '../../../../components/TextAnimation'
 import Input from '../../../../components/Input'
-import { Button } from '../../../../components/Button'
 
 import { FormDataStep1 } from '..'
 import { Dot, PagesContainer, Subtitle, Title } from '../../OnBoard/styles'
 import {
   ButtonGoBack,
+  ButtonSubmit,
   Container,
   Form,
   FormTitle,
@@ -34,7 +34,7 @@ interface FormData {
 const schema = yup.object().shape({
   password: yup
     .string()
-    .min(6, 'Password confirmation must be at least 6 characters')
+    .min(6, 'Password must be at least 6 characters')
     .required('Password is a required field'),
   password_confirmation: yup
     .string()
@@ -140,13 +140,7 @@ export function Step2({ messageLeave, dataStep1, setPage }: Step2Props) {
           defaultValue=""
         />
 
-        <Button
-          text="Register"
-          style={{
-            marginTop: 32,
-          }}
-          onPress={handleSubmit(handleOnSubmit)}
-        />
+        <ButtonSubmit text="Register" onPress={handleSubmit(handleOnSubmit)} />
       </Form>
     </Container>
   )

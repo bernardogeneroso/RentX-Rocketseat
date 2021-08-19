@@ -26,19 +26,19 @@ export const ButtonIcon = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })``
 
-export const PerfilTitle = styled.Text`
+export const ProfileTitle = styled.Text`
   font-family: ${theme.fonts.title600};
   color: ${theme.colors.white};
   font-size: 25px;
 `
 
-export const ContentPerfilImage = styled.View`
+export const ContentProfileImage = styled.View`
   flex: 1;
   align-items: center;
   margin-top: 36px;
 `
 
-export const PerfilImage = styled.Image`
+export const ProfileImage = styled.Image`
   width: 180px;
   height: 180px;
   border-radius: 90px;

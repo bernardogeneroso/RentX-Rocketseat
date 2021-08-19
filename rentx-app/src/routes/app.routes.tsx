@@ -6,7 +6,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import { DatePicker } from '../pages/App/DatePicker'
-import { EditPerfil } from '../pages/App/EditPerfil'
+import { EditProfile } from '../pages/App/EditProfile'
 import { ModalStatus } from '../pages/ModalStatus'
 
 import { Home } from '../pages/App/TabMenu/Home'
@@ -55,11 +55,11 @@ export function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="DatePicker"
+        initialRouteName="EditProfile"
       >
         <StackApp.Screen name="TabMenu" component={TabMenu} />
         <StackApp.Screen name="DatePicker" component={DatePicker} />
-        <StackApp.Screen name="EditPerfil" component={EditPerfil} />
+        <StackApp.Screen name="EditProfile" component={EditProfile} />
         <StackApp.Screen
           name="ModalStatus"
           component={ModalStatus}

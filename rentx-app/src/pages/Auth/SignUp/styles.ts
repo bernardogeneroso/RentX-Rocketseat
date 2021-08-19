@@ -1,6 +1,8 @@
 import styled from 'styled-components/native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
+import { Button } from '../../../components/Button'
+
 import { theme } from '../../../global/styles/theme'
 
 export const Container = styled.View`
@@ -45,4 +47,8 @@ export const FormTitle = styled.Text`
   color: ${theme.colors.grey600};
   font-size: 20px;
   margin-bottom: 24px;
+`
+
+export const ButtonSubmit = styled(Button)`
+  margin-top: 32px;
 `
