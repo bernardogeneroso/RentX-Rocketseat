@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { cars } from '../../../../utils/cars'
 
@@ -12,21 +13,27 @@ import ArrowDown from '../../../../assets/arrow-down.svg'
 import { ContentDate, DateText, DateTitle } from '../../DatePicker/styles'
 import { Container, Header, ButtonArrowDown, Content, CarList } from './styles'
 
-interface HomeProps {
-  route: {
-    params: {
-      inDate: Date
-      toDate: Date
-    }
-  }
-}
-
-export function Home({ route }: HomeProps) {
+export function Home() {
   const navigation = useNavigation()
 
   const [modal, setModal] = useState(false)
-  const [inDate] = useState<Date>(route.params.inDate)
-  const [toDate] = useState<Date>(route.params.toDate)
+  const [inDate, setInDate] = useState<Date | null>(null)
+  const [toDate, setToDate] = useState<Date | null>(null)
+
+  useEffect(() => {
+    async function loadWithPage() {
+      const data = await AsyncStorage.getItem('RenteX::datePicker')
+
+      if (!data) return
+
+      const parseData = JSON.parse(data)
+
+      setInDate(parseData.inDate)
+      setToDate(parseData.toDate)
+    }
+
+    loadWithPage()
+  }, [])
 
   const handleToggleModal = useCallback(() => {
     setModal((value) => !value)
@@ -47,7 +54,9 @@ export function Home({ route }: HomeProps) {
         <ContentDate>
           <DateTitle>In</DateTitle>
 
-          <DateText>{format(new Date(inDate), 'd LLLL yyyy')}</DateText>
+          <DateText>
+            {inDate && format(new Date(inDate), 'd LLLL yyyy')}
+          </DateText>
         </ContentDate>
 
         <ButtonArrowDown onPress={handleToRedirectDatePicker}>
@@ -57,7 +66,9 @@ export function Home({ route }: HomeProps) {
         <ContentDate>
           <DateTitle>To</DateTitle>
 
-          <DateText>{format(new Date(toDate), 'd LLLL yyyy')}</DateText>
+          <DateText>
+            {toDate && format(new Date(toDate), 'd LLLL yyyy')}
+          </DateText>
         </ContentDate>
       </Header>
 

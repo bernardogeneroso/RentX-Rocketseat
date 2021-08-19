@@ -3,6 +3,7 @@ import { format, isSameDay } from 'date-fns'
 import { Octicons } from '@expo/vector-icons'
 import Calendar from 'react-native-calendar-picker'
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { Button } from '../../../components/Button'
 import Arrow from '../../../assets/arrow.svg'
@@ -36,11 +37,17 @@ export function DatePicker() {
     }
   }
 
-  function handleRedirectToApp() {
+  async function handleRedirectToApp() {
+    const date = {
+      inDate,
+      toDate,
+    }
+
+    await AsyncStorage.setItem('RenteX::datePicker', JSON.stringify(date))
+
     // @ts-ignore
     navigation.navigate('TabMenu', {
       screen: 'Home',
-      params: { inDate, toDate },
     })
   }
 
