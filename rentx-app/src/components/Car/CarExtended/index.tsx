@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
 // @ts-ignore
 import { FlatListSlider } from 'react-native-flatlist-slider'
 
@@ -32,14 +33,21 @@ export function CarExtended({ car }: CarExtendedProps) {
     image: item,
   }))
 
+  const navigation = useNavigation()
+
   const [dotIndexFlatListSlider, setDotIndexFlatListSlider] = useState(0)
 
-  const handleFlatListSliderIndex = useCallback((number: number) => {
+  function handleFlatListSliderIndex(number: number) {
     setDotIndexFlatListSlider(number)
-  }, [])
+  }
+
+  function handleNavigateToDetails() {
+    // @ts-ignore
+    navigation.navigate('CarDetails')
+  }
 
   return (
-    <Container>
+    <Container onPress={handleNavigateToDetails}>
       <Header>
         <CarDetails>
           <CarText>{car.brand}</CarText>

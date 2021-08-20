@@ -7467,6 +7467,16 @@ react-native-ratings@8.0.4:
   dependencies:
     lodash "^4.17.15"
 
+react-native-responsive-image-view@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-image-view/-/react-native-responsive-image-view-2.1.0.tgz#9846c9ce2410dcde03100a21ff8d00fa43358fbe"
+  integrity sha512-DCIcIZVzfRn5XxWEalr0mMJx1j0sW0xWJzAkoe/aNRNWRKmWeQwz0fC5RZaIQvsEBPApn0Cf1mYoyKQBQNb/AQ==
+
+react-native-responsive-image@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-responsive-image/-/react-native-responsive-image-2.3.1.tgz#3f8d3882061a8eae389d70a960e3e6436da9e354"
+  integrity sha512-I9/Z5uz60qGLXZ69wWd0P6pIB4SfMX94s66NvNttJjqP1MsK1LBD0wSP4Wj4sCNQk8uz08SvagFnQ9MOREHyPg==
+
 react-native-safe-area-context@3.2.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz"

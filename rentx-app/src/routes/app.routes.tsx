@@ -8,6 +8,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import { DatePicker } from '../pages/App/DatePicker'
 import { EditProfile } from '../pages/App/EditProfile'
+import { CarDetails } from '../pages/App/CarDetails'
 import { ModalStatus } from '../pages/ModalStatus'
 
 import { Home } from '../pages/App/TabMenu/Home'
@@ -79,11 +80,12 @@ export function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="DatePicker"
+        initialRouteName="TabMenu"
       >
         <StackApp.Screen name="TabMenu" component={TabMenu} />
         <StackApp.Screen name="DatePicker" component={DatePicker} />
         <StackApp.Screen name="EditProfile" component={EditProfile} />
+        <StackApp.Screen name="CarDetails" component={CarDetails} />
         <StackApp.Screen
           name="ModalStatus"
           component={ModalStatus}

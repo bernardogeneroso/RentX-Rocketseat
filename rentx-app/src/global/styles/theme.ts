@@ -18,6 +18,7 @@ export const theme = {
     grey500: '#737380',
     grey450: '#A8A8B3',
     grey400: '#A0A0B3',
+    grey350: '#A0A0B2',
     grey300: '#7A7A80',
     grey200: '#AEAEB3',
     grey150: '#E6E6F0',

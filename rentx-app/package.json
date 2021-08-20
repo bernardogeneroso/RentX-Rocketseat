@@ -39,6 +39,8 @@
     "react-native-modal": "^12.1.0",
     "react-native-onboarding-swiper": "^1.1.4",
     "react-native-pager-view": "5.0.12",
+    "react-native-responsive-image": "^2.3.1",
+    "react-native-responsive-image-view": "^2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "^3.4.0",
     "react-native-sliders": "^1.1.1",

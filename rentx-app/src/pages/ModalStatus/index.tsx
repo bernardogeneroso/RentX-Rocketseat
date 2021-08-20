@@ -21,7 +21,7 @@ import {
 interface ModalStatusProps {
   route: {
     params: {
-      option: 'signIn' | 'editProfile' | 'exitApp'
+      option: 'signIn' | 'editProfile' | 'exitApp' | 'carDetails'
       status?: 'success' | 'error'
       button?: 'one' | 'two'
       title: string
@@ -68,6 +68,12 @@ export function ModalStatus({
 
       actionTwo = () => {
         BackHandler.exitApp()
+      }
+      break
+    case 'carDetails':
+      actionOne = () => {
+        // @ts-ignore
+        navigation.navigate('TabMenu')
       }
       break
     default:

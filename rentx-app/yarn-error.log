@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/react-native-sliders -D
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @types/react-native-responsive-image-view -D
 
 PATH: 
   C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Users\gener\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Users\gener\AppData\Local\Microsoft\WindowsApps;C:\Users\gener\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\gener\AppData\Local\Yarn\bin;C:\Users\gener\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\gener\AppData\Local\GitHubDesktop\bin;C:\Android\Sdk\emulator;C:\Android\Sdk\tools;C:\Android\Sdk\tools\bin;C:\Android\Sdk\platform-tools;
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@types%2freact-native-sliders: Not found
+  Error: https://registry.yarnpkg.com/@types%2freact-native-responsive-image-view: Not found
       at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66097:18)
       at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140749:22)
       at Request.emit (node:events:394:28)
@@ -68,11 +68,13 @@ npm manifest:
       "react-native-modal": "^12.1.0",
       "react-native-onboarding-swiper": "^1.1.4",
       "react-native-pager-view": "5.0.12",
+      "react-native-responsive-image-view": "^2.1.0",
       "react-native-safe-area-context": "3.2.0",
       "react-native-screens": "^3.4.0",
       "react-native-sliders": "^1.1.1",
       "react-native-svg": "^12.1.1",
       "react-native-swipe-gestures": "^1.0.5",
+      "react-native-tab-view": "^3.1.1",
       "react-native-web": "~0.13.12",
       "styled-components": "^5.3.0",
       "styled-system": "^5.1.5",
@@ -7579,6 +7581,11 @@ Lockfile:
     dependencies:
       lodash "^4.17.15"
   
+  react-native-responsive-image-view@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/react-native-responsive-image-view/-/react-native-responsive-image-view-2.1.0.tgz#9846c9ce2410dcde03100a21ff8d00fa43358fbe"
+    integrity sha512-DCIcIZVzfRn5XxWEalr0mMJx1j0sW0xWJzAkoe/aNRNWRKmWeQwz0fC5RZaIQvsEBPApn0Cf1mYoyKQBQNb/AQ==
+  
   react-native-safe-area-context@3.2.0:
     version "3.2.0"
     resolved "https://registry.npmjs.org/react-native-safe-area-context/-/react-native-safe-area-context-3.2.0.tgz"
@@ -7625,6 +7632,11 @@ Lockfile:
     version "1.0.5"
     resolved "https://registry.yarnpkg.com/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz#a172cb0f3e7478ccd681fd36b8bfbcdd098bde7c"
     integrity sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==
+  
+  react-native-tab-view@^3.1.1:
+    version "3.1.1"
+    resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"
+    integrity sha512-M5pRN6utQfytKWoKlKVzg5NbkYu308qNoW1khGTtEOTs1k14p2dHJ/BWOJoJYHKbPVUyZldbG9MFT7gUl4YHnw==
   
   react-native-vector-icons@^8.1.0:
     version "8.1.0"
