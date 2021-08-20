@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -31,6 +32,8 @@ const schema = yup.object().shape({
 })
 
 export function ProfileChangePassword() {
+  const navigation = useNavigation()
+
   const {
     control,
     handleSubmit,
@@ -41,6 +44,13 @@ export function ProfileChangePassword() {
 
   function handleOnSubmit(data: FormData) {
     console.log(data)
+
+    // @ts-ignore
+    navigation.navigate('ModalStatus', {
+      option: 'editProfile',
+      title: 'Done!',
+      subtitle: 'Now your info\nare update.',
+    })
   }
 
   return (

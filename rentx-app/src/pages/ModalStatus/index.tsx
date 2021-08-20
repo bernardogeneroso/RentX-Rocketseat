@@ -21,7 +21,7 @@ import {
 interface ModalStatusProps {
   route: {
     params: {
-      option: 'signIn'
+      option: 'signIn' | 'editProfile'
       status?: 'success' | 'error'
       button?: 'one' | 'two'
       title: string
@@ -49,8 +49,13 @@ export function ModalStatus({
         })
       }
       break
+    case 'editProfile':
+      actionOne = () => {
+        // @ts-ignore
+        navigation.navigate('EditProfile')
+      }
+      break
     default:
-    case 'signIn':
       actionOne = () => {
         // @ts-ignore
         navigation.navigate('SignIn', {
@@ -85,10 +90,10 @@ export function ModalStatus({
           {button === 'two' ? (
             <>
               <ButtonSignIn onPress={actionTwo}>
-                <ButtonText>Não</ButtonText>
+                <ButtonText>No</ButtonText>
               </ButtonSignIn>
               <ButtonSignUp onPress={actionTwo}>
-                <ButtonText>Sim</ButtonText>
+                <ButtonText>Yes</ButtonText>
               </ButtonSignUp>
             </>
           ) : (

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigation } from '@react-navigation/native'
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -28,6 +29,8 @@ const schema = yup.object().shape({
 })
 
 export function ProfileChangeData() {
+  const navigation = useNavigation()
+
   const {
     control,
     handleSubmit,
@@ -38,6 +41,13 @@ export function ProfileChangeData() {
 
   function handleOnSubmit(data: FormData) {
     console.log(data)
+
+    // @ts-ignore
+    navigation.navigate('ModalStatus', {
+      option: 'editProfile',
+      title: 'Done!',
+      subtitle: 'Now your info\nare update.',
+    })
   }
 
   return (
