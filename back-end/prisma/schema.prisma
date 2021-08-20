@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Users {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name             String             @db.VarChar
+  email            String             @unique @db.VarChar
+  password         String             @db.VarChar
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  carsAppointments CarsAppointments[]
+}
+
+model Cars {
+  plate            String             @id @db.VarChar
+  carsDetails      CarsDetails?
+  brand            String             @db.VarChar
+  model            String             @unique @db.VarChar
+  colour           String             @db.VarChar
+  fuel             FuelRoles          @default(gasoline)
+  transmission     TransmissionRoles  @default(auto)
+  pricePerDay      Int                @db.Integer
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @updatedAt
+  carsAppointments CarsAppointments[]
+}
+
+model CarsDetails {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  car        Cars     @relation(fields: [carId], references: [plate])
+  carId      String   @db.VarChar
+  maxSpeed   Int      @db.Integer
+  topSeed    Int      @db.Integer
+  hp         Int      @db.Integer
+  people     Int      @db.Integer
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model CarsAppointments {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  car        Cars      @relation(fields: [carId], references: [plate])
+  carId      String    @db.VarChar
+  user       Users     @relation(fields: [userId], references: [id])
+  userId     String    @db.Uuid
+  start_in   DateTime?
+  end_in     DateTime?
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+}
+
+enum FuelRoles {
+  gasoline
+  electric
+  alcohol
+}
+
+enum TransmissionRoles {
+  auto
+  manual
+}
