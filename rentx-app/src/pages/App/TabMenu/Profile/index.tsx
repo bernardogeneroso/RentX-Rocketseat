@@ -34,6 +34,17 @@ export function Profile() {
     navigation.navigate('EditProfile')
   }
 
+  function handleModalToExitApp() {
+    // @ts-ignore
+    navigation.navigate('ModalStatus', {
+      option: 'exitApp',
+      status: 'error',
+      button: 'two',
+      title: 'Exit of RENTEX!',
+      subtitle: 'Are you sure\nyou want do that?',
+    })
+  }
+
   return (
     <Container>
       <Header>
@@ -44,7 +55,7 @@ export function Profile() {
 
           <ProfileTitle>Profile</ProfileTitle>
 
-          <ButtonIcon>
+          <ButtonIcon onPress={handleModalToExitApp}>
             <PowerIcon />
           </ButtonIcon>
         </ContentActions>

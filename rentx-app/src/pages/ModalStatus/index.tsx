@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { StatusBar } from 'react-native'
+import { StatusBar, BackHandler } from 'react-native'
 
 import Union from '../../assets/union.svg'
 import Done from '../../assets/done.svg'
@@ -21,7 +21,7 @@ import {
 interface ModalStatusProps {
   route: {
     params: {
-      option: 'signIn' | 'editProfile'
+      option: 'signIn' | 'editProfile' | 'exitApp'
       status?: 'success' | 'error'
       button?: 'one' | 'two'
       title: string
@@ -55,6 +55,21 @@ export function ModalStatus({
         navigation.navigate('EditProfile')
       }
       break
+    case 'exitApp':
+      actionOne = () => {
+        // @ts-ignore
+        if (navigation.canGoBack()) {
+          navigation.goBack()
+        } else {
+          // @ts-ignore
+          navigation.navigate('DatePicker')
+        }
+      }
+
+      actionTwo = () => {
+        BackHandler.exitApp()
+      }
+      break
     default:
       actionOne = () => {
         // @ts-ignore
@@ -73,14 +88,10 @@ export function ModalStatus({
       />
 
       <Container>
-        {status === 'error' ? (
-          <Error fill="#242428" width="100%" height="360" />
-        ) : (
-          <Union fill="#242428" width="100%" height="360" />
-        )}
+        <Union fill="#242428" width="100%" height="360" />
 
         <Content>
-          <Done />
+          {status === 'error' ? <Error /> : <Done />}
 
           <Title>{title}</Title>
           <Subtitle>{subtitle}</Subtitle>
@@ -89,7 +100,7 @@ export function ModalStatus({
         <ContentButton isTwoButton={button === 'two' ? true : false}>
           {button === 'two' ? (
             <>
-              <ButtonSignIn onPress={actionTwo}>
+              <ButtonSignIn onPress={actionOne}>
                 <ButtonText>No</ButtonText>
               </ButtonSignIn>
               <ButtonSignUp onPress={actionTwo}>

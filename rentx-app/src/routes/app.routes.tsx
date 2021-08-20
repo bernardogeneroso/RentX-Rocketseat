@@ -1,7 +1,8 @@
-import React from 'react'
-import { StatusBar } from 'react-native'
+import React, { useEffect } from 'react'
+import { BackHandler, StatusBar } from 'react-native'
 import { View, Platform } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
+import { useNavigation } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createStackNavigator } from '@react-navigation/stack'
 
@@ -43,6 +44,29 @@ function Icon({ name, focused }: IconProps) {
 }
 
 export function App() {
+  const navigation = useNavigation()
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', handleModalToExitApp)
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', handleModalToExitApp)
+    }
+  }, [])
+
+  function handleModalToExitApp() {
+    // @ts-ignore
+    navigation.navigate('ModalStatus', {
+      option: 'exitApp',
+      status: 'error',
+      button: 'two',
+      title: 'Exit of RENTEX!',
+      subtitle: 'Are you sure\nyou want do that?',
+    })
+
+    return true
+  }
+
   return (
     <>
       <StatusBar
