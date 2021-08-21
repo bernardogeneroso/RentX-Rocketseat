@@ -11,6 +11,7 @@
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/node": "^16.6.2",
@@ -30,6 +31,7 @@
   },
   "dependencies": {
     "@prisma/client": "^2.29.1",
+    "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
