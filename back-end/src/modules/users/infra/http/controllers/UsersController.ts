@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { userTransformer } from "@modules/users/utils/userTransformer";
 import CreateUserService from "../../../services/CreateUserService";
 import UpdateUserAvatarService from "../../../services/UpdateUserAvatarService";
 import AppError from "@shared/errors/AppError";
@@ -24,7 +25,7 @@ class UsersController {
     request: Request,
     response: Response
   ): Promise<Response> {
-    const avatar = request.file.filename;
+    const avatar = request.file?.filename;
 
     if (!avatar) {
       throw new AppError("Avatar file is required!");
@@ -39,7 +40,7 @@ class UsersController {
       avatar,
     });
 
-    return response.json(user);
+    return response.json(userTransformer(user));
   }
 }
 

@@ -13,8 +13,11 @@ interface IRequest {
 }
 
 interface UserAuth {
+  name: string;
   email: string;
-  password: string;
+  avatar: string | null;
+  created_at: Date;
+  updated_at: Date;
 }
 
 interface IResponse {
@@ -31,14 +34,14 @@ class AuthenticateUserService {
   }
 
   public async execute({ email, password }: IRequest): Promise<IResponse> {
-    const user = await this.usersRepository.findByEmail(email);
+    const userFind = await this.usersRepository.findByEmail(email);
 
-    if (!user)
+    if (!userFind)
       throw new AppError("Incorrect email or password combination", 401);
 
     const isPasswordMatch = await this.hashProvider.compareHash(
       password,
-      user.password
+      userFind.password
     );
 
     if (!isPasswordMatch)
@@ -46,7 +49,15 @@ class AuthenticateUserService {
 
     const { secret, expiresIn } = authConfig.jwt;
 
-    const token = sign({}, secret, { subject: user.id, expiresIn });
+    const token = sign({}, secret, { subject: userFind.id, expiresIn });
+
+    const user: UserAuth = {
+      name: userFind.name,
+      email: userFind.email,
+      avatar: userFind.avatar,
+      created_at: userFind.created_at,
+      updated_at: userFind.updated_at,
+    };
 
     return { user, token };
   }

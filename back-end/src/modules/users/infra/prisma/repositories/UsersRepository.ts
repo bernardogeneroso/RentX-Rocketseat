@@ -2,6 +2,10 @@ import { Users as User } from ".prisma/client";
 
 import ICreateUserDTO from "@modules/users/dtos/ICreateUserDTO";
 import IUsersRepository from "@modules/users/repositories/IUsersRepository";
+import {
+  IUsersModelCreate,
+  UsersModelCreate,
+} from "@modules/users/infra/prisma/model/UsersModelCreate";
 
 import { prisma } from "@shared/services/prisma";
 
@@ -22,9 +26,10 @@ class UsersRepository implements IUsersRepository {
     });
   }
 
-  async create(data: ICreateUserDTO): Promise<ICreateUserDTO> {
+  async create(data: ICreateUserDTO): Promise<IUsersModelCreate> {
     return await prisma.users.create({
       data,
+      select: UsersModelCreate,
     });
   }
 

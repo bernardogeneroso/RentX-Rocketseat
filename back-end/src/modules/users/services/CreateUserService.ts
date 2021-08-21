@@ -1,9 +1,11 @@
 import { injectable, inject } from "tsyringe";
+import path from "path";
 
+import { IUsersModelCreate } from "../infra/prisma/model/UsersModelCreate";
 import UsersRepository from "../infra/prisma/repositories/UsersRepository";
+import IMailProvider from "@shared/container/providers/MailProvider/models/IMailProvider";
 import IUsersRepository from "../repositories/IUsersRepository";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
-import ICreateUserDTO from "../dtos/ICreateUserDTO";
 import AppError from "@shared/errors/AppError";
 
 interface IRequest {
@@ -16,7 +18,10 @@ interface IRequest {
 class CreateUserService {
   private usersRepository: IUsersRepository;
 
-  constructor(@inject("HashProvider") private hashProvider: IHashProvider) {
+  constructor(
+    @inject("HashProvider") private hashProvider: IHashProvider,
+    @inject("MailProvider") private mailProvider: IMailProvider
+  ) {
     this.usersRepository = new UsersRepository();
   }
 
@@ -24,7 +29,7 @@ class CreateUserService {
     name,
     email,
     password,
-  }: IRequest): Promise<ICreateUserDTO | null> {
+  }: IRequest): Promise<IUsersModelCreate | null> {
     const isAlreadyRegistered = await this.usersRepository.findByEmail(email);
 
     if (isAlreadyRegistered) throw new AppError("Email address already used.");
@@ -35,6 +40,25 @@ class CreateUserService {
       name,
       email,
       password: hashedPass,
+    });
+
+    // Send email
+    const mailTemplate = path.resolve(
+      __dirname,
+      "..",
+      "views",
+      "account_created.hbs"
+    );
+
+    await this.mailProvider.sendMail({
+      to: { name: user.name, email: user.email },
+      subject: "[RenteX] Welcome to RenteX!",
+      templateData: {
+        file: mailTemplate,
+        variables: {
+          name: user.name,
+        },
+      },
     });
 
     return user;

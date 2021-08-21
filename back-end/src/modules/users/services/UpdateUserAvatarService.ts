@@ -26,9 +26,9 @@ class UpdateUserAvatarService {
 
     if (!user) throw new AppError("Error on update avatar", 401);
 
-    if (user.avatarUrl) {
+    if (user.avatar) {
       await this.storageProvider.deleteFile({
-        file: user.avatarUrl,
+        file: user.avatar,
         options: "avatars",
       });
     }
@@ -41,7 +41,7 @@ class UpdateUserAvatarService {
     // @ts-ignore
     delete user.users_tag;
 
-    user.avatarUrl = fileName;
+    user.avatar = fileName;
     await this.usersRepository.save(user);
 
     return user;

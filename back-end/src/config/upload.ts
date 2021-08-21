@@ -43,7 +43,7 @@ export default {
   multer: {
     storageAvatars: {
       storage: multer.diskStorage({
-        destination: path.resolve(tmpFolder, "users", "avatars"),
+        destination: path.resolve(tmpFolder),
         filename: (request, file, callback) => {
           const fileHash = crypto.randomBytes(10).toString("hex");
           const fileName = `${fileHash}-${file.originalname}`;

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
+import { userTransformer } from "@modules/users/utils/userTransformer";
 import AuthenticateUserService from "../../../services/AuthenticateUserService";
 
 class SessionsController {
@@ -14,7 +15,7 @@ class SessionsController {
       password,
     });
 
-    return response.json({ user, token });
+    return response.json({ user: userTransformer(user), token });
   }
 }
 

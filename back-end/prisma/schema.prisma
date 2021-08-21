@@ -15,7 +15,7 @@ model Users {
   name             String             @db.VarChar
   email            String             @unique @db.VarChar
   password         String             @db.VarChar
-  avatarUrl        String?            @db.VarChar
+  avatar           String?            @db.VarChar
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
   usersTokens      UsersTokens[]
