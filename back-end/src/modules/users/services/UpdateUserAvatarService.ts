@@ -1,0 +1,51 @@
+import { Users as User } from ".prisma/client";
+import { injectable, inject } from "tsyringe";
+
+import UsersRepository from "../infra/prisma/repositories/UsersRepository";
+import IUsersRepository from "@modules/users/repositories/IUsersRepository";
+import IStorageProvider from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import AppError from "@shared/errors/AppError";
+
+interface IRequest {
+  user_id: string;
+  avatar: string;
+}
+
+@injectable()
+class UpdateUserAvatarService {
+  private usersRepository: IUsersRepository;
+
+  constructor(
+    @inject("StorageProvider") private storageProvider: IStorageProvider
+  ) {
+    this.usersRepository = new UsersRepository();
+  }
+
+  public async execute({ user_id, avatar }: IRequest): Promise<User | null> {
+    const user = await this.usersRepository.findById(user_id);
+
+    if (!user) throw new AppError("Error on update avatar", 401);
+
+    if (user.avatarUrl) {
+      await this.storageProvider.deleteFile({
+        file: user.avatarUrl,
+        options: "avatars",
+      });
+    }
+
+    const fileName = await this.storageProvider.saveFile({
+      file: avatar,
+      options: "avatars",
+    });
+
+    // @ts-ignore
+    delete user.users_tag;
+
+    user.avatarUrl = fileName;
+    await this.usersRepository.save(user);
+
+    return user;
+  }
+}
+
+export default UpdateUserAvatarService;

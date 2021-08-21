@@ -10,7 +10,6 @@ interface IRequest {
   name: string;
   email: string;
   password: string;
-  avatarUrl: string;
 }
 
 @injectable()
@@ -25,7 +24,6 @@ class CreateUserService {
     name,
     email,
     password,
-    avatarUrl,
   }: IRequest): Promise<ICreateUserDTO | null> {
     const isAlreadyRegistered = await this.usersRepository.findByEmail(email);
 
@@ -37,7 +35,6 @@ class CreateUserService {
       name,
       email,
       password: hashedPass,
-      avatarUrl,
     });
 
     return user;
