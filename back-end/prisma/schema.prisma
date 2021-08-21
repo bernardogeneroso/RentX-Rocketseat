@@ -15,10 +15,20 @@ model Users {
   name             String             @db.VarChar
   email            String             @unique @db.VarChar
   password         String             @db.VarChar
-  avatarUrl        String             @db.VarChar
+  avatarUrl        String?            @db.VarChar
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
+  usersTokens      UsersTokens[]
   carsAppointments CarsAppointments[]
+}
+
+model UsersTokens {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  token      String   @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String   @db.Uuid
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  user       Users    @relation(fields: [user_id], references: [id])
 }
 
 model Cars {
