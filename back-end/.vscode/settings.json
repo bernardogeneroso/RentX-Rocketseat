@@ -1,4 +1,11 @@
 {
-  "cSpell.ignoreWords": ["dtos", "gmail", "n", "originalname", "tsyringe"],
+  "cSpell.ignoreWords": [
+    "dtos",
+    "gmail",
+    "middlewares",
+    "n",
+    "originalname",
+    "tsyringe"
+  ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }

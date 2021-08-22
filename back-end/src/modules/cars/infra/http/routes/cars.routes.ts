@@ -1,0 +1,48 @@
+import { Router } from "express";
+import { celebrate, Segments, Joi } from "celebrate";
+
+import CarsController from "../controllers/CarsController";
+import CarsBetweenDatesController from "../controllers/CarsBetweenDatesController";
+import appointmentsRouter from "./sub.routes/appointments.routes";
+
+const carsRouter = Router();
+
+const carsController = new CarsController();
+const carsBetweenDatesController = new CarsBetweenDatesController();
+
+carsRouter.use("/appointments", appointmentsRouter);
+
+carsRouter.get("/", carsController.allCars);
+carsRouter.get(
+  "/between-dates",
+  celebrate({
+    [Segments.BODY]: {
+      startDate: Joi.date().required(),
+      endDate: Joi.date().required(),
+    },
+  }),
+  carsBetweenDatesController.index
+);
+carsRouter.post(
+  "/",
+  celebrate({
+    [Segments.BODY]: {
+      plate: Joi.string().min(6).max(6).required(),
+      brand: Joi.string().required(),
+      model: Joi.string().required(),
+      colour: Joi.string().required(),
+      fuel: Joi.string().valid("gasoline", "electric", "alcohol").required(),
+      transmission: Joi.string().valid("auto", "manual").required(),
+      pricePerDay: Joi.number().required(),
+      carDetail: Joi.object({
+        maxSpeed: Joi.number().required(),
+        topSpeed: Joi.number().required(),
+        hp: Joi.number().required(),
+        people: Joi.number().required(),
+      }).required(),
+    },
+  }),
+  carsController.create
+);
+
+export default carsRouter;
