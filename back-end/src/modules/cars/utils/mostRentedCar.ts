@@ -3,7 +3,7 @@ import {
   CountsCarsHasBeenUsed,
 } from "../services/MostRentedCarByUserService";
 
-export function mostRentalCar(counts: CountsCarsHasBeenUsed): CarModified {
+export function mostRentedCar(counts: CountsCarsHasBeenUsed): CarModified {
   const countsArray = Object.entries(counts);
 
   let car: CarModified = {} as CarModified;

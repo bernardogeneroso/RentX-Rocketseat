@@ -4,9 +4,11 @@ import ICarsRepository from "../repositories/ICarsRepository";
 import CarsRepository from "../infra/prisma/repositories/CarsRepository";
 import CarsAppointmentsRepository from "../infra/prisma/repositories/CarsAppointmentsRepository";
 import ICarsAppointmentsRepository from "../repositories/ICarsAppointmentsRepository";
-import AppError from "@shared/errors/AppError";
-import { mostRentalCar } from "../utils/mostRentalCar";
+import { mostRentedCar } from "../utils/mostRentedCar";
 import { sumOfDaysCarWasUsed } from "../utils/sumOfDaysCarWasUsed";
+import { divideCarsByRegistration } from "../utils/divideCarsByRegistration";
+import { sumTotalAppointments } from "../utils/sumTotalAppointments";
+import AppError from "@shared/errors/AppError";
 
 export interface CarModified extends CarAppointment {
   used: number;
@@ -14,6 +16,16 @@ export interface CarModified extends CarAppointment {
 
 export interface CountsCarsHasBeenUsed {
   [plate: string]: CarModified;
+}
+
+interface CarRequest {
+  used: number;
+  daysUsed: number;
+}
+
+interface IRequest {
+  totalAppointments: number;
+  car: CarRequest;
 }
 
 class CreateCarAppointmentService {
@@ -25,42 +37,26 @@ class CreateCarAppointmentService {
     this.carsRepository = new CarsRepository();
   }
 
-  async execute(userId: string): Promise<any> {
+  async execute(userId: string): Promise<IRequest> {
     const carsRentedByUser =
       await this.carsAppointmentsRepository.carsRentedByUser(userId);
 
     if (!carsRentedByUser) throw new AppError("Error on get favorite car", 404);
 
-    const counts: CountsCarsHasBeenUsed = {};
+    const carsDivided = divideCarsByRegistration(carsRentedByUser);
 
-    carsRentedByUser.forEach((x) => {
-      try {
-        counts[x.carId] = {
-          ...x,
-          used: (counts[x.carId].used || 0) + 1,
-        };
-      } catch {
-        counts[x.carId] = {
-          ...x,
-          used: 1,
-        };
-      }
-    });
-
-    const totalAppointments = Object.values(counts).reduce(
-      (a: any, b: any) => a.used + b.used
-    );
+    const totalAppointments = sumTotalAppointments(carsDivided);
 
     // Most rental car
-    const appointment = mostRentalCar(counts);
-
-    const car = await this.carsRepository.findById(appointment.carId);
-
-    // @ts-ignore
-    delete car.carDetailId;
+    const appointment = mostRentedCar(carsDivided);
 
     // Sum of days of car more rental
     const daysUsed = sumOfDaysCarWasUsed(carsRentedByUser, appointment.carId);
+
+    // Get information about car
+    const car = await this.carsRepository.findById(appointment.carId);
+    // @ts-ignore
+    delete car.carDetailId;
 
     return {
       totalAppointments,
