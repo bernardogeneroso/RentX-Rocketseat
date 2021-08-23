@@ -11,7 +11,7 @@ appointmentsRouter.post(
   "/",
   celebrate({
     [Segments.BODY]: {
-      carId: Joi.string().min(6).max(6).required(),
+      carId: Joi.string().length(6).required(),
       start_in: Joi.date().required(),
       end_in: Joi.date().required(),
     },

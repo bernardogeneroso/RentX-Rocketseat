@@ -5,10 +5,7 @@ import ICreateCarDTO from "../dtos/ICreateCarDTO";
 interface ICarsRepository {
   findAllCars(): Promise<Car[] | null>;
   findById(plate: string): Promise<Car | null>;
-  findCarsAvailableBetweenDates(
-    startDate: Date,
-    endDate: Date
-  ): Promise<Car[] | null>;
+  findCarsAvailableBetweenDates(date: Date): Promise<Car[] | null>;
   create(data: ICreateCarDTO): Promise<Car>;
 }
 

@@ -25,7 +25,7 @@ class CreateUserService {
     this.usersRepository = new UsersRepository();
   }
 
-  public async execute({
+  async execute({
     name,
     email,
     password,

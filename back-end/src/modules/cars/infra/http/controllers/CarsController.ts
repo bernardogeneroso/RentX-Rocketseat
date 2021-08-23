@@ -3,6 +3,7 @@ import { container } from "tsyringe";
 
 import AllCarsService from "../../../services/AllCarsService";
 import CreateCarService from "../../../services/CreateCarService";
+import MostRentedCarByUserService from "../../../services/MostRentedCarByUserService";
 
 class CarsController {
   async allCars(request: Request, response: Response): Promise<Response> {
@@ -11,6 +12,18 @@ class CarsController {
     const cars = await allCarsService.execute();
 
     return response.json(cars);
+  }
+
+  async favouriteCar(request: Request, response: Response): Promise<Response> {
+    const mostRentedCarByUserService = container.resolve(
+      MostRentedCarByUserService
+    );
+
+    const userId = request.user.id;
+
+    const car = await mostRentedCarByUserService.execute(userId);
+
+    return response.json(car);
   }
 
   async create(request: Request, response: Response): Promise<Response> {

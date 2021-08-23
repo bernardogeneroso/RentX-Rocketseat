@@ -10,6 +10,25 @@ class CarsAppointmentsRepository implements ICarsAppointmentsRepository {
       data,
     });
   }
+
+  async carAvailable(carId: string, startDate: Date): Promise<number | null> {
+    return await prisma.carsAppointments.count({
+      where: {
+        carId,
+        end_in: {
+          gte: startDate,
+        },
+      },
+    });
+  }
+
+  async carsRentedByUser(userId: string): Promise<CarAppointment[] | null> {
+    return await prisma.carsAppointments.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
 }
 
 export default CarsAppointmentsRepository;

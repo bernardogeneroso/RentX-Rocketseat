@@ -17,17 +17,17 @@ carsRouter.get(
   "/between-dates",
   celebrate({
     [Segments.BODY]: {
-      startDate: Joi.date().required(),
-      endDate: Joi.date().required(),
+      date: Joi.date().required(),
     },
   }),
   carsBetweenDatesController.index
 );
+carsRouter.get("/favourite", carsController.favouriteCar);
 carsRouter.post(
   "/",
   celebrate({
     [Segments.BODY]: {
-      plate: Joi.string().min(6).max(6).required(),
+      plate: Joi.string().length(6).required(),
       brand: Joi.string().required(),
       model: Joi.string().required(),
       colour: Joi.string().required(),

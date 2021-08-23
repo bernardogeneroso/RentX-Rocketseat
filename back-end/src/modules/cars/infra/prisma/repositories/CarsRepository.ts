@@ -17,20 +17,14 @@ class CarsRepository implements ICarsRepository {
     });
   }
 
-  async findCarsAvailableBetweenDates(
-    startDate: Date,
-    endDate: Date
-  ): Promise<Car[] | null> {
+  async findCarsAvailableBetweenDates(date: Date): Promise<Car[] | null> {
     return prisma.cars.findMany({
       include: {
         carsAppointments: {
           where: {
             NOT: {
               start_in: {
-                lte: startDate,
-              },
-              end_in: {
-                gte: endDate,
+                gte: date,
               },
             },
           },

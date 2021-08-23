@@ -33,7 +33,7 @@ class AuthenticateUserService {
     this.usersRepository = new UsersRepository();
   }
 
-  public async execute({ email, password }: IRequest): Promise<IResponse> {
+  async execute({ email, password }: IRequest): Promise<IResponse> {
     const userFind = await this.usersRepository.findByEmail(email);
 
     if (!userFind)

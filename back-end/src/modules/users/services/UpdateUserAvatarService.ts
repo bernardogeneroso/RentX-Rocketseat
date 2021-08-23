@@ -21,7 +21,7 @@ class UpdateUserAvatarService {
     this.usersRepository = new UsersRepository();
   }
 
-  public async execute({ user_id, avatar }: IRequest): Promise<User | null> {
+  async execute({ user_id, avatar }: IRequest): Promise<User | null> {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) throw new AppError("Error on update avatar", 401);

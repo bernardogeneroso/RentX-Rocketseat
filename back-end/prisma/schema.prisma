@@ -66,15 +66,16 @@ model CarsDetails {
 }
 
 model CarsAppointments {
-  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  carId      String    @db.VarChar
-  userId     String    @db.Uuid
-  start_in   DateTime?
-  end_in     DateTime?
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  car        Cars      @relation(fields: [carId], references: [plate])
-  user       Users     @relation(fields: [userId], references: [id])
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  carId       String   @db.VarChar
+  userId      String   @db.Uuid
+  start_in    DateTime @default(now())
+  end_in      DateTime
+  rentalPrice Int      @db.Integer
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  car         Cars     @relation(fields: [carId], references: [plate])
+  user        Users    @relation(fields: [userId], references: [id])
 }
 
 enum FuelRoles {
