@@ -12,12 +12,28 @@ const carsBetweenDatesController = new CarsBetweenDatesController();
 
 carsRouter.use("/appointments", appointmentsRouter);
 
-carsRouter.get("/", carsController.allCars);
+carsRouter.get(
+  "/",
+  celebrate({
+    [Segments.QUERY]: {
+      search: Joi.string(),
+    },
+  }),
+  carsController.allCars
+);
 carsRouter.get(
   "/between-dates",
   celebrate({
     [Segments.BODY]: {
       date: Joi.date().required(),
+      filter: Joi.object({
+        pricesPerDay: Joi.object({
+          startPricePerDay: Joi.number().required(),
+          endPricePerDay: Joi.number().required(),
+        }).required(),
+        fuel: Joi.string().valid("gasoline", "electric", "alcohol").required(),
+        transmission: Joi.string().valid("auto", "manual").required(),
+      }),
     },
   }),
   carsBetweenDatesController.index

@@ -5,12 +5,13 @@ import CarsBetweenDatesService from "@modules/cars/services/CarsBetweenDatesServ
 
 class CarsBetweenDatesController {
   async index(request: Request, response: Response): Promise<Response> {
-    const { date } = request.body;
+    const { date, filter } = request.body;
 
     const carsBetweenDatesService = container.resolve(CarsBetweenDatesService);
 
     const carsBetweenDates = await carsBetweenDatesService.execute({
       date,
+      filter,
     });
 
     return response.json(carsBetweenDates);

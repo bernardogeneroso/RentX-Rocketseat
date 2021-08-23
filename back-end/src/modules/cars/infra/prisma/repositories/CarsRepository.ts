@@ -1,6 +1,7 @@
 import { Cars as Car } from ".prisma/client";
 
 import ICreateCarDTO from "@modules/cars/dtos/ICreateCarDTO";
+import IFindCarsAvailableBetweenDatesDTO from "@modules/cars/dtos/IFindCarsAvailableBetweenDatesDTO";
 import ICarsRepository from "@modules/cars/repositories/ICarsRepository";
 import { prisma } from "@shared/services/prisma";
 
@@ -41,7 +42,7 @@ class CarsRepository implements ICarsRepository {
     return await prisma.cars.findMany({
       where: {
         carsAppointments: {
-          some: {
+          none: {
             userId,
           },
         },
@@ -49,18 +50,34 @@ class CarsRepository implements ICarsRepository {
     });
   }
 
-  async findCarsAvailableBetweenDates(date: Date): Promise<Car[] | null> {
+  async findCarsAvailableBetweenDates(
+    data: IFindCarsAvailableBetweenDatesDTO
+  ): Promise<Car[] | null> {
     return prisma.cars.findMany({
-      include: {
+      where: {
         carsAppointments: {
-          where: {
+          every: {
             NOT: {
               start_in: {
-                gte: date,
+                gte: data.date,
               },
             },
           },
         },
+        fuel: data.filter?.fuel,
+        transmission: data.filter?.transmission,
+        AND: [
+          {
+            pricePerDay: {
+              gte: data.filter?.pricesPerDay.startPricePerDay,
+            },
+          },
+          {
+            pricePerDay: {
+              lte: data.filter?.pricesPerDay.endPricePerDay,
+            },
+          },
+        ],
       },
     });
   }
