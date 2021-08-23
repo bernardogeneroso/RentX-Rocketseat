@@ -5,13 +5,20 @@ import ICarsAppointmentsRepository from "@modules/cars/repositories/ICarsAppoint
 import { prisma } from "@shared/services/prisma";
 
 class CarsAppointmentsRepository implements ICarsAppointmentsRepository {
-  async create(data: ICreateCarsAppointmentsDTO): Promise<CarAppointment> {
-    return await prisma.carsAppointments.create({
-      data,
+  async findUserScheduledCars(
+    userId: string
+  ): Promise<CarAppointment[] | null> {
+    return await prisma.carsAppointments.findMany({
+      where: {
+        userId,
+      },
     });
   }
 
-  async carAvailable(carId: string, startDate: Date): Promise<number | null> {
+  async countCarsAvailable(
+    carId: string,
+    startDate: Date
+  ): Promise<number | null> {
     return await prisma.carsAppointments.count({
       where: {
         carId,
@@ -22,11 +29,9 @@ class CarsAppointmentsRepository implements ICarsAppointmentsRepository {
     });
   }
 
-  async carsRentedByUser(userId: string): Promise<CarAppointment[] | null> {
-    return await prisma.carsAppointments.findMany({
-      where: {
-        userId,
-      },
+  async create(data: ICreateCarsAppointmentsDTO): Promise<CarAppointment> {
+    return await prisma.carsAppointments.create({
+      data,
     });
   }
 }

@@ -1,10 +1,12 @@
 import { Cars as Car } from "@prisma/client";
-import { injectable } from "tsyringe";
 
 import CarsRepository from "../infra/prisma/repositories/CarsRepository";
 import ICarsRepository from "../repositories/ICarsRepository";
 
-@injectable()
+interface IResponse {
+  search: string | null;
+}
+
 class AllCarsService {
   private carsRepository: ICarsRepository;
 
@@ -12,8 +14,8 @@ class AllCarsService {
     this.carsRepository = new CarsRepository();
   }
 
-  async execute(): Promise<Car[] | null> {
-    return await this.carsRepository.findAllCars();
+  async execute({ search }: IResponse): Promise<Car[] | null> {
+    return await this.carsRepository.findAllCars(search);
   }
 }
 

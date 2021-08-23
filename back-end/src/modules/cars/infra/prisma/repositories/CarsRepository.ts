@@ -5,14 +5,46 @@ import ICarsRepository from "@modules/cars/repositories/ICarsRepository";
 import { prisma } from "@shared/services/prisma";
 
 class CarsRepository implements ICarsRepository {
-  async findAllCars(): Promise<Car[] | null> {
-    return await prisma.cars.findMany();
+  async findAllCars(search: string | null): Promise<Car[] | null> {
+    search || (search = "");
+
+    return await prisma.cars.findMany({
+      where: {
+        OR: [
+          {
+            brand: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+          {
+            model: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+      take: 3,
+    });
   }
 
   async findById(plate: string): Promise<Car | null> {
     return await prisma.cars.findUnique({
       where: {
         plate,
+      },
+    });
+  }
+
+  async findCarsRentedByUser(userId: string): Promise<Car[] | null> {
+    return await prisma.cars.findMany({
+      where: {
+        carsAppointments: {
+          some: {
+            userId,
+          },
+        },
       },
     });
   }

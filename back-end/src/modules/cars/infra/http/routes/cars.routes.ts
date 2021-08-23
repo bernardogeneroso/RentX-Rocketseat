@@ -22,6 +22,7 @@ carsRouter.get(
   }),
   carsBetweenDatesController.index
 );
+carsRouter.get("/schedules", carsController.userSchedules);
 carsRouter.get("/favourite", carsController.favouriteCar);
 carsRouter.post(
   "/",

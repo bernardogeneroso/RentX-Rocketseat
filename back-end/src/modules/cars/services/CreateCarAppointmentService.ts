@@ -31,7 +31,7 @@ class CreateCarAppointmentService {
     if (!carToRental) throw new AppError("Error on create appointment");
 
     const countCarAvailable =
-      await this.carsAppointmentsRepository.carAvailable(
+      await this.carsAppointmentsRepository.countCarsAvailable(
         data.carId,
         data.start_in
       );

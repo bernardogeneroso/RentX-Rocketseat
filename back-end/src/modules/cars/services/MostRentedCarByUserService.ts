@@ -39,7 +39,7 @@ class CreateCarAppointmentService {
 
   async execute(userId: string): Promise<IRequest> {
     const carsRentedByUser =
-      await this.carsAppointmentsRepository.carsRentedByUser(userId);
+      await this.carsAppointmentsRepository.findUserScheduledCars(userId);
 
     if (!carsRentedByUser) throw new AppError("Error on get favorite car", 404);
 
