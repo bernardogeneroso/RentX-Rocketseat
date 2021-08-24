@@ -1,18 +1,19 @@
 import { Router } from "express";
-import { celebrate, Segments, Joi } from "celebrate";
+import * as Yup from "yup";
 
 import SessionsController from "../../controllers/SessionsController";
+import { schemaValidation } from "@shared/infra/http/middlewares/schemaValidation";
 
 const sessionsRouter = Router();
 const sessionsController = new SessionsController();
 
 sessionsRouter.post(
   "/",
-  celebrate({
-    [Segments.BODY]: {
-      email: Joi.string().email().required(),
-      password: Joi.string().required(),
-    },
+  schemaValidation({
+    schema: Yup.object({
+      email: Yup.string().email().required(),
+      password: Yup.string().required(),
+    }),
   }),
   sessionsController.create
 );

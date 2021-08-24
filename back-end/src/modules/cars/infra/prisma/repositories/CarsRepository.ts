@@ -53,8 +53,6 @@ class CarsRepository implements ICarsRepository {
   async findCarsAvailableBetweenDates(
     data: IFindCarsAvailableBetweenDatesDTO
   ): Promise<Car[] | null> {
-    console.log(data.dates);
-
     return prisma.cars.findMany({
       where: {
         carsAppointments: {

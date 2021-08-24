@@ -36,7 +36,6 @@
   "dependencies": {
     "@prisma/client": "^2.29.1",
     "bcryptjs": "^2.4.3",
-    "celebrate": "^15.0.0",
     "cors": "^2.8.5",
     "date-fns": "^2.23.0",
     "dotenv": "^10.0.0",
@@ -48,6 +47,7 @@
     "nodemailer": "^6.6.3",
     "reflect-metadata": "^0.1.13",
     "tsyringe": "^4.6.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.9"
   }
 }

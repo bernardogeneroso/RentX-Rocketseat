@@ -1,5 +1,6 @@
+import { schemaValidation } from "@shared/infra/http/middlewares/schemaValidation";
 import { Router } from "express";
-import { celebrate, Segments, Joi } from "celebrate";
+import * as Yup from "yup";
 
 import ForgotPasswordController from "../../controllers/ForgotPasswordController";
 import ResetPasswordController from "../../controllers/ResetPasswordController";
@@ -10,21 +11,23 @@ const resetPasswordController = new ResetPasswordController();
 
 passwordsRouter.post(
   "/forgot/:email",
-  celebrate({
-    [Segments.PARAMS]: {
-      email: Joi.string().email().required(),
-    },
+  schemaValidation({
+    schema: Yup.object({
+      email: Yup.string().email().required(),
+    }),
   }),
   forgotPasswordController.create
 );
 passwordsRouter.post(
   "/reset",
-  celebrate({
-    [Segments.BODY]: {
-      token: Joi.string().id().required(),
-      password: Joi.string().required(),
-      password_confirmation: Joi.string().required().valid(Joi.ref("password")),
-    },
+  schemaValidation({
+    schema: Yup.object({
+      token: Yup.string().uuid().required(),
+      password: Yup.string().required(),
+      password_confirmation: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Password must match")
+        .required(),
+    }),
   }),
   resetPasswordController.create
 );

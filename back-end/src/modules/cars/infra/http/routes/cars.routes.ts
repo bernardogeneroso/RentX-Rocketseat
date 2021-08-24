@@ -1,47 +1,49 @@
 import { Router } from "express";
-import { celebrate, Segments, errors, Joi } from "celebrate";
+import * as Yup from "yup";
 
 import CarsController from "../controllers/CarsController";
 import CarsBetweenDatesController from "../controllers/CarsBetweenDatesController";
 import appointmentsRouter from "./sub.routes/appointments.routes";
+import { schemaValidation } from "@shared/infra/http/middlewares/schemaValidation";
 
 const carsRouter = Router();
 
 const carsController = new CarsController();
 const carsBetweenDatesController = new CarsBetweenDatesController();
 
-// TODO: Celebrate with Joi, don't give error
-
 carsRouter.use("/appointments", appointmentsRouter);
 
 carsRouter.get(
   "/",
-  celebrate({
-    [Segments.QUERY]: {
-      search: Joi.string(),
-    },
+  schemaValidation({
+    schema: Yup.object({
+      search: Yup.string(),
+    }),
+    segments: "query",
   }),
   carsController.allCars
 );
 carsRouter.get(
   "/between-dates",
-  celebrate({
-    [Segments.BODY]: {
-      startDate: Joi.date().required(),
-      endDate: Joi.date().required(),
-      /*dates: Joi.object({
-        startDate: Joi.date().required(),
-        endDate: Joi.date().required(),
-      }).required(),*/
-      /*filter: Joi.object({
-        pricesPerDay: Joi.object({
-          startPricePerDay: Joi.number().required(),
-          endPricePerDay: Joi.number().required(),
+  schemaValidation({
+    schema: Yup.object({
+      dates: Yup.object({
+        startDate: Yup.date().required(),
+        endDate: Yup.date().required(),
+      }).required(),
+      filter: Yup.object({
+        pricesPerDay: Yup.object({
+          startPricePerDay: Yup.number().required(),
+          endPricePerDay: Yup.number().required(),
         }).required(),
-        fuel: Joi.string().valid("gasoline", "electric", "alcohol").required(),
-        transmission: Joi.string().valid("auto", "manual").required(),
-      }),*/
-    },
+        fuel: Yup.mixed<"gasoline" | "electric" | "alcohol">()
+          .oneOf(["gasoline", "electric", "alcohol"])
+          .required(),
+        transmission: Yup.mixed<"auto" | "manual">()
+          .oneOf(["auto", "manual"])
+          .required(),
+      }),
+    }),
   }),
   carsBetweenDatesController.index
 );
@@ -49,26 +51,28 @@ carsRouter.get("/schedules", carsController.userSchedules);
 carsRouter.get("/favourite", carsController.favouriteCar);
 carsRouter.post(
   "/",
-  celebrate({
-    [Segments.BODY]: {
-      plate: Joi.string().length(6).required(),
-      brand: Joi.string().required(),
-      model: Joi.string().required(),
-      colour: Joi.string().required(),
-      fuel: Joi.string().valid("gasoline", "electric", "alcohol").required(),
-      transmission: Joi.string().valid("auto", "manual").required(),
-      pricePerDay: Joi.number().required(),
-      carDetail: Joi.object({
-        maxSpeed: Joi.number().required(),
-        topSpeed: Joi.number().required(),
-        hp: Joi.number().required(),
-        people: Joi.number().required(),
+  schemaValidation({
+    schema: Yup.object({
+      plate: Yup.string().length(6).required(),
+      brand: Yup.string().required(),
+      model: Yup.string().required(),
+      colour: Yup.string().required(),
+      fuel: Yup.mixed<"gasoline" | "electric" | "alcohol">()
+        .oneOf(["gasoline", "electric", "alcohol"])
+        .required(),
+      transmission: Yup.mixed<"auto" | "manual">()
+        .oneOf(["auto", "manual"])
+        .required(),
+      pricePerDay: Yup.number().required(),
+      carDetail: Yup.object({
+        maxSpeed: Yup.number().required(),
+        topSpeed: Yup.number().required(),
+        hp: Yup.number().required(),
+        people: Yup.number().required(),
       }).required(),
-    },
+    }),
   }),
   carsController.create
 );
-
-carsRouter.use(errors());
 
 export default carsRouter;
