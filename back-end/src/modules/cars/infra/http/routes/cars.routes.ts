@@ -1,12 +1,15 @@
 import { Router } from "express";
+import multer from "multer";
 import * as Yup from "yup";
 
 import CarsController from "../controllers/CarsController";
 import CarsBetweenDatesController from "../controllers/CarsBetweenDatesController";
 import appointmentsRouter from "./sub.routes/appointments.routes";
 import { schemaValidation } from "@shared/infra/http/middlewares/schemaValidation";
+import uploadConfig from "../../../../../config/upload";
 
 const carsRouter = Router();
+const upload = multer(uploadConfig.multer.storageCars);
 
 const carsController = new CarsController();
 const carsBetweenDatesController = new CarsBetweenDatesController();
@@ -49,6 +52,7 @@ carsRouter.get(
 );
 carsRouter.get("/schedules", carsController.userSchedules);
 carsRouter.get("/favourite", carsController.favouriteCar);
+
 carsRouter.post(
   "/",
   schemaValidation({
@@ -72,7 +76,20 @@ carsRouter.post(
       }).required(),
     }),
   }),
+
   carsController.create
+);
+
+carsRouter.post(
+  "/images",
+  upload.single("image"),
+  schemaValidation({
+    schema: Yup.object({
+      carId: Yup.string().length(6).required(),
+      oldUrl: Yup.string(),
+    }),
+  }),
+  carsController.updateImages
 );
 
 export default carsRouter;

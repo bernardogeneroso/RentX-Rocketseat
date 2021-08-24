@@ -6,6 +6,8 @@ import IStorageProvider, { File } from "../models/IStorageProvider";
 
 const uploadsFolder = {
   avatars: uploadConfig.uploads.uploadsFolderUsersAvatars,
+  carImages: uploadConfig.uploads.uploadsFolderCarsImages,
+  rest: uploadConfig.uploads.tmpFolder,
 };
 
 class DiskStorageProvider implements IStorageProvider {

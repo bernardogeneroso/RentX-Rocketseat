@@ -27,9 +27,7 @@ class UsersController {
   ): Promise<Response> {
     const avatar = request.file?.filename;
 
-    if (!avatar) {
-      throw new AppError("Avatar file is required!");
-    }
+    if (!avatar) throw new AppError("Avatar file is required!");
 
     const { id: user_id } = request.user;
 

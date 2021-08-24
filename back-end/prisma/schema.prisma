@@ -48,9 +48,8 @@ model Cars {
 }
 
 model CarsImages {
-  id    String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  url   String @id @db.VarChar
   carId String @db.VarChar
-  url   String @db.VarChar
   car   Cars   @relation(fields: [carId], references: [plate])
 }
 

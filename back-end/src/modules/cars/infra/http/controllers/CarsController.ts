@@ -5,6 +5,8 @@ import AllCarsService from "../../../services/AllCarsService";
 import CreateCarService from "../../../services/CreateCarService";
 import ScheduledCarsByUser from "../../../services/ScheduledCarsByUser";
 import MostRentedCarByUserService from "../../../services/MostRentedCarByUserService";
+import UpdateCarImagesService from "../../../services/UpdateCarImagesService";
+import AppError from "@shared/errors/AppError";
 
 class CarsController {
   async allCars(request: Request, response: Response): Promise<Response> {
@@ -69,6 +71,25 @@ class CarsController {
     });
 
     return response.json(car);
+  }
+
+  async updateImages(request: Request, response: Response): Promise<Response> {
+    const { oldUrl, carId } = request.body;
+    const url = request.file?.filename;
+
+    if (!url) throw new AppError("Image file is required!");
+
+    const updateCarImagesService = container.resolve(UpdateCarImagesService);
+
+    const data = await updateCarImagesService.execute({
+      carId,
+      url,
+      oldUrl,
+    });
+
+    console.log(data);
+
+    return response.json(data);
   }
 }
 

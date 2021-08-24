@@ -17,10 +17,16 @@ interface IUploadConfig {
   uploads: {
     tmpFolder: string;
     uploadsFolderUsersAvatars: string;
+    uploadsFolderCarsImages: string;
   };
 
   multer: {
     storageAvatars: {
+      storage: StorageEngine;
+      fileFilter: any;
+      limits: MulterLimitsFileSize;
+    };
+    storageCars: {
       storage: StorageEngine;
       fileFilter: any;
       limits: MulterLimitsFileSize;
@@ -38,10 +44,40 @@ export default {
   uploads: {
     tmpFolder,
     uploadsFolderUsersAvatars: path.resolve(tmpFolder, "users", "avatars"),
+    uploadsFolderCarsImages: path.resolve(tmpFolder, "cars", "images"),
   },
 
   multer: {
     storageAvatars: {
+      storage: multer.diskStorage({
+        destination: path.resolve(tmpFolder),
+        filename: (request, file, callback) => {
+          const fileHash = crypto.randomBytes(10).toString("hex");
+          const fileName = `${fileHash}-${file.originalname}`;
+
+          return callback(null, fileName);
+        },
+      }),
+      fileFilter: (
+        request: Request,
+        file: Express.Multer.File,
+        cb: FileFilterCallback
+      ) => {
+        if (
+          file.mimetype == "image/png" ||
+          file.mimetype == "image/jpg" ||
+          file.mimetype == "image/jpeg"
+        ) {
+          cb(null, true);
+        } else {
+          cb(null, false);
+          // @ts-ignore
+          return cb(new AppError("Only .png, .jpg and .jpeg format allowed!"));
+        }
+      },
+      limits: { fileSize: maxSizeAvatar },
+    },
+    storageCars: {
       storage: multer.diskStorage({
         destination: path.resolve(tmpFolder),
         filename: (request, file, callback) => {

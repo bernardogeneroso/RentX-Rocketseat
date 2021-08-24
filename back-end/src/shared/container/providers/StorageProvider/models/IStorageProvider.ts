@@ -1,6 +1,6 @@
 export interface File {
   file: string;
-  options: "avatars";
+  options: "avatars" | "carImages" | "rest";
 }
 
 interface IStorageProvider {
