@@ -69,8 +69,8 @@ model CarsAppointments {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   carId       String   @db.VarChar
   userId      String   @db.Uuid
-  start_in    DateTime @default(now())
-  end_in      DateTime
+  start_in    DateTime @db.Timestamptz() @default(now())
+  end_in      DateTime @db.Timestamptz()
   rentalPrice Int      @db.Integer
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt

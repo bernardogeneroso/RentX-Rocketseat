@@ -20,7 +20,7 @@ class CreateCarAppointmentService {
   async execute(
     data: Omit<ICreateCarsAppointmentsDTO, "rentalPrice">
   ): Promise<CarAppointment> {
-    if (compareAsc(data.start_in, data.end_in) <= 0)
+    if (compareAsc(data.start_in, data.end_in) > 0)
       throw new AppError("Error, invalid dates");
 
     if (isPast(data.start_in) || isPast(data.end_in))

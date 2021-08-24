@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { celebrate, Segments, Joi } from "celebrate";
+import { celebrate, Segments, errors, Joi } from "celebrate";
 
 import CarsController from "../controllers/CarsController";
 import CarsBetweenDatesController from "../controllers/CarsBetweenDatesController";
@@ -9,6 +9,8 @@ const carsRouter = Router();
 
 const carsController = new CarsController();
 const carsBetweenDatesController = new CarsBetweenDatesController();
+
+// TODO: Celebrate with Joi, don't give error
 
 carsRouter.use("/appointments", appointmentsRouter);
 
@@ -25,15 +27,20 @@ carsRouter.get(
   "/between-dates",
   celebrate({
     [Segments.BODY]: {
-      date: Joi.date().required(),
-      filter: Joi.object({
+      startDate: Joi.date().required(),
+      endDate: Joi.date().required(),
+      /*dates: Joi.object({
+        startDate: Joi.date().required(),
+        endDate: Joi.date().required(),
+      }).required(),*/
+      /*filter: Joi.object({
         pricesPerDay: Joi.object({
           startPricePerDay: Joi.number().required(),
           endPricePerDay: Joi.number().required(),
         }).required(),
         fuel: Joi.string().valid("gasoline", "electric", "alcohol").required(),
         transmission: Joi.string().valid("auto", "manual").required(),
-      }),
+      }),*/
     },
   }),
   carsBetweenDatesController.index
@@ -61,5 +68,7 @@ carsRouter.post(
   }),
   carsController.create
 );
+
+carsRouter.use(errors());
 
 export default carsRouter;

@@ -42,7 +42,7 @@ class CarsRepository implements ICarsRepository {
     return await prisma.cars.findMany({
       where: {
         carsAppointments: {
-          none: {
+          some: {
             userId,
           },
         },
@@ -53,15 +53,26 @@ class CarsRepository implements ICarsRepository {
   async findCarsAvailableBetweenDates(
     data: IFindCarsAvailableBetweenDatesDTO
   ): Promise<Car[] | null> {
+    console.log(data.dates);
+
     return prisma.cars.findMany({
       where: {
         carsAppointments: {
-          every: {
-            NOT: {
-              start_in: {
-                gte: data.date,
+          none: {
+            OR: [
+              {
+                start_in: {
+                  gte: data.dates.startDate,
+                  lte: data.dates.endDate,
+                },
               },
-            },
+              {
+                end_in: {
+                  gte: data.dates.startDate,
+                  lte: data.dates.endDate,
+                },
+              },
+            ],
           },
         },
         fuel: data.filter?.fuel,

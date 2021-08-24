@@ -14,11 +14,11 @@ class CarsBetweenDatesService {
   }
 
   async execute({
-    date,
+    dates,
     filter,
   }: IFindCarsAvailableBetweenDatesDTO): Promise<Car[] | null> {
     return await this.carsRepository.findCarsAvailableBetweenDates({
-      date,
+      dates,
       filter,
     });
   }

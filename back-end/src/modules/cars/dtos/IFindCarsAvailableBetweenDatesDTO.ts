@@ -1,5 +1,8 @@
 export default interface IFindCarsAvailableBetweenDatesDTO {
-  date: Date;
+  dates: {
+    startDate: Date;
+    endDate: Date;
+  };
   filter?: {
     pricesPerDay: {
       startPricePerDay: number;
