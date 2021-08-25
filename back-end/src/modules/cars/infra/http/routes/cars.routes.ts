@@ -1,4 +1,5 @@
-import { Router } from "express";
+import express, { Router } from "express";
+import path from "path";
 import multer from "multer";
 import * as Yup from "yup";
 
@@ -100,6 +101,11 @@ carsRouter.post(
     }),
   }),
   carsController.updateImages
+);
+
+carsRouter.use(
+  "/image",
+  express.static(path.resolve(uploadConfig.uploads.tmpFolder, "cars", "images"))
 );
 
 export default carsRouter;

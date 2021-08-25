@@ -8,6 +8,7 @@ import MostRentedCarByUserService from "../../../services/MostRentedCarByUserSer
 import UpdateCarImagesService from "../../../services/UpdateCarImagesService";
 import CarDetailsService from "../../../services/CarDetailsService";
 import AppError from "@shared/errors/AppError";
+import { carsTransformer } from "@modules/cars/utils/carsTransformer";
 
 class CarsController {
   async allCars(request: Request, response: Response): Promise<Response> {
@@ -19,7 +20,7 @@ class CarsController {
       search: search?.toString() || null,
     });
 
-    return response.json(cars);
+    return response.json(carsTransformer(cars));
   }
 
   async carDetails(request: Request, response: Response): Promise<Response> {
@@ -29,7 +30,7 @@ class CarsController {
 
     const car = await carDetailsService.execute(plate);
 
-    return response.json(car);
+    return response.json(carsTransformer(car));
   }
 
   async favouriteCar(request: Request, response: Response): Promise<Response> {
@@ -51,7 +52,7 @@ class CarsController {
 
     const carsSchedules = await scheduledCarsByUser.execute(userId);
 
-    return response.json(carsSchedules);
+    return response.json(carsTransformer(carsSchedules));
   }
 
   async create(request: Request, response: Response): Promise<Response> {
@@ -97,8 +98,6 @@ class CarsController {
       url,
       oldUrl,
     });
-
-    console.log(data);
 
     return response.json(data);
   }

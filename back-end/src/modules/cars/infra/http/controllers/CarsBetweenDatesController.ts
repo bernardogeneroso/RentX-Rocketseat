@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
-import CarsBetweenDatesService from "@modules/cars/services/CarsBetweenDatesService";
+import CarsBetweenDatesService from "../../../services/CarsBetweenDatesService";
+import { carsTransformer } from "../../../utils/carsTransformer";
 
 class CarsBetweenDatesController {
   async index(request: Request, response: Response): Promise<Response> {
@@ -14,7 +15,7 @@ class CarsBetweenDatesController {
       filter,
     });
 
-    return response.json(carsBetweenDates);
+    return response.json(carsTransformer(carsBetweenDates));
   }
 }
 

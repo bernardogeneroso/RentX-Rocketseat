@@ -1,4 +1,5 @@
 import { Users as User } from "@prisma/client";
+
 import AppError from "@shared/errors/AppError";
 
 export function userTransformer(users: User[] | User | any): any {
