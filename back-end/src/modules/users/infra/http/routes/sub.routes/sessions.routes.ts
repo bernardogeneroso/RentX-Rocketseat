@@ -7,6 +7,8 @@ import { schemaValidation } from "@shared/infra/http/middlewares/schemaValidatio
 const sessionsRouter = Router();
 const sessionsController = new SessionsController();
 
+sessionsRouter.get("/validate");
+
 sessionsRouter.post(
   "/",
   schemaValidation({
