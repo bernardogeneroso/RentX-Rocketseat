@@ -4,6 +4,7 @@ import * as Yup from "yup";
 
 import ForgotPasswordController from "../../controllers/ForgotPasswordController";
 import ResetPasswordController from "../../controllers/ResetPasswordController";
+import ensureAuthenticated from "../../middlewares/ensureAuthenticated";
 
 const passwordsRouter = Router();
 const forgotPasswordController = new ForgotPasswordController();
@@ -30,6 +31,20 @@ passwordsRouter.post(
     }),
   }),
   resetPasswordController.create
+);
+passwordsRouter.put(
+  "/reset-authenticated",
+  ensureAuthenticated,
+  schemaValidation({
+    schema: Yup.object({
+      actual_password: Yup.string().required(),
+      password: Yup.string().required(),
+      password_confirmation: Yup.string()
+        .oneOf([Yup.ref("password"), null], "Password must match")
+        .required(),
+    }),
+  }),
+  resetPasswordController.resetPasswordAuthenticated
 );
 
 export default passwordsRouter;

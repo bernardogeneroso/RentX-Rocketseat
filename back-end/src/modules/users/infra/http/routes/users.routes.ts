@@ -30,6 +30,18 @@ usersRouter.post(
   usersController.create
 );
 
+usersRouter.put(
+  "/",
+  ensureAuthenticated,
+  schemaValidation({
+    schema: Yup.object({
+      name: Yup.string().required(),
+      email: Yup.string().email().required(),
+    }),
+  }),
+  usersController.update
+);
+
 usersRouter.patch(
   "/avatar",
   ensureAuthenticated,

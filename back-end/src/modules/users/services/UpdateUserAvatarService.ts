@@ -7,7 +7,7 @@ import IStorageProvider from "@shared/container/providers/StorageProvider/models
 import AppError from "@shared/errors/AppError";
 
 interface IRequest {
-  user_id: string;
+  userId: string;
   avatar: string;
 }
 
@@ -21,8 +21,8 @@ class UpdateUserAvatarService {
     this.usersRepository = new UsersRepository();
   }
 
-  async execute({ user_id, avatar }: IRequest): Promise<User | null> {
-    const user = await this.usersRepository.findById(user_id);
+  async execute({ userId, avatar }: IRequest): Promise<User | null> {
+    const user = await this.usersRepository.findById(userId);
 
     if (!user) throw new AppError("Error on update avatar", 401);
 
