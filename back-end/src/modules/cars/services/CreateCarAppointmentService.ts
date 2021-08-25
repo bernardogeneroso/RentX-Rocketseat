@@ -1,7 +1,7 @@
 import { CarsAppointments as CarAppointment } from "@prisma/client";
 import { isPast, differenceInDays, compareAsc } from "date-fns";
 
-import ICreateCarsAppointmentsDTO from "../dtos/ICreateCarsAppointmentsDTO";
+import { ICreateCarsAppointmentsDTO } from "../dtos/ICreateCarsAppointmentsDTO";
 import CarsAppointmentsRepository from "../infra/prisma/repositories/CarsAppointmentsRepository";
 import CarsRepository from "../infra/prisma/repositories/CarsRepository";
 import ICarsAppointmentsRepository from "../repositories/ICarsAppointmentsRepository";
@@ -31,10 +31,13 @@ class CreateCarAppointmentService {
     if (!carToRental) throw new AppError("Error on create appointment");
 
     const countCarAvailable =
-      await this.carsAppointmentsRepository.countCarsAvailable(
-        data.carId,
-        data.start_in
-      );
+      await this.carsAppointmentsRepository.countCarsAvailable({
+        carId: data.carId,
+        date: {
+          startDate: data.start_in,
+          endDate: data.end_in,
+        },
+      });
 
     if (countCarAvailable !== 0)
       throw new AppError("Error on create appointment");

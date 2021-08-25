@@ -1,4 +1,4 @@
-export default interface ICreateCarDetailsDTO {
+export interface ICreateCarDetailsDTO {
   maxSpeed: number;
   topSpeed: number;
   hp: number;

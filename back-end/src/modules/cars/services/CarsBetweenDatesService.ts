@@ -1,6 +1,6 @@
 import { Cars as Car } from "@prisma/client";
-import IFindCarsAvailableBetweenDatesDTO from "../dtos/IFindCarsAvailableBetweenDatesDTO";
 
+import { IFindCarsAvailableBetweenDatesDTO } from "../dtos/IFindCarsAvailableBetweenDatesDTO";
 import CarsRepository from "../infra/prisma/repositories/CarsRepository";
 import ICarsRepository from "../repositories/ICarsRepository";
 

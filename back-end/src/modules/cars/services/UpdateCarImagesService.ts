@@ -3,7 +3,7 @@ import { injectable, inject } from "tsyringe";
 import CarsImagesRepository from "../infra/prisma/repositories/CarsImagesRepository";
 import ICarsImagesRepository from "../repositories/ICarsImagesRepository";
 import IStorageProvider from "@shared/container/providers/StorageProvider/models/IStorageProvider";
-import ICreateCarImagesDTO from "../dtos/ICreateCarImagesDTO";
+import { ICreateCarImagesDTO } from "../dtos/ICreateCarImagesDTO";
 import AppError from "@shared/errors/AppError";
 
 interface IResponse {

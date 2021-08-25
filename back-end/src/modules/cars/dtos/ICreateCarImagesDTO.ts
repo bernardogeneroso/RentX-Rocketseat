@@ -1,4 +1,4 @@
-export default interface ICreateCarImagesDTO {
+export interface ICreateCarImagesDTO {
   carId: string;
   url: string;
   oldUrl?: string;

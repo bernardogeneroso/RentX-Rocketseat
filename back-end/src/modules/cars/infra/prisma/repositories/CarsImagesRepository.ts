@@ -1,6 +1,6 @@
 import { CarsImages as CarImage } from ".prisma/client";
 
-import ICreateCarImagesDTO from "@modules/cars/dtos/ICreateCarImagesDTO";
+import { ICreateCarImagesDTO } from "@modules/cars/dtos/ICreateCarImagesDTO";
 import ICarsImagesRepository from "@modules/cars/repositories/ICarsImagesRepository";
 import { prisma } from "@shared/services/prisma";
 

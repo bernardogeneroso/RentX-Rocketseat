@@ -1,4 +1,4 @@
-export default interface IFindCarsAvailableBetweenDatesDTO {
+export interface IFindCarsAvailableBetweenDatesDTO {
   dates: {
     startDate: Date;
     endDate: Date;

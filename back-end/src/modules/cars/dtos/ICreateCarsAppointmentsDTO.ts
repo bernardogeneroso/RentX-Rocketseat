@@ -1,4 +1,4 @@
-export default interface ICreateCarsAppointmentsDTO {
+export interface ICreateCarsAppointmentsDTO {
   carId: string;
   userId: string;
   start_in: Date;

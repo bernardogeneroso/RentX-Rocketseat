@@ -1,6 +1,6 @@
 import { Cars as Car } from "@prisma/client";
 
-import ICreateCarDTO from "../dtos/ICreateCarDTO";
+import { ICreateCarDTO } from "../dtos/ICreateCarDTO";
 import CarsRepository from "../infra/prisma/repositories/CarsRepository";
 import ICarsRepository from "../repositories/ICarsRepository";
 

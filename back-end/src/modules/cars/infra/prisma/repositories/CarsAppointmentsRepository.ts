@@ -1,6 +1,7 @@
 import { CarsAppointments as CarAppointment } from "@prisma/client";
 
-import ICreateCarsAppointmentsDTO from "@modules/cars/dtos/ICreateCarsAppointmentsDTO";
+import { ICreateCarsAppointmentsDTO } from "@modules/cars/dtos/ICreateCarsAppointmentsDTO";
+import { ICountCarsAvailableDTO } from "@modules/cars/dtos/ICountCarsAvailableDTO";
 import ICarsAppointmentsRepository from "@modules/cars/repositories/ICarsAppointmentsRepository";
 import { prisma } from "@shared/services/prisma";
 
@@ -15,16 +16,27 @@ class CarsAppointmentsRepository implements ICarsAppointmentsRepository {
     });
   }
 
-  async countCarsAvailable(
-    carId: string,
-    startDate: Date
-  ): Promise<number | null> {
+  async countCarsAvailable({
+    carId,
+    date: { startDate, endDate },
+  }: ICountCarsAvailableDTO): Promise<number | null> {
     return await prisma.carsAppointments.count({
       where: {
         carId,
-        end_in: {
-          gte: startDate,
-        },
+        OR: [
+          {
+            start_in: {
+              gte: startDate,
+              lte: endDate,
+            },
+          },
+          {
+            end_in: {
+              gte: startDate,
+              lte: endDate,
+            },
+          },
+        ],
       },
     });
   }

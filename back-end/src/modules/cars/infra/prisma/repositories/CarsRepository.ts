@@ -1,7 +1,7 @@
 import { Cars as Car } from ".prisma/client";
 
-import ICreateCarDTO from "@modules/cars/dtos/ICreateCarDTO";
-import IFindCarsAvailableBetweenDatesDTO from "@modules/cars/dtos/IFindCarsAvailableBetweenDatesDTO";
+import { ICreateCarDTO } from "@modules/cars/dtos/ICreateCarDTO";
+import { IFindCarsAvailableBetweenDatesDTO } from "@modules/cars/dtos/IFindCarsAvailableBetweenDatesDTO";
 import ICarsRepository from "@modules/cars/repositories/ICarsRepository";
 import { prisma } from "@shared/services/prisma";
 
@@ -26,7 +26,7 @@ class CarsRepository implements ICarsRepository {
           },
         ],
       },
-      take: 3,
+      take: search ? 3 : undefined,
     });
   }
 

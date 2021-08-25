@@ -1,6 +1,6 @@
 import { Users as User } from "@prisma/client";
 
-import ICreateUserDTO from "../dtos/ICreateUserDTO";
+import { ICreateUserDTO } from "../dtos/ICreateUserDTO";
 import { IUsersModelCreate } from "../infra/prisma/model/UsersModelCreate";
 
 interface IUsersRepository {

@@ -1,6 +1,6 @@
-import ICreateCarDetailsDTO from "./ICreateCarDetailsDTO";
+import { ICreateCarDetailsDTO } from "./ICreateCarDetailsDTO";
 
-export default interface ICreateCarDTO {
+export interface ICreateCarDTO {
   plate: string;
   brand: string;
   model: string;
