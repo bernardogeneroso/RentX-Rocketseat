@@ -45,7 +45,7 @@ carsRouter.get(
         transmission: Yup.mixed<"auto" | "manual">()
           .oneOf(["auto", "manual"])
           .required(),
-      }),
+      }).default(undefined),
     }),
   }),
   carsBetweenDatesController.index

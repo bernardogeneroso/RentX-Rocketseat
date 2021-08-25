@@ -10,6 +10,13 @@ class CarsRepository implements ICarsRepository {
     search || (search = "");
 
     return await prisma.cars.findMany({
+      include: {
+        carsImages: {
+          select: {
+            url: true,
+          },
+        },
+      },
       where: {
         OR: [
           {
@@ -41,6 +48,11 @@ class CarsRepository implements ICarsRepository {
   async findCarDetailsById(plate: string): Promise<Car | null> {
     return await prisma.cars.findUnique({
       include: {
+        carsImages: {
+          select: {
+            url: true,
+          },
+        },
         carDetail: true,
       },
       where: {
@@ -51,6 +63,26 @@ class CarsRepository implements ICarsRepository {
 
   async findCarsRentedByUser(userId: string): Promise<Car[] | null> {
     return await prisma.cars.findMany({
+      include: {
+        carsImages: {
+          select: {
+            url: true,
+          },
+        },
+        carsAppointments: {
+          select: {
+            start_in: true,
+            end_in: true,
+            rentalPrice: true,
+          },
+          orderBy: {
+            start_in: "desc",
+          },
+          where: {
+            userId,
+          },
+        },
+      },
       where: {
         carsAppointments: {
           some: {
@@ -65,6 +97,13 @@ class CarsRepository implements ICarsRepository {
     data: IFindCarsAvailableBetweenDatesDTO
   ): Promise<Car[] | null> {
     return prisma.cars.findMany({
+      include: {
+        carsImages: {
+          select: {
+            url: true,
+          },
+        },
+      },
       where: {
         carsAppointments: {
           none: {

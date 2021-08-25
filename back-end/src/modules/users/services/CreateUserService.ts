@@ -42,7 +42,7 @@ class CreateUserService {
       password: hashedPass,
     });
 
-    // Send email
+    /*// Send email
     const mailTemplate = path.resolve(
       __dirname,
       "..",
@@ -59,7 +59,7 @@ class CreateUserService {
           name: user.name,
         },
       },
-    });
+    });*/
 
     return user;
   }
