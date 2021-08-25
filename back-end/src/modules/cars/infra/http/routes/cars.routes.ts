@@ -52,6 +52,16 @@ carsRouter.get(
 );
 carsRouter.get("/schedules", carsController.userSchedules);
 carsRouter.get("/favourite", carsController.favouriteCar);
+carsRouter.get(
+  "/details/:plate",
+  schemaValidation({
+    schema: Yup.object({
+      plate: Yup.string().length(6).required(),
+    }),
+    segments: "params",
+  }),
+  carsController.carDetails
+);
 
 carsRouter.post(
   "/",

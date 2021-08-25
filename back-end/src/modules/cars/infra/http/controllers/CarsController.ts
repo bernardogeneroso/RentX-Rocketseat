@@ -6,6 +6,7 @@ import CreateCarService from "../../../services/CreateCarService";
 import ScheduledCarsByUser from "../../../services/ScheduledCarsByUser";
 import MostRentedCarByUserService from "../../../services/MostRentedCarByUserService";
 import UpdateCarImagesService from "../../../services/UpdateCarImagesService";
+import CarDetailsService from "../../../services/CarDetailsService";
 import AppError from "@shared/errors/AppError";
 
 class CarsController {
@@ -19,6 +20,16 @@ class CarsController {
     });
 
     return response.json(cars);
+  }
+
+  async carDetails(request: Request, response: Response): Promise<Response> {
+    const { plate } = request.params;
+
+    const carDetailsService = container.resolve(CarDetailsService);
+
+    const car = await carDetailsService.execute(plate);
+
+    return response.json(car);
   }
 
   async favouriteCar(request: Request, response: Response): Promise<Response> {

@@ -38,6 +38,17 @@ class CarsRepository implements ICarsRepository {
     });
   }
 
+  async findCarDetailsById(plate: string): Promise<Car | null> {
+    return await prisma.cars.findUnique({
+      include: {
+        carDetail: true,
+      },
+      where: {
+        plate,
+      },
+    });
+  }
+
   async findCarsRentedByUser(userId: string): Promise<Car[] | null> {
     return await prisma.cars.findMany({
       where: {
@@ -75,18 +86,10 @@ class CarsRepository implements ICarsRepository {
         },
         fuel: data.filter?.fuel,
         transmission: data.filter?.transmission,
-        AND: [
-          {
-            pricePerDay: {
-              gte: data.filter?.pricesPerDay.startPricePerDay,
-            },
-          },
-          {
-            pricePerDay: {
-              lte: data.filter?.pricesPerDay.endPricePerDay,
-            },
-          },
-        ],
+        pricePerDay: {
+          gte: data.filter?.pricesPerDay.startPricePerDay,
+          lte: data.filter?.pricesPerDay.endPricePerDay,
+        },
       },
     });
   }

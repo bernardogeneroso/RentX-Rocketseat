@@ -54,8 +54,6 @@ class ScheduledCarsByUser {
     } else {
       const imageContent = await this.carsImagesRepository.findCarImage(oldUrl);
 
-      console.log(imageContent, url);
-
       if (!imageContent) {
         await this.storageProvider.deleteFile({
           file: oldUrl,
