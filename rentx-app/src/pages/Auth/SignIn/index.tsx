@@ -5,6 +5,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  StatusBar,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { useForm, Controller } from 'react-hook-form'
@@ -94,98 +95,108 @@ export function SignIn({ route }: SignInProps) {
   }, [])
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{
-        flex: 1,
-      }}
-      onLayout={handleChangeMessageLeave}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <Header>
-            <ButtonGoBack onPress={handleNavigateToOnBoard}>
-              <Feather name="chevron-left" size={24} color="#AEAEB3" />
-            </ButtonGoBack>
-          </Header>
+    <>
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle="dark-content"
+        translucent
+      />
 
-          <Information>
-            <TextAnimation isVisible={messageLeave}>
-              <Title>We are{'\n'}almost there.</Title>
-            </TextAnimation>
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={{
+          flex: 1,
+        }}
+        onLayout={handleChangeMessageLeave}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <Container>
+            <Header>
+              <ButtonGoBack onPress={handleNavigateToOnBoard}>
+                <Feather name="chevron-left" size={24} color="#AEAEB3" />
+              </ButtonGoBack>
+            </Header>
 
-            <TextAnimation>
-              <Subtitle>
-                Login to get started{'\n'}an amazing experience.
-              </Subtitle>
-            </TextAnimation>
-          </Information>
+            <Information>
+              <TextAnimation isVisible={messageLeave}>
+                <Title>We are{'\n'}almost there.</Title>
+              </TextAnimation>
 
-          <Form>
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value, name } }) => (
-                <Input
-                  name={name}
-                  placeholder="E-mail"
-                  error={errors.email}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="email"
-              defaultValue=""
-            />
-            <Controller
-              control={control}
-              rules={{
-                required: true,
-              }}
-              render={({ field: { onChange, onBlur, value, name } }) => (
-                <Input
-                  name={name}
-                  placeholder="Password"
-                  error={errors.password}
-                  onBlur={onBlur}
-                  onChangeText={onChange}
-                  value={value}
-                />
-              )}
-              name="password"
-              defaultValue=""
-            />
+              <TextAnimation>
+                <Subtitle>
+                  Login to get started{'\n'}an amazing experience.
+                </Subtitle>
+              </TextAnimation>
+            </Information>
 
-            <ContentOptions>
-              <Remember>
-                <CheckBox
-                  onPress={handleChangeCheckbox}
-                  isChecked={checkboxRemember}
-                  disableBuiltInState
-                  iconStyle={{
-                    backgroundColor: checkboxRemember
-                      ? theme.colors.background
-                      : theme.colors.grey100,
-                    borderRadius: 0,
-                    borderColor: '#fff',
-                  }}
-                />
+            <Form>
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value, name } }) => (
+                  <Input
+                    name={name}
+                    placeholder="E-mail"
+                    error={errors.email}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name="email"
+                defaultValue=""
+              />
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                }}
+                render={({ field: { onChange, onBlur, value, name } }) => (
+                  <Input
+                    name={name}
+                    placeholder="Password"
+                    error={errors.password}
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                  />
+                )}
+                name="password"
+                defaultValue=""
+              />
 
-                <RememberText>Remember</RememberText>
-              </Remember>
+              <ContentOptions>
+                <Remember>
+                  <CheckBox
+                    onPress={handleChangeCheckbox}
+                    isChecked={checkboxRemember}
+                    disableBuiltInState
+                    iconStyle={{
+                      backgroundColor: checkboxRemember
+                        ? theme.colors.background
+                        : theme.colors.grey100,
+                      borderRadius: 0,
+                      borderColor: '#fff',
+                    }}
+                  />
 
-              <ButtonForgetMyPassword>
-                <ForgetMyPasswordText>Forget my password!</ForgetMyPasswordText>
-              </ButtonForgetMyPassword>
-            </ContentOptions>
+                  <RememberText>Remember</RememberText>
+                </Remember>
 
-            <Button text="Login" onPress={handleSubmit(handleOnSubmit)} />
-          </Form>
-        </Container>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+                <ButtonForgetMyPassword>
+                  <ForgetMyPasswordText>
+                    Forget my password!
+                  </ForgetMyPasswordText>
+                </ButtonForgetMyPassword>
+              </ContentOptions>
+
+              <Button text="Login" onPress={handleSubmit(handleOnSubmit)} />
+            </Form>
+          </Container>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </>
   )
 }

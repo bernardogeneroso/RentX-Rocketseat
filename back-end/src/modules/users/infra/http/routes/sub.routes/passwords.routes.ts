@@ -24,7 +24,7 @@ passwordsRouter.post(
   schemaValidation({
     schema: Yup.object({
       token: Yup.string().uuid().required(),
-      password: Yup.string().required(),
+      password: Yup.string().min(6).required(),
       password_confirmation: Yup.string()
         .oneOf([Yup.ref("password"), null], "Password must match")
         .required(),
@@ -37,8 +37,8 @@ passwordsRouter.put(
   ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
-      actual_password: Yup.string().required(),
-      password: Yup.string().required(),
+      actual_password: Yup.string().min(6).required(),
+      password: Yup.string().min(6).required(),
       password_confirmation: Yup.string()
         .oneOf([Yup.ref("password"), null], "Password must match")
         .required(),

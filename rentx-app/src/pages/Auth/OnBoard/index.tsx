@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
-import { Image, TouchableOpacity } from 'react-native'
+import { Image, TouchableOpacity, StatusBar } from 'react-native'
 import PagerView from 'react-native-pager-view'
 import { Feather } from '@expo/vector-icons'
 
@@ -36,6 +36,8 @@ export function OnBoard({ route }: OnBoardProps) {
   const pagerViewRef = useRef<PagerView>(null)
   const navigation = useNavigation()
 
+  const [pageSelected, setPageSelected] = useState(0)
+
   function setPage(page: number) {
     pagerViewRef.current?.setPage(page)
   }
@@ -51,75 +53,90 @@ export function OnBoard({ route }: OnBoardProps) {
   }
 
   return (
-    <Container>
-      <PagerView
-        ref={pagerViewRef}
-        style={{
-          flex: 1,
-        }}
-        initialPage={route.params?.page ?? 0}
-      >
-        {onboard.map((item, index) =>
-          index !== onboard.length - 1 ? (
-            <ContainerOnboard key={item.id}>
-              <Header>
-                <Image source={item.image} />
+    <>
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle={
+          pageSelected === 0 || pageSelected === 1
+            ? 'dark-content'
+            : 'light-content'
+        }
+        translucent
+      />
 
-                <Numbering>
-                  {item.id.length === 1 ? '0' + item.id : item.id}
-                </Numbering>
-              </Header>
+      <Container>
+        <PagerView
+          ref={pagerViewRef}
+          style={{
+            flex: 1,
+          }}
+          initialPage={route.params?.page ?? 0}
+          onPageSelected={(props) =>
+            setPageSelected(props.nativeEvent.position)
+          }
+        >
+          {onboard.map((item, index) =>
+            index !== onboard.length - 1 ? (
+              <ContainerOnboard key={item.id}>
+                <Header>
+                  <Image source={item.image} />
 
-              <Content>
-                <Title>{item.title}</Title>
+                  <Numbering>
+                    {item.id.length === 1 ? '0' + item.id : item.id}
+                  </Numbering>
+                </Header>
 
-                <Subtitle>{item.subtitle}</Subtitle>
-              </Content>
+                <Content>
+                  <Title>{item.title}</Title>
 
-              <Footer>
-                <PagesContainer>
-                  <Dot active={index === 0} />
-                  <Dot active={index === 1} />
-                </PagesContainer>
+                  <Subtitle>{item.subtitle}</Subtitle>
+                </Content>
 
-                <TouchableOpacity
-                  onPress={() => setPage((index + 1) % onboard.length)}
-                >
-                  <Feather name="chevron-right" size={24} color="#AEAEB3" />
-                </TouchableOpacity>
-              </Footer>
-            </ContainerOnboard>
-          ) : (
-            <ContainerOnboard key={item.id} lastView>
-              <Header lastView>
-                <Image source={item.image} />
-              </Header>
+                <Footer>
+                  <PagesContainer>
+                    <Dot active={index === 0} />
+                    <Dot active={index === 1} />
+                  </PagesContainer>
 
-              <Content>
-                <Title lastView>{item.title}</Title>
+                  <TouchableOpacity
+                    onPress={() => setPage((index + 1) % onboard.length)}
+                  >
+                    <Feather name="chevron-right" size={24} color="#AEAEB3" />
+                  </TouchableOpacity>
+                </Footer>
+              </ContainerOnboard>
+            ) : (
+              <ContainerOnboard key={item.id} lastView>
+                <Header lastView>
+                  <Image source={item.image} />
+                </Header>
 
-                <Subtitle lastView>{item.subtitle}</Subtitle>
-              </Content>
+                <Content>
+                  <Title lastView>{item.title}</Title>
 
-              <Footer lastView>
-                <FooterContent>
-                  <Button onPress={handleNavigateToSignIn}>
-                    <ButtonText>Sign In</ButtonText>
-                  </Button>
+                  <Subtitle lastView>{item.subtitle}</Subtitle>
+                </Content>
 
-                  <Button onPress={handleNavigateToSignUp} second>
-                    <ButtonText>Sign Up</ButtonText>
-                  </Button>
-                </FooterContent>
+                <Footer lastView>
+                  <FooterContent>
+                    <Button onPress={handleNavigateToSignIn}>
+                      <ButtonText>Sign In</ButtonText>
+                    </Button>
 
-                <ButtonGoBack onPress={() => setPage(0)}>
-                  <ButtonGoBackText>Go back</ButtonGoBackText>
-                </ButtonGoBack>
-              </Footer>
-            </ContainerOnboard>
-          )
-        )}
-      </PagerView>
-    </Container>
+                    <Button onPress={handleNavigateToSignUp} second>
+                      <ButtonText>Sign Up</ButtonText>
+                    </Button>
+                  </FooterContent>
+
+                  <ButtonGoBack onPress={() => setPage(0)}>
+                    <ButtonGoBackText>Go back</ButtonGoBackText>
+                  </ButtonGoBack>
+                </Footer>
+              </ContainerOnboard>
+            )
+          )}
+        </PagerView>
+      </Container>
+    </>
   )
 }

@@ -5,6 +5,7 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  StatusBar,
 } from 'react-native'
 
 import { Step1 } from './step1'
@@ -37,26 +38,34 @@ export function SignUp() {
   }
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
-      style={{
-        flex: 1,
-      }}
-      onLayout={handleChangeMessageLeave}
-    >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <PagerView
-          ref={pagerViewRef}
-          style={{
-            flex: 1,
-          }}
-          initialPage={0}
-          scrollEnabled={false}
-        >
-          <Step1 {...{ messageLeave, setPage, handleSaveDataStep1 }} />
-          <Step2 {...{ messageLeave, setPage, dataStep1 }} />
-        </PagerView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+    <>
+      <StatusBar
+        backgroundColor="transparent"
+        barStyle="dark-content"
+        translucent
+      />
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+        style={{
+          flex: 1,
+        }}
+        onLayout={handleChangeMessageLeave}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <PagerView
+            ref={pagerViewRef}
+            style={{
+              flex: 1,
+            }}
+            initialPage={0}
+            scrollEnabled={false}
+          >
+            <Step1 {...{ messageLeave, setPage, handleSaveDataStep1 }} />
+            <Step2 {...{ messageLeave, setPage, dataStep1 }} />
+          </PagerView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </>
   )
 }
