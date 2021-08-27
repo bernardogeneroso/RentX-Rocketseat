@@ -13,6 +13,7 @@ import {
   Archivo_700Bold,
 } from '@expo-google-fonts/archivo'
 
+import AppProvider from './src/hooks'
 import { Routes } from './src/routes'
 
 export default function App() {
@@ -31,7 +32,9 @@ export default function App() {
     <>
       <StatusBar backgroundColor="transparent" translucent />
 
-      <Routes />
+      <AppProvider>
+        <Routes />
+      </AppProvider>
     </>
   )
 }

@@ -6,6 +6,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   StatusBar,
+  Alert,
 } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 import { useForm, Controller } from 'react-hook-form'
@@ -14,6 +15,7 @@ import * as yup from 'yup'
 
 import { TextAnimation } from '../../../components/TextAnimation'
 import Input from '../../../components/Input'
+import useAuth from '../../../hooks/useAuth'
 import { Button } from '../../../components/Button'
 import { theme } from '../../../global/styles/theme'
 
@@ -59,6 +61,7 @@ interface SignInProps {
 
 export function SignIn({ route }: SignInProps) {
   const navigation = useNavigation()
+  const { signIn } = useAuth()
   const {
     control,
     handleSubmit,
@@ -89,10 +92,21 @@ export function SignIn({ route }: SignInProps) {
     })
   }, [])
 
-  const handleOnSubmit = useCallback((data: FormData) => {
-    console.log(data)
-    // { email: 'test@example.com', password: '123456' }
-  }, [])
+  const handleOnSubmit = useCallback(
+    async (data: FormData) => {
+      console.log(data)
+
+      try {
+        await signIn({
+          email: data.email,
+          password: data.password,
+        })
+      } catch (err: any) {
+        Alert.alert('Error on sign in', err.message)
+      }
+    },
+    [signIn]
+  )
 
   return (
     <>
