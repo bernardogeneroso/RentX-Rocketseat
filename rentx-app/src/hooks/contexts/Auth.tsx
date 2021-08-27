@@ -8,6 +8,7 @@ interface User {
   id: string
   name: string
   email: string
+  avatar: string
   avatar_url: string
 }
 
@@ -51,6 +52,13 @@ const AuthProvider: React.FC = ({ children }) => {
 
       if (token[1] && user[1]) {
         api.defaults.headers.authorization = `Bearer ${token[1]}`
+
+        /*try {
+          await api.get('/users/session/validate')
+        } catch (err) {
+          setLoading(false)
+          return
+        }*/
 
         setData({ token: token[1], user: JSON.parse(user[1]) })
       }

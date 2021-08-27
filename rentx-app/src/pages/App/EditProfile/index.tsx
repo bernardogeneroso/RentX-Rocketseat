@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 import { TabsProfile } from './TabsProfile'
+import useAuth from '../../../hooks/useAuth'
 
 import ArrowLeftIcon from '../../../assets/arrow-left.svg'
 import CameraIcon from '../../../assets/camera.svg'
@@ -19,6 +20,7 @@ import {
 
 export function EditProfile() {
   const navigation = useNavigation()
+  const { user } = useAuth()
 
   function handleRedirectBack() {
     // @ts-ignore
@@ -45,7 +47,7 @@ export function EditProfile() {
         <SubContentEditProfileImage>
           <ProfileImage
             source={{
-              uri: 'https://avatars.githubusercontent.com/u/58465456?v=4',
+              uri: user.avatar_url || undefined,
             }}
           />
 

@@ -2,6 +2,8 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { StatusBar, BackHandler } from 'react-native'
 
+import useAuth from '../../hooks/useAuth'
+
 import Union from '../../assets/union.svg'
 import Done from '../../assets/done.svg'
 import Error from '../../assets/error.svg'
@@ -36,6 +38,7 @@ export function ModalStatus({
   },
 }: ModalStatusProps) {
   const navigation = useNavigation()
+  const { signOut } = useAuth()
 
   let actionOne = () => {}
   let actionTwo = () => {}
@@ -66,7 +69,9 @@ export function ModalStatus({
         }
       }
 
-      actionTwo = () => {
+      actionTwo = async () => {
+        await signOut()
+
         BackHandler.exitApp()
       }
       break
