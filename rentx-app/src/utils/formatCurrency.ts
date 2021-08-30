@@ -1,5 +1,3 @@
-import numbro from 'numbro'
-
 export function formatCurrent(
   price: number,
   local: 'pt-PT' | 'en-US',
@@ -10,6 +8,4 @@ export function formatCurrent(
     currency,
     currencyDisplay: 'symbol',
   })} €`
-
-  //return numbro(price).formatCurrency(local)
 }

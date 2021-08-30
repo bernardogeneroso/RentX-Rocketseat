@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+
+import useHome from '../../../../../../hooks/useHome'
+import { CombustionSelected } from '../../../../../../hooks/contexts/Home'
 
 import Gasoline from '../../../../../../assets/gasoline.svg'
 import Electric from '../../../../../../assets/electric.svg'
@@ -13,22 +16,11 @@ import {
   FuelText,
 } from './styles'
 
-type CombustionSelected = 'Gasoline' | 'Electric' | 'Alcohol'
-
-interface CombustionProps {
-  cleanMode: boolean
-}
-
-export function Combustion({ cleanMode }: CombustionProps) {
-  const [combustionSelected, setCombustionSelected] =
-    useState<CombustionSelected>('Gasoline')
-
-  useEffect(() => {
-    setCombustionSelected('Gasoline')
-  }, [cleanMode])
+export function Combustion() {
+  const { combustionSelected, handleSetCombustionSelected } = useHome()
 
   function handleChangeCombustionSelected(combustion: CombustionSelected) {
-    setCombustionSelected(combustion)
+    handleSetCombustionSelected(combustion)
   }
 
   return (
@@ -39,29 +31,29 @@ export function Combustion({ cleanMode }: CombustionProps) {
 
       <Content>
         <ContentFuel
-          onPress={() => handleChangeCombustionSelected('Gasoline')}
-          active={combustionSelected === 'Gasoline'}
+          onPress={() => handleChangeCombustionSelected('gasoline')}
+          active={combustionSelected === 'gasoline'}
         >
           <Gasoline
-            fill={combustionSelected === 'Gasoline' ? '#DC1637' : '#AEAEB3'}
+            fill={combustionSelected === 'gasoline' ? '#DC1637' : '#AEAEB3'}
           />
           <FuelText>Gasoline</FuelText>
         </ContentFuel>
         <ContentFuel
-          onPress={() => handleChangeCombustionSelected('Electric')}
-          active={combustionSelected === 'Electric'}
+          onPress={() => handleChangeCombustionSelected('electric')}
+          active={combustionSelected === 'electric'}
         >
           <Electric
-            fill={combustionSelected === 'Electric' ? '#DC1637' : '#AEAEB3'}
+            fill={combustionSelected === 'electric' ? '#DC1637' : '#AEAEB3'}
           />
           <FuelText>Electric</FuelText>
         </ContentFuel>
         <ContentFuel
-          onPress={() => handleChangeCombustionSelected('Alcohol')}
-          active={combustionSelected === 'Alcohol'}
+          onPress={() => handleChangeCombustionSelected('alcohol')}
+          active={combustionSelected === 'alcohol'}
         >
           <Alcohol
-            fill={combustionSelected === 'Alcohol' ? '#DC1637' : '#AEAEB3'}
+            fill={combustionSelected === 'alcohol' ? '#DC1637' : '#AEAEB3'}
           />
           <FuelText>Alcohol</FuelText>
         </ContentFuel>

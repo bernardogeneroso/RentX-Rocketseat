@@ -2,23 +2,17 @@ import React, { useEffect, useState } from 'react'
 // @ts-ignore
 import Slider from 'react-native-sliders'
 
+import useHome from '../../../../../../hooks/useHome'
+
 import SliderImage from '../../../../../../assets/slider.png'
 
 import { Container, Header, DayPriceText, PricesText, Content } from './styles'
 
-interface DayPriceProps {
-  cleanMode: boolean
-}
-
-export function DayPrice({ cleanMode }: DayPriceProps) {
-  const [slider, setSlider] = useState([160, 380])
-
-  useEffect(() => {
-    setSlider([160, 380])
-  }, [cleanMode])
+export function DayPrice() {
+  const { handleSetDayPriceSlider, dayPriceSlider } = useHome()
 
   function handleChangeSliderValues(value: number[]) {
-    setSlider(value)
+    handleSetDayPriceSlider(value[0], value[1])
   }
 
   return (
@@ -27,13 +21,13 @@ export function DayPrice({ cleanMode }: DayPriceProps) {
         <DayPriceText>Daily price</DayPriceText>
 
         <PricesText>
-          {slider[0]}€ - {slider[1]}€
+          {dayPriceSlider[0]}€ - {dayPriceSlider[1]}€
         </PricesText>
       </Header>
 
       <Content>
         <Slider
-          value={slider}
+          value={dayPriceSlider}
           minimumValue={1}
           maximumValue={800}
           minimumTrackTintColor="#DC1637"

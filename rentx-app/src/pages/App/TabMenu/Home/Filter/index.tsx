@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Modal from 'react-native-modal'
 
+import useHome from '../../../../../hooks/useHome'
 import { QuickButton } from '../../../../../components/QuickButton'
 import { DayPrice } from './DayPrice'
 import { Combustion } from './Combustion'
@@ -25,11 +26,7 @@ interface FilterProps {
 }
 
 export function Filter({ modal, handleToggleModal }: FilterProps) {
-  const [cleanMode, setCleanMode] = useState(false)
-
-  function handleCleanAllFields() {
-    setCleanMode((value) => !value)
-  }
+  const { handleCleanAllFields, handleGetApiCarsWithFilters } = useHome()
 
   return (
     <ContainerModal>
@@ -60,11 +57,14 @@ export function Filter({ modal, handleToggleModal }: FilterProps) {
           </Header>
 
           <Content>
-            <DayPrice {...{ cleanMode }} />
-            <Combustion {...{ cleanMode }} />
-            <Transmission {...{ cleanMode }} />
+            <DayPrice />
+            <Combustion />
+            <Transmission />
 
-            <ButtonConfirm text="Confirm" />
+            <ButtonConfirm
+              text="Confirm"
+              onPress={handleGetApiCarsWithFilters}
+            />
           </Content>
         </Container>
       </Modal>

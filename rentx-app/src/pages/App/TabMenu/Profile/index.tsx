@@ -42,6 +42,10 @@ interface CarFavorite {
     updated_at: Date
     used: number
     daysUsed: number
+    carsImages: {
+      url: string
+      carId: string
+    }[]
   }
 }
 
@@ -55,7 +59,7 @@ export function Profile() {
 
   useEffect(() => {
     async function loadWithPage() {
-      const response = await api.get('/cars/favourite')
+      const response = await api.get('/cars/favorite')
 
       setCarFavorite(response.data)
     }
@@ -129,7 +133,7 @@ export function Profile() {
             </CarUsedTimesText>
           </HeaderFavoriteCar>
 
-          <CarSimplified car={cars[cars.length - 1]} />
+          {carFavorite && <CarSimplified car={carFavorite.car} />}
         </ContentFavoriteCar>
       </Content>
     </Container>

@@ -3,11 +3,9 @@ import { useNavigation } from '@react-navigation/native'
 // @ts-ignore
 import { FlatListSlider } from 'react-native-flatlist-slider'
 
-import { Cars } from '../../../utils/cars'
+import { Fuel } from '../../Fuel'
+import { CarsBetweenDates } from '../../../pages/App/TabMenu/Home'
 import { formatCurrent } from '../../../utils/formatCurrency'
-
-import Electric from '../../../assets/electric.svg'
-import Gasoline from '../../../assets/gasoline.svg'
 
 import { Dot } from '../../../pages/Auth/OnBoard/styles'
 import {
@@ -18,20 +16,26 @@ import {
   CarModel,
   CarPrice,
   Content,
-  CarImage,
   Footer,
   CarFuel,
   ContainerSlider,
 } from './styles'
 
 interface CarExtendedProps {
-  car: Cars
+  car: CarsBetweenDates
 }
 
 export function CarExtended({ car }: CarExtendedProps) {
-  const carImages = car.images.map((item) => ({
-    image: item,
-  }))
+  let carImages: any[] = []
+
+  car.carsImages.forEach((item, index) => {
+    carImages.push(
+      Object.assign({
+        image: item.url,
+        desc: index.toString(),
+      })
+    )
+  })
 
   const navigation = useNavigation()
 
@@ -56,27 +60,28 @@ export function CarExtended({ car }: CarExtendedProps) {
 
         <CarDetails>
           <CarText>Per day</CarText>
-          <CarPrice>
-            {formatCurrent(car.price.per_day, 'pt-PT', car.price.currency)}
-          </CarPrice>
+          <CarPrice>{formatCurrent(car.pricePerDay, 'pt-PT', 'EUR')}</CarPrice>
         </CarDetails>
       </Header>
       <Content>
-        <FlatListSlider
-          data={carImages}
-          indicator={false}
-          onChangeFlatlistSlider={handleFlatListSliderIndex}
-        />
+        {Object.assign(carImages).length !== 0 && (
+          <FlatListSlider
+            data={carImages}
+            indicator={false}
+            onChangeFlatlistSlider={handleFlatListSliderIndex}
+          />
+        )}
       </Content>
       <Footer>
         <CarFuel>
-          {car.fuel === 'electric' ? <Electric /> : <Gasoline />}
+          <Fuel fuel={car.fuel} />
         </CarFuel>
 
         <ContainerSlider>
-          {carImages.map((item, index) => (
-            <Dot key={index} active={dotIndexFlatListSlider === index} />
-          ))}
+          {Object.assign(carImages).length !== 0 &&
+            carImages.map((item, index) => (
+              <Dot key={index} active={dotIndexFlatListSlider === index} />
+            ))}
         </ContainerSlider>
       </Footer>
     </Container>

@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useIsFocused, useNavigation } from '@react-navigation/native'
 import { format } from 'date-fns'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-import { cars } from '../../../../utils/cars'
-
+import useHome from '../../../../hooks/useHome'
 import { Filter } from './Filter'
 import { CarExtended } from '../../../../components/Car/CarExtended'
 import { CarListHeader } from './CarListHeader'
@@ -15,6 +14,8 @@ import { Container, Header, ButtonArrowDown, Content, CarList } from './styles'
 
 export function Home() {
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
+  const { cars, handleGetApiCars } = useHome()
 
   const [modal, setModal] = useState(false)
   const [inDate, setInDate] = useState<Date | null>(null)
@@ -22,18 +23,27 @@ export function Home() {
 
   useEffect(() => {
     async function loadWithPage() {
-      const data = await AsyncStorage.getItem('RenteX::datePicker')
+      if (isFocused) {
+        const data = await AsyncStorage.getItem('RenteX::datePicker')
 
-      if (!data) return
+        if (!data) return
 
-      const parseData = JSON.parse(data)
+        const { inDate, toDate } = JSON.parse(data)
 
-      setInDate(parseData.inDate)
-      setToDate(parseData.toDate)
+        setInDate(inDate)
+        setToDate(toDate)
+
+        await handleGetApiCars({
+          dates: {
+            startDate: inDate,
+            endDate: toDate,
+          },
+        })
+      }
     }
 
     loadWithPage()
-  }, [])
+  }, [isFocused])
 
   const handleToggleModal = useCallback(() => {
     setModal((value) => !value)
@@ -75,10 +85,15 @@ export function Home() {
       <Content>
         <CarList
           data={cars}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <CarExtended key={item.id} car={item} />}
+          keyExtractor={(item) => item.plate}
+          renderItem={({ item }) => <CarExtended key={item.plate} car={item} />}
           ListHeaderComponent={() => (
-            <CarListHeader {...{ handleOpenFilter }} />
+            <CarListHeader
+              {...{
+                handleOpenFilter,
+                carsLength: cars?.length || 0,
+              }}
+            />
           )}
         />
       </Content>

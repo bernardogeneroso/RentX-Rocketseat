@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+
+import useHome from '../../../../../../hooks/useHome'
+import { TransmissionSelected } from '../../../../../../hooks/contexts/Home'
 
 import {
   Container,
@@ -9,24 +12,13 @@ import {
   TransmissionStatusText,
 } from './styles'
 
-type TransmissionSelected = 'Automatic' | 'Manual'
-
-interface TransmissionProps {
-  cleanMode: boolean
-}
-
-export function Transmission({ cleanMode }: TransmissionProps) {
-  const [transmissionSelected, setTransmissionSelected] =
-    useState<TransmissionSelected>('Automatic')
-
-  useEffect(() => {
-    setTransmissionSelected('Automatic')
-  }, [cleanMode])
+export function Transmission() {
+  const { transmissionSelected, handleSetTransmissionSelected } = useHome()
 
   function handleChangeTransmissionSelected(
     transmission: TransmissionSelected
   ) {
-    setTransmissionSelected(transmission)
+    handleSetTransmissionSelected(transmission)
   }
 
   return (
@@ -37,14 +29,14 @@ export function Transmission({ cleanMode }: TransmissionProps) {
 
       <Content>
         <ContentTransmission
-          onPress={() => handleChangeTransmissionSelected('Automatic')}
-          active={transmissionSelected === 'Automatic'}
+          onPress={() => handleChangeTransmissionSelected('auto')}
+          active={transmissionSelected === 'auto'}
         >
           <TransmissionStatusText>Automatic</TransmissionStatusText>
         </ContentTransmission>
         <ContentTransmission
-          onPress={() => handleChangeTransmissionSelected('Manual')}
-          active={transmissionSelected === 'Manual'}
+          onPress={() => handleChangeTransmissionSelected('manual')}
+          active={transmissionSelected === 'manual'}
         >
           <TransmissionStatusText>Manual</TransmissionStatusText>
         </ContentTransmission>

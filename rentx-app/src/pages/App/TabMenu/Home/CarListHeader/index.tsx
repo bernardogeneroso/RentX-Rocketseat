@@ -1,22 +1,26 @@
 import React from 'react'
 
-import { cars } from '../../../../../utils/cars'
-
 import Filter from '../../../../../assets/filter.svg'
 
 import { Container, Title, Details, DetailsText, ButtonFilter } from './styles'
 
 interface CarListHeaderProps {
+  carsLength: number
   handleOpenFilter: () => void
 }
 
-export function CarListHeader({ handleOpenFilter }: CarListHeaderProps) {
+export function CarListHeader({
+  carsLength,
+  handleOpenFilter,
+}: CarListHeaderProps) {
   return (
     <Container>
       <Title>Results</Title>
 
       <Details>
-        <DetailsText>{cars.length} carros</DetailsText>
+        <DetailsText>{`${carsLength} ${
+          carsLength === 1 ? 'car' : 'cars'
+        }`}</DetailsText>
 
         <ButtonFilter onPress={handleOpenFilter}>
           <Filter />

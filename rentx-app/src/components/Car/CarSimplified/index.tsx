@@ -2,10 +2,9 @@ import React from 'react'
 import { format, isBefore } from 'date-fns'
 
 import { Cars } from '../../../utils/cars'
+import { Fuel } from '../../Fuel'
 import { formatCurrent } from '../../../utils/formatCurrency'
 
-import Electric from '../../../assets/electric.svg'
-import Gasoline from '../../../assets/gasoline.svg'
 import ArrowRightSmallIcon from '../../../assets/arrow-right-small.svg'
 
 import {
@@ -28,14 +27,26 @@ import {
 } from './styles'
 
 interface CarSimplifiedProps {
-  car: Cars
+  car: {
+    plate: string
+    brand: string
+    model: string
+    colour: string
+    fuel: 'electric' | 'gasoline' | 'alcohol'
+    transmission: 'manual' | 'auto'
+    pricePerDay: number
+    created_at: Date
+    updated_at: Date
+    used: number
+    daysUsed: number
+    carsImages: {
+      url: string
+      carId: string
+    }[]
+  }
 }
 
 export function CarSimplified({ car }: CarSimplifiedProps) {
-  const carImages = car.images.map((item) => ({
-    image: item,
-  }))
-
   return (
     <Container>
       <ContentInfo>
@@ -49,32 +60,32 @@ export function CarSimplified({ car }: CarSimplifiedProps) {
             <CarDetails>
               <CarText>Per day</CarText>
               <CarPrice>
-                {formatCurrent(car.price.per_day, 'pt-PT', car.price.currency)}
+                {/*formatCurrent(car.pricePerDay, 'pt-PT', 'EUR')*/}
               </CarPrice>
             </CarDetails>
 
             <CarFuel>
-              {car.fuel === 'electric' ? <Electric /> : <Gasoline />}
+              <Fuel fuel={car.fuel} />
             </CarFuel>
           </ContentPerDay>
         </Details>
 
-        <CarImage
-          source={{
-            uri: carImages[0].image,
-          }}
-          resizeMode="contain"
-        />
+        {/*<CarImage
+            source={{
+              uri: car.carsImages[0].url,
+            }}
+            resizeMode="contain"
+          />*/}
       </ContentInfo>
 
-      {car.start_date && car.end_date && isBefore(new Date(), car.end_date) && (
+      {/*car.start_date && car.end_date && isBefore(new Date(), car.end_date) && (
         <ContentSchedules>
           <ScheduleTimeText>
             Using until {format(new Date(car.end_date), 'LLLL d, yyyy')}
           </ScheduleTimeText>
         </ContentSchedules>
-      )}
-      {car.start_date && car.end_date && !isBefore(new Date(), car.end_date) && (
+      )*/}
+      {/*car.start_date && car.end_date && !isBefore(new Date(), car.end_date) && (
         <ContentSchedules timeMode>
           <TimeText>Time</TimeText>
 
@@ -90,7 +101,7 @@ export function CarSimplified({ car }: CarSimplifiedProps) {
             </EndTimeText>
           </ContentTime>
         </ContentSchedules>
-      )}
+      )*/}
     </Container>
   )
 }

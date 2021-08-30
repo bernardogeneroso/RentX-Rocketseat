@@ -2,7 +2,7 @@ import styled from 'styled-components/native'
 import { FlatList } from 'react-native'
 import { getStatusBarHeight } from 'react-native-iphone-x-helper'
 
-import { Cars } from '../../../../utils/cars'
+import { CarsBetweenDates } from '.'
 import { theme } from '../../../../global/styles/theme'
 
 export const Container = styled.View`
@@ -31,7 +31,7 @@ export const Content = styled.View`
   flex: 1;
 `
 
-export const CarList = styled(FlatList as new () => FlatList<Cars>)`
+export const CarList = styled(FlatList as new () => FlatList<CarsBetweenDates>)`
   flex: 1;
   padding-left: 16px;
   padding-right: 16px;
