@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
+import { api } from '../../../../../services/api'
 import Input from '../../../../../components/Input'
 import { Button } from '../../../../../components/Button'
 
@@ -38,19 +39,34 @@ export function ProfileChangePassword() {
     control,
     handleSubmit,
     formState: { errors },
+    reset: resetForm,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   })
 
-  function handleOnSubmit(data: FormData) {
-    console.log(data)
+  async function handleOnSubmit(data: FormData) {
+    try {
+      await api.put('/users/passwords/reset-authenticated', {
+        actual_password: data.current_password,
+        password: data.password,
+        password_confirmation: data.password_confirmation,
+      })
 
-    // @ts-ignore
-    navigation.navigate('ModalStatus', {
-      option: 'editProfile',
-      title: 'Done!',
-      subtitle: 'Now your info\nare update.',
-    })
+      resetForm()
+
+      // @ts-ignore
+      navigation.navigate('ModalStatus', {
+        option: 'editProfile',
+        title: 'Done!',
+        subtitle: 'Now your info\nare update.',
+      })
+    } catch {
+      // @ts-ignore
+      navigation.navigate('ModalStatus', {
+        option: 'stay',
+        title: 'Error on update profile',
+      })
+    }
   }
 
   return (

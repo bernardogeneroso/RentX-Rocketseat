@@ -46,9 +46,10 @@ export function Schedules() {
         <HeaderTitle>Schedules</HeaderTitle>
 
         <PeriodsText>
-          {`${carsSchedules?.length} ${
-            carsSchedules?.length === 1 ? 'period' : 'periods'
-          }`}
+          {carsSchedules &&
+            `${carsSchedules.length} ${
+              carsSchedules.length === 1 ? 'period' : 'periods'
+            }`}
         </PeriodsText>
       </Header>
 

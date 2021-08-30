@@ -80,7 +80,7 @@ export function App() {
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName="TabMenu"
+        initialRouteName="DatePicker"
       >
         <StackApp.Screen name="TabMenu" component={TabMenu} />
         <StackApp.Screen name="DatePicker" component={DatePicker} />

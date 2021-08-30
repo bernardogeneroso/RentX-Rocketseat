@@ -23,7 +23,7 @@ import {
 interface ModalStatusProps {
   route: {
     params: {
-      option: 'signIn' | 'editProfile' | 'exitApp' | 'carDetails'
+      option: 'signIn' | 'editProfile' | 'exitApp' | 'carDetails' | 'stay'
       status?: 'success' | 'error'
       button?: 'one' | 'two'
       title: string
@@ -38,7 +38,7 @@ export function ModalStatus({
   },
 }: ModalStatusProps) {
   const navigation = useNavigation()
-  const { signOut } = useAuth()
+  const { signOut, user } = useAuth()
 
   let actionOne = () => {}
   let actionTwo = () => {}
@@ -60,8 +60,10 @@ export function ModalStatus({
       break
     case 'exitApp':
       actionOne = () => {
-        // @ts-ignore
-        if (navigation.canGoBack()) {
+        if (!user) {
+          // @ts-ignore
+          navigation.navigate('SignIn')
+        } else if (navigation.canGoBack()) {
           navigation.goBack()
         } else {
           // @ts-ignore
@@ -79,6 +81,11 @@ export function ModalStatus({
       actionOne = () => {
         // @ts-ignore
         navigation.navigate('TabMenu')
+      }
+      break
+    case 'stay':
+      actionOne = () => {
+        navigation.goBack()
       }
       break
     default:

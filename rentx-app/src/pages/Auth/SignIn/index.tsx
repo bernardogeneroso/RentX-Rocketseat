@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import {
   KeyboardAvoidingView,
   Platform,
@@ -61,10 +62,12 @@ interface SignInProps {
 
 export function SignIn({ route }: SignInProps) {
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
   const { signIn } = useAuth()
   const {
     control,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(schema),
@@ -72,6 +75,25 @@ export function SignIn({ route }: SignInProps) {
 
   const [checkboxRemember, setCheckboxRemember] = useState(false)
   const [messageLeave, setMessageLeave] = useState(false)
+
+  useEffect(() => {
+    if (isFocused) {
+      async function loadWithPage() {
+        const remember = await AsyncStorage.getItem(
+          'RenteX:rememberCredentials'
+        )
+
+        if (remember && JSON.parse(remember)) {
+          const { email, password } = JSON.parse(remember)
+
+          setValue('email', email)
+          setValue('password', password)
+        }
+      }
+
+      loadWithPage()
+    }
+  }, [isFocused])
 
   useEffect(() => {
     if (route.params?.correctTitle) handleChangeMessageLeave()
@@ -94,18 +116,17 @@ export function SignIn({ route }: SignInProps) {
 
   const handleOnSubmit = useCallback(
     async (data: FormData) => {
-      console.log(data)
-
       try {
         await signIn({
           email: data.email,
           password: data.password,
+          remember: checkboxRemember,
         })
       } catch (err: any) {
-        Alert.alert('Error on sign in', err.message)
+        Alert.alert('Error on sign in', err.response.data.message)
       }
     },
-    [signIn]
+    [signIn, checkboxRemember]
   )
 
   return (

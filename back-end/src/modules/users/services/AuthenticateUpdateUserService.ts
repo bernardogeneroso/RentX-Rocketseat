@@ -1,3 +1,5 @@
+import { Users as User } from "@prisma/client";
+
 import UsersRepository from "../infra/prisma/repositories/UsersRepository";
 import IUsersRepository from "../repositories/IUsersRepository";
 import AppError from "@shared/errors/AppError";
@@ -15,7 +17,7 @@ class AuthenticateUpdateUserService {
     this.usersRepository = new UsersRepository();
   }
 
-  async execute({ userId, name, email }: IRequest): Promise<void> {
+  async execute({ userId, name, email }: IRequest): Promise<User> {
     const user = await this.usersRepository.findById(userId);
     if (!user) throw new AppError("Error on update user");
 
@@ -23,6 +25,8 @@ class AuthenticateUpdateUserService {
     user.email = email;
 
     await this.usersRepository.save(user);
+
+    return user;
   }
 }
 

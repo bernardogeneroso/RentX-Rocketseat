@@ -1,5 +1,5 @@
-import React from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, { useEffect } from 'react'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -12,8 +12,10 @@ import * as yup from 'yup'
 
 import Input from '../../../../../components/Input'
 import { Button } from '../../../../../components/Button'
+import useAuth from '../../../../../hooks/useAuth'
 
 import { Form, Content } from './styles'
+import { api } from '../../../../../services/api'
 
 interface FormData {
   name: string
@@ -30,24 +32,50 @@ const schema = yup.object().shape({
 
 export function ProfileChangeData() {
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
+  const { user, updateUser } = useAuth()
 
   const {
     control,
     handleSubmit,
     formState: { errors },
+    reset: resetForm,
+    setValue,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
   })
 
-  function handleOnSubmit(data: FormData) {
-    console.log(data)
+  useEffect(() => {
+    if (isFocused) {
+      setValue('name', user.name)
+      setValue('email', user.email)
+    }
+  }, [isFocused, user.name, user.email])
 
-    // @ts-ignore
-    navigation.navigate('ModalStatus', {
-      option: 'editProfile',
-      title: 'Done!',
-      subtitle: 'Now your info\nare update.',
-    })
+  async function handleOnSubmit(data: FormData) {
+    try {
+      const response = await api.put('/users', {
+        name: data.name,
+        email: data.email,
+      })
+
+      resetForm()
+
+      await updateUser(response.data)
+
+      // @ts-ignore
+      navigation.navigate('ModalStatus', {
+        option: 'editProfile',
+        title: 'Done!',
+        subtitle: 'Now your info\nare update.',
+      })
+    } catch {
+      // @ts-ignore
+      navigation.navigate('ModalStatus', {
+        option: 'stay',
+        title: 'Error on update profile',
+      })
+    }
   }
 
   return (

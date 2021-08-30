@@ -70,7 +70,7 @@ export function Step2({ messageLeave, dataStep1, setPage }: Step2Props) {
           password: userData.password,
         })
       } catch (err: any) {
-        Alert.alert('Error on create account', err.message)
+        Alert.alert('Error on create account', err.response.data.message)
       }
 
       const navigateToSignIn = () => {

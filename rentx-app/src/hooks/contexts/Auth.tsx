@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { api } from '../../services/api'
 
-interface User {
+export interface User {
   id: string
   name: string
   email: string
@@ -20,6 +20,7 @@ interface AuthState {
 interface SignInCredentials {
   email: string
   password: string
+  remember: boolean
 }
 
 interface SignUpCredentials {
@@ -53,12 +54,12 @@ const AuthProvider: React.FC = ({ children }) => {
       if (token[1] && user[1]) {
         api.defaults.headers.authorization = `Bearer ${token[1]}`
 
-        /*try {
+        try {
           await api.get('/users/session/validate')
-        } catch (err) {
+        } catch {
           setLoading(false)
           return
-        }*/
+        }
 
         setData({ token: token[1], user: JSON.parse(user[1]) })
       }
@@ -69,23 +70,33 @@ const AuthProvider: React.FC = ({ children }) => {
     loadStoragedData()
   }, [])
 
-  const signIn = useCallback(async ({ email, password }) => {
-    const response = await api.post('/users/session', {
-      email,
-      password,
-    })
+  const signIn = useCallback(
+    async ({ email, password, remember }: SignInCredentials) => {
+      const response = await api.post('/users/session', {
+        email,
+        password,
+      })
 
-    const { user, token } = response.data
+      const { user, token } = response.data
+      const rememberData = remember
+        ? JSON.stringify({
+            email: user.email,
+            password,
+          })
+        : ''
 
-    api.defaults.headers.authorization = `Bearer ${token}`
+      api.defaults.headers.authorization = `Bearer ${token}`
 
-    await AsyncStorage.multiSet([
-      ['RenteX:token', token],
-      ['RenteX:user', JSON.stringify(user)],
-    ])
+      await AsyncStorage.multiSet([
+        ['RenteX:token', token],
+        ['RenteX:user', JSON.stringify(user)],
+        ['RenteX:rememberCredentials', rememberData],
+      ])
 
-    setData({ token, user })
-  }, [])
+      setData({ token, user })
+    },
+    []
+  )
 
   const signUp = useCallback(async ({ email, name, password }) => {
     await api.post('/users', {

@@ -19,7 +19,7 @@ class UsersController {
       password,
     });
 
-    return response.json(user);
+    return response.json(userTransformer(user));
   }
 
   async update(request: Request, response: Response): Promise<Response> {
@@ -36,7 +36,7 @@ class UsersController {
       email,
     });
 
-    return response.json(user);
+    return response.json(userTransformer(user));
   }
 
   async updateAvatar(request: Request, response: Response): Promise<Response> {
