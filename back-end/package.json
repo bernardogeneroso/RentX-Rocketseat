@@ -21,6 +21,7 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "babel-cli": "^6.26.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
@@ -35,6 +36,7 @@
   },
   "dependencies": {
     "@prisma/client": "^2.29.1",
+    "babel-preset-react": "^6.24.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "date-fns": "^2.23.0",
