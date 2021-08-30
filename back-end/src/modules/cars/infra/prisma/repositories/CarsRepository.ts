@@ -39,6 +39,9 @@ class CarsRepository implements ICarsRepository {
 
   async findById(plate: string): Promise<Car | null> {
     return await prisma.cars.findUnique({
+      include: {
+        carsImages: true,
+      },
       where: {
         plate,
       },

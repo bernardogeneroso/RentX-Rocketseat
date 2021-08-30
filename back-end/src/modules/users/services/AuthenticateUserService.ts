@@ -1,4 +1,5 @@
 import { injectable, inject } from "tsyringe";
+import { Users as User } from "@prisma/client";
 import { sign } from "jsonwebtoken";
 
 import UsersRepository from "../infra/prisma/repositories/UsersRepository";
@@ -12,16 +13,8 @@ interface IRequest {
   password: string;
 }
 
-interface UserAuth {
-  name: string;
-  email: string;
-  avatar: string | null;
-  created_at: Date;
-  updated_at: Date;
-}
-
 interface IResponse {
-  user: UserAuth;
+  user: Omit<User, "password">;
   token: string;
 }
 
@@ -51,15 +44,7 @@ class AuthenticateUserService {
 
     const token = sign({}, secret, { subject: userFind.id, expiresIn });
 
-    const user: UserAuth = {
-      name: userFind.name,
-      email: userFind.email,
-      avatar: userFind.avatar,
-      created_at: userFind.created_at,
-      updated_at: userFind.updated_at,
-    };
-
-    return { user, token };
+    return { user: userFind, token };
   }
 }
 

@@ -49,12 +49,4 @@ usersRouter.patch(
   usersController.updateAvatar
 );
 
-usersRouter.use(
-  "/avatar/image",
-  ensureAuthenticated,
-  express.static(
-    path.resolve(uploadConfig.uploads.tmpFolder, "users", "avatars")
-  )
-);
-
 export default usersRouter;

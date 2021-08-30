@@ -28,7 +28,7 @@ interface IRequest {
   car: CarRequest;
 }
 
-class CreateCarAppointmentService {
+class MostRentedCarByUserService {
   private carsRepository: ICarsRepository;
   private carsAppointmentsRepository: ICarsAppointmentsRepository;
 
@@ -69,4 +69,4 @@ class CreateCarAppointmentService {
   }
 }
 
-export default CreateCarAppointmentService;
+export default MostRentedCarByUserService;

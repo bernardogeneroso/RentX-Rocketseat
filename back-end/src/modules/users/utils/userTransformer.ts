@@ -15,10 +15,10 @@ export function userTransformer(users: User[] | User | any): any {
 
         return {
           ...user,
-          avatarUrl: user.avatar
-            ? process.env.APP_API_URL
+          avatar_url: process.env.APP_API_URL
+            ? user.avatar
               ? process.env.APP_API_URL + staticUrl + user.avatar
-              : null
+              : process.env.APP_API_URL + staticUrl + "avatar.png"
             : null,
         };
       });
@@ -30,10 +30,10 @@ export function userTransformer(users: User[] | User | any): any {
 
     return {
       ...users,
-      avatarUrl: users.avatar
-        ? process.env.APP_API_URL
+      avatar_url: process.env.APP_API_URL
+        ? users.avatar
           ? process.env.APP_API_URL + staticUrl + users.avatar
-          : null
+          : process.env.APP_API_URL + staticUrl + "avatar.png"
         : null,
     };
   } catch (err) {

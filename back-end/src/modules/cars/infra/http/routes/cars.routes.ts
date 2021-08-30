@@ -1,5 +1,4 @@
-import express, { Router } from "express";
-import path from "path";
+import { Router } from "express";
 import multer from "multer";
 import * as Yup from "yup";
 
@@ -7,6 +6,7 @@ import CarsController from "../controllers/CarsController";
 import CarsBetweenDatesController from "../controllers/CarsBetweenDatesController";
 import appointmentsRouter from "./sub.routes/appointments.routes";
 import { schemaValidation } from "@shared/infra/http/middlewares/schemaValidation";
+import ensureAuthenticated from "@modules/users/infra/http/middlewares/ensureAuthenticated";
 import uploadConfig from "../../../../../config/upload";
 
 const carsRouter = Router();
@@ -15,10 +15,11 @@ const upload = multer(uploadConfig.multer.storageCars);
 const carsController = new CarsController();
 const carsBetweenDatesController = new CarsBetweenDatesController();
 
-carsRouter.use("/appointments", appointmentsRouter);
+carsRouter.use("/appointments", ensureAuthenticated, appointmentsRouter);
 
 carsRouter.get(
   "/",
+  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       search: Yup.string(),
@@ -27,8 +28,9 @@ carsRouter.get(
   }),
   carsController.allCars
 );
-carsRouter.get(
+carsRouter.post(
   "/between-dates",
+  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       dates: Yup.object({
@@ -51,10 +53,11 @@ carsRouter.get(
   }),
   carsBetweenDatesController.index
 );
-carsRouter.get("/schedules", carsController.userSchedules);
-carsRouter.get("/favourite", carsController.favouriteCar);
+carsRouter.get("/schedules", ensureAuthenticated, carsController.userSchedules);
+carsRouter.get("/favorite", ensureAuthenticated, carsController.favoriteCar);
 carsRouter.get(
   "/details/:plate",
+  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       plate: Yup.string().length(6).required(),
@@ -66,6 +69,7 @@ carsRouter.get(
 
 carsRouter.post(
   "/",
+  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       plate: Yup.string().length(6).required(),
@@ -93,6 +97,7 @@ carsRouter.post(
 
 carsRouter.post(
   "/images",
+  ensureAuthenticated,
   upload.single("image"),
   schemaValidation({
     schema: Yup.object({
@@ -101,11 +106,6 @@ carsRouter.post(
     }),
   }),
   carsController.updateImages
-);
-
-carsRouter.use(
-  "/image",
-  express.static(path.resolve(uploadConfig.uploads.tmpFolder, "cars", "images"))
 );
 
 export default carsRouter;

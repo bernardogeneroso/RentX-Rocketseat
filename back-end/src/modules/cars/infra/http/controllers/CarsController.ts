@@ -33,16 +33,19 @@ class CarsController {
     return response.json(carsTransformer(car));
   }
 
-  async favouriteCar(request: Request, response: Response): Promise<Response> {
+  async favoriteCar(request: Request, response: Response): Promise<Response> {
     const mostRentedCarByUserService = container.resolve(
       MostRentedCarByUserService
     );
 
     const userId = request.user.id;
 
-    const car = await mostRentedCarByUserService.execute(userId);
+    const carData = await mostRentedCarByUserService.execute(userId);
 
-    return response.json(car);
+    return response.json({
+      totalAppointments: carData.totalAppointments,
+      car: carsTransformer(carData.car),
+    });
   }
 
   async userSchedules(request: Request, response: Response): Promise<Response> {
