@@ -6,16 +6,6 @@ import ICarsAppointmentsRepository from "@modules/cars/repositories/ICarsAppoint
 import { prisma } from "@shared/services/prisma";
 
 class CarsAppointmentsRepository implements ICarsAppointmentsRepository {
-  async findUserScheduledCars(
-    userId: string
-  ): Promise<CarAppointment[] | null> {
-    return await prisma.carsAppointments.findMany({
-      where: {
-        userId,
-      },
-    });
-  }
-
   async countCarsAvailable({
     carId,
     date: { startDate, endDate },
@@ -37,6 +27,40 @@ class CarsAppointmentsRepository implements ICarsAppointmentsRepository {
             },
           },
         ],
+      },
+    });
+  }
+
+  async findUserScheduledCars(
+    userId: string
+  ): Promise<CarAppointment[] | null> {
+    return await prisma.carsAppointments.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  async findUserScheduledCarsRented(
+    userId: string
+  ): Promise<CarAppointment[] | null> {
+    return await prisma.carsAppointments.findMany({
+      include: {
+        car: {
+          include: {
+            carsImages: {
+              select: {
+                url: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        userId,
+      },
+      orderBy: {
+        start_in: "desc",
       },
     });
   }

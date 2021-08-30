@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { FlatListSlider } from 'react-native-flatlist-slider'
 
 import { Fuel } from '../../Fuel'
-import { CarsBetweenDates } from '../../../pages/App/TabMenu/Home'
+import { Cars } from '../../../hooks/contexts/Home'
 import { formatCurrent } from '../../../utils/formatCurrency'
 
 import { Dot } from '../../../pages/Auth/OnBoard/styles'
@@ -22,11 +22,16 @@ import {
 } from './styles'
 
 interface CarExtendedProps {
-  car: CarsBetweenDates
+  car: Cars
+}
+
+export interface CarImages {
+  image: string
+  desc: string
 }
 
 export function CarExtended({ car }: CarExtendedProps) {
-  let carImages: any[] = []
+  let carImages: CarImages[] = []
 
   car.carsImages.forEach((item, index) => {
     carImages.push(
@@ -47,7 +52,9 @@ export function CarExtended({ car }: CarExtendedProps) {
 
   function handleNavigateToDetails() {
     // @ts-ignore
-    navigation.navigate('CarDetails')
+    navigation.navigate('CarDetails', {
+      plate: car.plate,
+    })
   }
 
   return (

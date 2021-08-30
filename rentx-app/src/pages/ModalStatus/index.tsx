@@ -27,7 +27,7 @@ interface ModalStatusProps {
       status?: 'success' | 'error'
       button?: 'one' | 'two'
       title: string
-      subtitle: string
+      subtitle?: string
     }
   }
 }
@@ -105,7 +105,7 @@ export function ModalStatus({
           {status === 'error' ? <Error /> : <Done />}
 
           <Title>{title}</Title>
-          <Subtitle>{subtitle}</Subtitle>
+          {subtitle && <Subtitle>{subtitle}</Subtitle>}
         </Content>
 
         <ContentButton isTwoButton={button === 'two' ? true : false}>

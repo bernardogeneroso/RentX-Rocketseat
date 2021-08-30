@@ -5,7 +5,7 @@ import Gasoline from '../../assets/gasoline.svg'
 import Alcohol from '../../assets/alcohol.svg'
 
 interface FuelProps {
-  fuel: 'electric' | 'gasoline' | 'alcohol'
+  fuel: 'electric' | 'gasoline' | 'alcohol' | undefined
 }
 
 export function Fuel({ fuel }: FuelProps) {

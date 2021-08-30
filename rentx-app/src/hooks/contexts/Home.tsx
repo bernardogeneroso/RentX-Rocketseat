@@ -1,10 +1,10 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { createContext } from 'use-context-selector'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import { api } from '../../services/api'
 
-interface Cars {
+export interface Cars {
   plate: string
   brand: string
   model: string
@@ -23,18 +23,12 @@ interface Cars {
 }
 
 interface CarsFilter {
-  dates?: {
-    startDate: Date
-    endDate: Date
+  pricesPerDay: {
+    startPricePerDay: number
+    endPricePerDay: number
   }
-  filter?: {
-    pricesPerDay: {
-      startPricePerDay: number
-      endPricePerDay: number
-    }
-    fuel: 'gasoline' | 'electric' | 'alcohol'
-    transmission: 'auto' | 'manual'
-  }
+  fuel: 'gasoline' | 'electric' | 'alcohol'
+  transmission: 'auto' | 'manual'
 }
 
 type DayPriceSlider = [first: number, second: number]
@@ -43,22 +37,30 @@ export type TransmissionSelected = 'auto' | 'manual'
 
 interface HomeContextData {
   cars: Cars[] | undefined
+  carsFilter: Cars[] | undefined
+  inDate: Date | null
+  toDate: Date | null
   dayPriceSlider: DayPriceSlider
   combustionSelected: CombustionSelected
   transmissionSelected: TransmissionSelected
   loading: boolean
-  handleGetApiCars(data: CarsFilter): void
+  handleSetDates(inDate: Date, toDate: Date): void
+  handleToFilterCarsBetweenDates(): void
   handleSetDayPriceSlider(first: number, second: number): void
   handleSetCombustionSelected(combustion: CombustionSelected): void
   handleSetTransmissionSelected(transmission: TransmissionSelected): void
   handleCleanAllFields(): void
-  handleGetApiCarsWithFilters(): void
+  handleIsThisCarAvailableToRental(plate: string): boolean
+  handleToRemoveCarRented(plate: string): void
 }
 
 const HomeContext = createContext<HomeContextData>({} as HomeContextData)
 
 const HomeProvider: React.FC = ({ children }) => {
+  const [inDate, setInDate] = useState<Date | null>(null)
+  const [toDate, setToDate] = useState<Date | null>(null)
   const [cars, setCars] = useState<Cars[] | undefined>(undefined)
+  const [carsFilter, setCarsFilter] = useState<Cars[] | undefined>(undefined)
   const [loading, setLoading] = useState(true)
   const [dayPriceSlider, setDayPriceSlider] = useState<DayPriceSlider>([
     160, 380,
@@ -68,50 +70,35 @@ const HomeProvider: React.FC = ({ children }) => {
   const [transmissionSelected, setTransmissionSelected] =
     useState<TransmissionSelected>('auto')
 
-  const handleGetApiCars = useCallback(
-    async ({ dates, filter }: CarsFilter) => {
-      let dataSearch = {}
-
-      if (!dates) {
-        const data = await AsyncStorage.getItem('RenteX::datePicker')
-
-        if (!data) return
-
-        const { inDate, toDate } = JSON.parse(data)
-
-        dataSearch = {
+  useEffect(() => {
+    if (inDate && toDate) {
+      async function loadWithPage() {
+        const response = await api.post('/cars/between-dates', {
           dates: {
-            startDate: new Date(inDate),
-            endDate: new Date(toDate),
+            startDate: new Date(inDate || ''),
+            endDate: new Date(toDate || ''),
           },
-        }
-      } else {
-        dataSearch = {
-          dates: {
-            ...dates,
-          },
-        }
+        })
+
+        setCars(response.data)
+        setLoading(false)
       }
 
-      if (filter) {
-        dataSearch = {
-          ...dataSearch,
-          filter,
-        }
-      }
+      loadWithPage()
+    }
+  }, [inDate, toDate])
 
-      console.log(dataSearch)
+  const handleSetDates = useCallback((inDate: Date, toDate: Date) => {
+    setInDate(inDate)
+    setToDate(toDate)
+  }, [])
 
-      const response = await api.post('/cars/between-dates', dataSearch)
-
-      setCars(response.data)
-      setLoading(false)
-    },
-    []
-  )
-
-  const handleGetApiCarsWithFilters = useCallback(async () => {
-    await handleGetApiCars({
+  const handleToFilterCarsBetweenDates = useCallback(async () => {
+    const dataSearch = {
+      dates: {
+        startDate: inDate,
+        endDate: toDate,
+      },
       filter: {
         pricesPerDay: {
           startPricePerDay: dayPriceSlider[0],
@@ -120,20 +107,19 @@ const HomeProvider: React.FC = ({ children }) => {
         fuel: combustionSelected,
         transmission: transmissionSelected,
       },
-    })
-  }, [
-    dayPriceSlider,
-    combustionSelected,
-    transmissionSelected,
-    handleGetApiCars,
-  ])
+    }
+
+    const response = await api.post('/cars/between-dates', dataSearch)
+
+    setCarsFilter(response.data)
+  }, [inDate, toDate, dayPriceSlider, combustionSelected, transmissionSelected])
 
   const handleCleanAllFields = useCallback(async () => {
     setDayPriceSlider([160, 380])
     setCombustionSelected('gasoline')
     setTransmissionSelected('auto')
 
-    await handleGetApiCars({})
+    setCarsFilter(undefined)
   }, [])
 
   const handleSetTransmissionSelected = useCallback(
@@ -158,20 +144,40 @@ const HomeProvider: React.FC = ({ children }) => {
     []
   )
 
+  const handleIsThisCarAvailableToRental = useCallback(
+    (plate: string) => {
+      if (!cars) return false
+
+      return !!cars.find((car) => car.plate === plate)
+    },
+    [cars]
+  )
+
+  const handleToRemoveCarRented = useCallback((plate: string) => {
+    setCars((state) => {
+      return state?.filter((car) => car.plate !== plate)
+    })
+  }, [])
+
   return (
     <HomeContext.Provider
       value={{
         cars,
+        carsFilter,
+        inDate,
+        toDate,
         dayPriceSlider,
         combustionSelected,
         transmissionSelected,
         loading,
-        handleGetApiCars,
+        handleSetDates,
+        handleToFilterCarsBetweenDates,
         handleSetDayPriceSlider,
         handleSetCombustionSelected,
         handleSetTransmissionSelected,
         handleCleanAllFields,
-        handleGetApiCarsWithFilters,
+        handleIsThisCarAvailableToRental,
+        handleToRemoveCarRented,
       }}
     >
       {children}

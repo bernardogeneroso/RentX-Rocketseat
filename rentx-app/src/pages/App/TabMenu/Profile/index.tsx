@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useIsFocused } from '@react-navigation/native'
 
 import { CarSimplified } from '../../../../components/Car/CarSimplified'
-import { cars } from '../../../../utils/cars'
 import useAuth from '../../../../hooks/useAuth'
 
 import EditIcon from '../../../../assets/edit.svg'
@@ -51,6 +50,7 @@ interface CarFavorite {
 
 export function Profile() {
   const navigation = useNavigation()
+  const isFocused = useIsFocused()
   const { user } = useAuth()
 
   const [carFavorite, setCarFavorite] = useState<CarFavorite | undefined>(
@@ -58,14 +58,15 @@ export function Profile() {
   )
 
   useEffect(() => {
-    async function loadWithPage() {
-      const response = await api.get('/cars/favorite')
+    if (isFocused) {
+      async function loadWithPage() {
+        const response = await api.get('/cars/favorite')
+        setCarFavorite(response.data)
+      }
 
-      setCarFavorite(response.data)
+      loadWithPage()
     }
-
-    loadWithPage()
-  }, [])
+  }, [isFocused])
 
   const splitNames = useMemo(() => {
     const userNames = user.name.split(' ')
@@ -133,7 +134,7 @@ export function Profile() {
             </CarUsedTimesText>
           </HeaderFavoriteCar>
 
-          {carFavorite && <CarSimplified car={carFavorite.car} />}
+          {carFavorite?.car && <CarSimplified car={carFavorite?.car} />}
         </ContentFavoriteCar>
       </Content>
     </Container>

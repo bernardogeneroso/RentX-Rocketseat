@@ -27,7 +27,19 @@ export function carsTransformer(cars: CarWithImages[] | null | any): any {
             };
           });
         } else {
-          throw new Error();
+          if (item.car.carsImages instanceof Array) {
+            item.car.carsImages.forEach((image: any, index: number) => {
+              item.car.carsImages[index] = {
+                url: image.url
+                  ? process.env.APP_API_URL
+                    ? process.env.APP_API_URL + staticUrl + image.url
+                    : null
+                  : null,
+              };
+            });
+          } else {
+            throw new Error();
+          }
         }
 
         return {

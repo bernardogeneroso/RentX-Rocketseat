@@ -1,8 +1,10 @@
-import React from 'react'
-import { format, isBefore } from 'date-fns'
+import React, { useMemo } from 'react'
+import { Alert } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import { format, isAfter, isBefore, parseISO } from 'date-fns'
 
-import { Cars } from '../../../utils/cars'
 import { Fuel } from '../../Fuel'
+import useHome from '../../../hooks/useHome'
 import { formatCurrent } from '../../../utils/formatCurrency'
 
 import ArrowRightSmallIcon from '../../../assets/arrow-right-small.svg'
@@ -27,81 +29,145 @@ import {
 } from './styles'
 
 interface CarSimplifiedProps {
-  car: {
-    plate: string
-    brand: string
-    model: string
-    colour: string
-    fuel: 'electric' | 'gasoline' | 'alcohol'
-    transmission: 'manual' | 'auto'
-    pricePerDay: number
-    created_at: Date
-    updated_at: Date
-    used: number
-    daysUsed: number
-    carsImages: {
-      url: string
-      carId: string
-    }[]
+  scheduled?: {
+    start_in: string
+    end_in: string
+    rentalPrice: number
   }
+  car:
+    | {
+        plate: string
+        brand: string
+        model: string
+        colour: string
+        fuel: 'electric' | 'gasoline' | 'alcohol'
+        transmission: 'manual' | 'auto'
+        pricePerDay: number
+        created_at: Date
+        updated_at: Date
+        used: number
+        daysUsed: number
+        carsImages: {
+          url: string
+          carId: string
+        }[]
+        carsAppointments?: {
+          start_in: Date
+          end_in: Date
+          rentalPrice: number
+        }[]
+      }
+    | undefined
 }
 
-export function CarSimplified({ car }: CarSimplifiedProps) {
+export function CarSimplified({ car, scheduled }: CarSimplifiedProps) {
+  const navigation = useNavigation()
+  const { handleIsThisCarAvailableToRental } = useHome()
+
+  const carUntilIsBeforeAndIsAfter = useMemo(() => {
+    return (
+      scheduled &&
+      isBefore(new Date(), parseISO(scheduled.end_in)) &&
+      isAfter(new Date(), parseISO(scheduled.start_in))
+    )
+  }, [scheduled])
+
+  const carUntilIsNotBeforeAndIsAfter = useMemo(() => {
+    return (
+      scheduled &&
+      !isBefore(new Date(), parseISO(scheduled.end_in)) &&
+      isAfter(new Date(), parseISO(scheduled.start_in))
+    )
+  }, [scheduled])
+
+  function handleNavigateToDetails() {
+    if (!car) return
+
+    if (!handleIsThisCarAvailableToRental(car.plate)) {
+      Alert.alert('Information', 'This car is not available to rental')
+      return
+    }
+
+    // @ts-ignore
+    navigation.navigate('CarDetails', {
+      plate: car.plate,
+    })
+  }
+
   return (
-    <Container>
+    <Container onPress={handleNavigateToDetails}>
       <ContentInfo>
         <Details>
           <CarDetails>
-            <CarText>{car.brand}</CarText>
-            <CarModel>{car.model}</CarModel>
+            <CarText>{car?.brand}</CarText>
+            <CarModel>{car?.model}</CarModel>
           </CarDetails>
 
           <ContentPerDay>
             <CarDetails>
               <CarText>Per day</CarText>
               <CarPrice>
-                {/*formatCurrent(car.pricePerDay, 'pt-PT', 'EUR')*/}
+                {formatCurrent(car?.pricePerDay, 'pt-PT', 'EUR')}
               </CarPrice>
             </CarDetails>
 
             <CarFuel>
-              <Fuel fuel={car.fuel} />
+              <Fuel fuel={car?.fuel} />
             </CarFuel>
           </ContentPerDay>
         </Details>
 
-        {/*<CarImage
-            source={{
-              uri: car.carsImages[0].url,
-            }}
-            resizeMode="contain"
-          />*/}
+        <CarImage
+          source={{
+            uri: car?.carsImages[0].url,
+          }}
+          resizeMode="contain"
+        />
       </ContentInfo>
 
-      {/*car.start_date && car.end_date && isBefore(new Date(), car.end_date) && (
+      {scheduled && carUntilIsBeforeAndIsAfter && (
         <ContentSchedules>
           <ScheduleTimeText>
-            Using until {format(new Date(car.end_date), 'LLLL d, yyyy')}
+            Using until {format(new Date(scheduled.end_in), 'LLLL d, yyyy')}
           </ScheduleTimeText>
         </ContentSchedules>
-      )*/}
-      {/*car.start_date && car.end_date && !isBefore(new Date(), car.end_date) && (
+      )}
+      {scheduled && carUntilIsNotBeforeAndIsAfter && (
         <ContentSchedules timeMode>
           <TimeText>Time</TimeText>
 
           <ContentTime>
             <StartTimeText>
-              {format(new Date(car.start_date), ' d LLLL yyyy')}
+              {format(new Date(scheduled.start_in), ' d LLLL yyyy')}
             </StartTimeText>
 
             <ArrowRightSmallIcon />
 
             <EndTimeText>
-              {format(new Date(car.end_date), ' d LLLL yyyy')}
+              {format(new Date(scheduled.end_in), ' d LLLL yyyy')}
             </EndTimeText>
           </ContentTime>
         </ContentSchedules>
-      )*/}
+      )}
+      {scheduled &&
+        !carUntilIsBeforeAndIsAfter &&
+        !carUntilIsNotBeforeAndIsAfter && (
+          <ContentSchedules timeMode>
+            <TimeText>Time</TimeText>
+
+            <ContentTime>
+              <StartTimeText>
+                {format(new Date(scheduled.start_in), ' d LLLL yyyy')}
+              </StartTimeText>
+
+              <ArrowRightSmallIcon />
+
+              <EndTimeText>
+                {format(new Date(scheduled.end_in), ' d LLLL yyyy')}
+              </EndTimeText>
+            </ContentTime>
+          </ContentSchedules>
+        )}
     </Container>
   )
 }

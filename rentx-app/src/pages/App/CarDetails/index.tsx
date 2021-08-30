@@ -1,13 +1,19 @@
-import React, { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useMemo, useState } from 'react'
 import { StatusBar } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { format, differenceInCalendarDays } from 'date-fns'
 // @ts-ignore
 import { FlatListSlider } from 'react-native-flatlist-slider'
 
+import useHome from '../../../hooks/useHome'
+import { api } from '../../../services/api'
+import { Cars } from '../../../hooks/contexts/Home'
+import { CarImages } from '../../../components/Car/CarExtended'
 import { QuickButton } from '../../../components/QuickButton'
 import { Button } from '../../../components/Button'
 import { formatCurrent } from '../../../utils/formatCurrency'
-import { cars } from '../../../utils/cars'
+import { formatStringFirstCharacter } from '../../../utils/formatStringFirstCharacter'
 
 import ArrowIcon from '../../../assets/arrow.svg'
 import ArrowLeftIcon from '../../../assets/arrow-left.svg'
@@ -48,10 +54,55 @@ import {
 import { ContainerSlider } from '../../../components/Car/CarExtended/styles'
 import { Dot } from '../../Auth/OnBoard/styles'
 
-export function CarDetails() {
-  const carImages = cars[0].images.map((item) => ({
-    image: item,
-  }))
+interface CarDetailsProps {
+  route: {
+    params: {
+      plate: string | undefined
+    }
+  }
+}
+
+interface CarWithDetails extends Cars {
+  carDetail: {
+    maxSpeed: number
+    topSpeed: number
+    hp: number
+    people: number
+  }
+}
+
+export function CarDetails(props: CarDetailsProps) {
+  const { inDate, toDate, handleToRemoveCarRented } = useHome()
+  let carImages: CarImages[] = []
+
+  const [car, setCar] = useState<CarWithDetails | undefined>(undefined)
+
+  const daysBetweenDates = useMemo(() => {
+    if (!inDate || !toDate) return null
+
+    return differenceInCalendarDays(new Date(toDate), new Date(inDate))
+  }, [inDate, toDate])
+
+  car?.carsImages.forEach((item, index) => {
+    carImages.push(
+      Object.assign({
+        image: item.url,
+        desc: index.toString(),
+      })
+    )
+  })
+
+  useEffect(() => {
+    async function loadWithPage() {
+      const response = await api.get(
+        `/cars/details/${props.route.params.plate}`
+      )
+
+      setCar(response.data)
+    }
+
+    loadWithPage()
+  }, [props.route.params.plate])
 
   const navigation = useNavigation()
 
@@ -70,14 +121,33 @@ export function CarDetails() {
     }
   }
 
-  function handleRentalCar() {
-    // @ts-ignore
-    navigation.navigate('ModalStatus', {
-      option: 'carDetails',
-      title: 'Rented car!',
-      subtitle:
-        'Now you just need to go\nto the RENTX dealership\npick up your car.',
-    })
+  async function handleRentalCar() {
+    if (!car) return
+
+    try {
+      await api.post('/cars/appointments', {
+        carId: car.plate,
+        start_in: inDate,
+        end_in: toDate,
+      })
+
+      handleToRemoveCarRented(car.plate)
+
+      // @ts-ignore
+      navigation.navigate('ModalStatus', {
+        option: 'carDetails',
+        title: 'Rented car!',
+        subtitle:
+          'Now you just need to go\nto the RENTX dealership\npick up your car.',
+      })
+    } catch {
+      // @ts-ignore
+      navigation.navigate('ModalStatus', {
+        option: 'carDetails',
+        status: 'error',
+        title: 'Error rented car!',
+      })
+    }
   }
 
   return (
@@ -96,19 +166,22 @@ export function CarDetails() {
             </QuickButton>
 
             <ContainerSlider>
-              {carImages.map((item, index) => (
-                <Dot key={index} active={dotIndexFlatListSlider === index} />
-              ))}
+              {carImages &&
+                carImages.map((item, index) => (
+                  <Dot key={index} active={dotIndexFlatListSlider === index} />
+                ))}
             </ContainerSlider>
           </HeaderContent>
 
           <ContainerFlatListSlider>
             <ContentFlatListSlider>
-              <FlatListSlider
-                data={carImages}
-                indicator={false}
-                onChangeFlatlistSlider={handleFlatListSliderIndex}
-              />
+              {Object.assign(carImages).length !== 0 && (
+                <FlatListSlider
+                  data={carImages}
+                  indicator={false}
+                  onChangeFlatlistSlider={handleFlatListSliderIndex}
+                />
+              )}
             </ContentFlatListSlider>
           </ContainerFlatListSlider>
         </Header>
@@ -116,13 +189,15 @@ export function CarDetails() {
         <Content>
           <ContentHeader>
             <CarDetail>
-              <CarText>Lamborghini</CarText>
-              <CarModel>Huracan</CarModel>
+              <CarText>{car?.brand}</CarText>
+              <CarModel>{car?.model}</CarModel>
             </CarDetail>
 
             <CarDetail>
               <CarText>Per day</CarText>
-              <CarPrice>{formatCurrent(580, 'pt-PT', 'EUR')}</CarPrice>
+              <CarPrice>
+                {formatCurrent(car?.pricePerDay, 'pt-PT', 'EUR')}
+              </CarPrice>
             </CarDetail>
           </ContentHeader>
 
@@ -130,30 +205,38 @@ export function CarDetails() {
             <ContentDetailsSeparation>
               <ContentDetails>
                 <SpeedIcon width={32} height={32} fill="#47474D" />
-                <DetailText>380km/h</DetailText>
+                <DetailText>{car?.carDetail.maxSpeed}km/h</DetailText>
               </ContentDetails>
               <ContentDetails leftActive rightActive>
                 <TopSpeedIcon width={32} height={32} fill="#47474D" />
-                <DetailText>3.2s</DetailText>
+                <DetailText>{car?.carDetail.topSpeed}s</DetailText>
               </ContentDetails>
               <ContentDetails>
                 <StrongHpIcon width={32} height={32} fill="#47474D" />
-                <DetailText>800 HP</DetailText>
+                <DetailText>{car?.carDetail.hp} HP</DetailText>
               </ContentDetails>
             </ContentDetailsSeparation>
 
             <ContentDetailsSeparation>
               <ContentDetails>
                 <GasolineIcon width={32} height={32} fill="#47474D" />
-                <DetailText>Gasoline</DetailText>
+                <DetailText>{formatStringFirstCharacter(car?.fuel)}</DetailText>
               </ContentDetails>
               <ContentDetails leftActive rightActive>
                 <GearShiftIcon width={32} height={32} fill="#47474D" />
-                <DetailText>Auto</DetailText>
+                <DetailText>
+                  {formatStringFirstCharacter(
+                    car?.transmission === 'auto'
+                      ? 'automatic'
+                      : car?.transmission
+                  )}
+                </DetailText>
               </ContentDetails>
               <ContentDetails>
                 <NameIcon width={32} height={32} fill="#47474D" />
-                <DetailText>2 people</DetailText>
+                <DetailText>{`${car?.carDetail.people} ${
+                  car?.carDetail.people === 1 ? 'people' : 'peoples'
+                }`}</DetailText>
               </ContentDetails>
             </ContentDetailsSeparation>
           </ContainerDetails>
@@ -161,14 +244,18 @@ export function CarDetails() {
           <ContentTime>
             <TimeDetails>
               <TimeForText>To</TimeForText>
-              <TimeText>18 Julho 2020</TimeText>
+              <TimeText>
+                {inDate && format(new Date(inDate), 'd LLLL yyyy')}
+              </TimeText>
             </TimeDetails>
 
             <ArrowIcon />
 
             <TimeDetails>
               <TimeForText>Until</TimeForText>
-              <TimeText>20 Julho 2020</TimeText>
+              <TimeText>
+                {toDate && format(new Date(toDate), 'd LLLL yyyy')}
+              </TimeText>
             </TimeDetails>
           </ContentTime>
         </Content>
@@ -177,10 +264,21 @@ export function CarDetails() {
           <ContentFooter>
             <AluguerStatus>
               <TotalText>Total</TotalText>
-              <AluguerCalcText>580€ x 3 daily</AluguerCalcText>
+              <AluguerCalcText>
+                {formatCurrent(car?.pricePerDay, 'pt-PT', 'EUR')} x{' '}
+                {daysBetweenDates} daily
+              </AluguerCalcText>
             </AluguerStatus>
 
-            <TotalCountText>2,900€</TotalCountText>
+            <TotalCountText>
+              {car?.pricePerDay &&
+                daysBetweenDates &&
+                formatCurrent(
+                  car?.pricePerDay * daysBetweenDates,
+                  'pt-PT',
+                  'EUR'
+                )}
+            </TotalCountText>
           </ContentFooter>
 
           <Button text="Rental now" onPress={handleRentalCar} />

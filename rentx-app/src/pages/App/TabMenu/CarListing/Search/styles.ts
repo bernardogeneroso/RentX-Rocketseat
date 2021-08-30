@@ -14,7 +14,9 @@ interface ContentSearchProps {
   searchMode: boolean
 }
 
-export const Container = styled.View``
+export const Container = styled.View`
+  background-color: blue;
+`
 
 export const ContentInput = styled.View<ContentInputProps>`
   background-color: ${theme.colors.white};

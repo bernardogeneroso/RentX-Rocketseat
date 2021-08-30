@@ -1,25 +1,24 @@
-import { Cars as Car } from "@prisma/client";
+import { CarsAppointments as CarAppointment } from "@prisma/client";
 
-import CarsRepository from "../infra/prisma/repositories/CarsRepository";
-import ICarsRepository from "../repositories/ICarsRepository";
+import CarsAppointmentsRepository from "../infra/prisma/repositories/CarsAppointmentsRepository";
+import ICarsAppointmentsRepository from "../repositories/ICarsAppointmentsRepository";
 import AppError from "@shared/errors/AppError";
 
 class ScheduledCarsByUser {
-  private carsRepository: ICarsRepository;
+  private carsAppointmentsRepository: ICarsAppointmentsRepository;
 
   constructor() {
-    this.carsRepository = new CarsRepository();
+    this.carsAppointmentsRepository = new CarsAppointmentsRepository();
   }
 
-  async execute(userId: string): Promise<Car[] | null> {
-    const carsRentedByUser = await this.carsRepository.findCarsRentedByUser(
-      userId
-    );
+  async execute(userId: string): Promise<CarAppointment[] | null> {
+    const carsScheduledRentedByUser =
+      await this.carsAppointmentsRepository.findUserScheduledCarsRented(userId);
 
-    if (!carsRentedByUser)
+    if (!carsScheduledRentedByUser)
       throw new AppError("Error on get scheduled cars", 404);
 
-    return carsRentedByUser;
+    return carsScheduledRentedByUser;
   }
 }
 

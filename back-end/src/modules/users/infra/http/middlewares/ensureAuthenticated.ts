@@ -28,7 +28,7 @@ const ensureAuthenticated = (
     request.user = { id: sub };
 
     return next();
-  } catch {
+  } catch (err) {
     throw new AppError("Invalid JWT token", 401);
   }
 };

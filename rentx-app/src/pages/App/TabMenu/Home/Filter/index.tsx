@@ -26,7 +26,7 @@ interface FilterProps {
 }
 
 export function Filter({ modal, handleToggleModal }: FilterProps) {
-  const { handleCleanAllFields, handleGetApiCarsWithFilters } = useHome()
+  const { handleCleanAllFields, handleToFilterCarsBetweenDates } = useHome()
 
   return (
     <ContainerModal>
@@ -63,7 +63,10 @@ export function Filter({ modal, handleToggleModal }: FilterProps) {
 
             <ButtonConfirm
               text="Confirm"
-              onPress={handleGetApiCarsWithFilters}
+              onPress={() => {
+                handleToFilterCarsBetweenDates()
+                handleToggleModal()
+              }}
             />
           </Content>
         </Container>

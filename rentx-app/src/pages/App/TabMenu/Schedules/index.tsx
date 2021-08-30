@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useIsFocused } from '@react-navigation/native'
 
-import { carsSchedules } from '../../../../utils/cars'
+import { api } from '../../../../services/api'
+import { Cars } from '../../../../hooks/contexts/Home'
 import { CarSimplified } from '../../../../components/Car/CarSimplified'
 
 import {
@@ -12,20 +14,59 @@ import {
   CarList,
 } from './styles'
 
+interface CarsSchedules {
+  start_in: string
+  end_in: string
+  rentalPrice: number
+  car: Cars
+}
+
 export function Schedules() {
+  const isFocused = useIsFocused()
+
+  const [carsSchedules, setCarsSchedules] = useState<
+    CarsSchedules[] | undefined
+  >(undefined)
+
+  useEffect(() => {
+    if (isFocused) {
+      async function loadWithPage() {
+        const response = await api.get('/cars/schedules')
+
+        setCarsSchedules(response.data)
+      }
+
+      loadWithPage()
+    }
+  }, [isFocused])
+
   return (
     <Container>
       <Header>
         <HeaderTitle>Schedules</HeaderTitle>
 
-        <PeriodsText>5 periods</PeriodsText>
+        <PeriodsText>
+          {`${carsSchedules?.length} ${
+            carsSchedules?.length === 1 ? 'period' : 'periods'
+          }`}
+        </PeriodsText>
       </Header>
 
       <Content>
         <CarList
           data={carsSchedules}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <CarSimplified key={item.id} car={item} />}
+          keyExtractor={(item: any) => item.id}
+          renderItem={({ item }: any) => (
+            <CarSimplified
+              key={item.car.created_at}
+              car={item.car}
+              scheduled={{
+                start_in: item.start_in,
+                end_in: item.end_in,
+                rentalPrice: item.rentalPrice,
+              }}
+            />
+          )}
           bounces={true}
           scrollEventThrottle={16}
         />

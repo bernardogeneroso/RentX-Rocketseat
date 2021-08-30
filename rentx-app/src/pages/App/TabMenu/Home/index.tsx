@@ -15,11 +15,9 @@ import { Container, Header, ButtonArrowDown, Content, CarList } from './styles'
 export function Home() {
   const navigation = useNavigation()
   const isFocused = useIsFocused()
-  const { cars, handleGetApiCars } = useHome()
+  const { cars, carsFilter, inDate, toDate, handleSetDates } = useHome()
 
   const [modal, setModal] = useState(false)
-  const [inDate, setInDate] = useState<Date | null>(null)
-  const [toDate, setToDate] = useState<Date | null>(null)
 
   useEffect(() => {
     async function loadWithPage() {
@@ -30,15 +28,7 @@ export function Home() {
 
         const { inDate, toDate } = JSON.parse(data)
 
-        setInDate(inDate)
-        setToDate(toDate)
-
-        await handleGetApiCars({
-          dates: {
-            startDate: inDate,
-            endDate: toDate,
-          },
-        })
+        handleSetDates(inDate, toDate)
       }
     }
 
@@ -54,9 +44,9 @@ export function Home() {
     navigation.navigate('DatePicker')
   }
 
-  function handleOpenFilter() {
+  const handleOpenFilter = useCallback(() => {
     handleToggleModal()
-  }
+  }, [handleToggleModal])
 
   return (
     <Container>
@@ -84,14 +74,16 @@ export function Home() {
 
       <Content>
         <CarList
-          data={cars}
-          keyExtractor={(item) => item.plate}
-          renderItem={({ item }) => <CarExtended key={item.plate} car={item} />}
+          data={carsFilter || cars}
+          keyExtractor={(item: any) => item.plate}
+          renderItem={({ item }: any) => (
+            <CarExtended key={item.plate} car={item} />
+          )}
           ListHeaderComponent={() => (
             <CarListHeader
               {...{
                 handleOpenFilter,
-                carsLength: cars?.length || 0,
+                carsLength: carsFilter ? carsFilter.length : cars?.length || 0,
               }}
             />
           )}

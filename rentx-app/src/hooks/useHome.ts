@@ -2,7 +2,10 @@ import { useContextSelector } from 'use-context-selector'
 import { HomeContext, HomeContextData } from './contexts/Home'
 
 export default function useAuth(): HomeContextData {
+  const inDate = useContextSelector(HomeContext, (home) => home.inDate)
+  const toDate = useContextSelector(HomeContext, (home) => home.toDate)
   const cars = useContextSelector(HomeContext, (home) => home.cars)
+  const carsFilter = useContextSelector(HomeContext, (home) => home.carsFilter)
   const dayPriceSlider = useContextSelector(
     HomeContext,
     (home) => home.dayPriceSlider
@@ -17,9 +20,13 @@ export default function useAuth(): HomeContextData {
   )
   const loading = useContextSelector(HomeContext, (home) => home.loading)
 
-  const handleGetApiCars = useContextSelector(
+  const handleSetDates = useContextSelector(
     HomeContext,
-    (home) => home.handleGetApiCars
+    (home) => home.handleSetDates
+  )
+  const handleToFilterCarsBetweenDates = useContextSelector(
+    HomeContext,
+    (home) => home.handleToFilterCarsBetweenDates
   )
   const handleSetDayPriceSlider = useContextSelector(
     HomeContext,
@@ -37,22 +44,32 @@ export default function useAuth(): HomeContextData {
     HomeContext,
     (home) => home.handleCleanAllFields
   )
-  const handleGetApiCarsWithFilters = useContextSelector(
+
+  const handleIsThisCarAvailableToRental = useContextSelector(
     HomeContext,
-    (home) => home.handleGetApiCarsWithFilters
+    (home) => home.handleIsThisCarAvailableToRental
+  )
+  const handleToRemoveCarRented = useContextSelector(
+    HomeContext,
+    (home) => home.handleToRemoveCarRented
   )
 
   return {
+    inDate,
+    toDate,
     cars,
+    carsFilter,
     dayPriceSlider,
     combustionSelected,
     transmissionSelected,
     loading,
-    handleGetApiCars,
+    handleSetDates,
+    handleToFilterCarsBetweenDates,
     handleSetDayPriceSlider,
     handleSetCombustionSelected,
     handleSetTransmissionSelected,
     handleCleanAllFields,
-    handleGetApiCarsWithFilters,
+    handleIsThisCarAvailableToRental,
+    handleToRemoveCarRented,
   }
 }

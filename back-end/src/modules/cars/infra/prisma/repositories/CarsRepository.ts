@@ -64,38 +64,6 @@ class CarsRepository implements ICarsRepository {
     });
   }
 
-  async findCarsRentedByUser(userId: string): Promise<Car[] | null> {
-    return await prisma.cars.findMany({
-      include: {
-        carsImages: {
-          select: {
-            url: true,
-          },
-        },
-        carsAppointments: {
-          select: {
-            start_in: true,
-            end_in: true,
-            rentalPrice: true,
-          },
-          orderBy: {
-            start_in: "desc",
-          },
-          where: {
-            userId,
-          },
-        },
-      },
-      where: {
-        carsAppointments: {
-          some: {
-            userId,
-          },
-        },
-      },
-    });
-  }
-
   async findCarsAvailableBetweenDates(
     data: IFindCarsAvailableBetweenDatesDTO
   ): Promise<Car[] | null> {

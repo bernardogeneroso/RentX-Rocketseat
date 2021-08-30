@@ -7,7 +7,6 @@ interface ICarsRepository {
   findAllCars(search: string | null): Promise<Car[] | null>;
   findById(plate: string): Promise<Car | null>;
   findCarDetailsById(plate: string): Promise<Car | null>;
-  findCarsRentedByUser(userId: string): Promise<Car[] | null>;
   findCarsAvailableBetweenDates(
     data: IFindCarsAvailableBetweenDatesDTO
   ): Promise<Car[] | null>;

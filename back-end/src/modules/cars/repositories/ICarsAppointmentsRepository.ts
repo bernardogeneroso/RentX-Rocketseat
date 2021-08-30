@@ -6,6 +6,7 @@ import { ICreateCarsAppointmentsDTO } from "../dtos/ICreateCarsAppointmentsDTO";
 interface ICarsAppointmentsRepository {
   countCarsAvailable(data: ICountCarsAvailableDTO): Promise<number | null>;
   findUserScheduledCars(userId: string): Promise<CarAppointment[] | null>;
+  findUserScheduledCarsRented(userId: string): Promise<CarAppointment[] | null>;
   create(data: ICreateCarsAppointmentsDTO): Promise<CarAppointment>;
 }
 

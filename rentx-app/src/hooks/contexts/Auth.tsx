@@ -67,7 +67,7 @@ const AuthProvider: React.FC = ({ children }) => {
     }
 
     loadStoragedData()
-  }, [data])
+  }, [])
 
   const signIn = useCallback(async ({ email, password }) => {
     const response = await api.post('/users/session', {
@@ -110,7 +110,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
       await AsyncStorage.setItem('RenteX:user', JSON.stringify(user))
     },
-    [setData, data.token]
+    [data.token]
   )
 
   return (

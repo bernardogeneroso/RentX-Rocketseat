@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react'
 
+import useListing from '../../../../../hooks/useListing'
 import { capitalize } from '../../../../../utils/capitalize'
 
 import SearchIcon from '../../../../../assets/search.svg'
@@ -16,7 +17,7 @@ import {
   ContentResultTextBold,
 } from './styles'
 
-const searchData = ['Lancer EVO X', 'Lancer EVO VIII', 'Lancer EVO VI']
+//const searchData = ['Lancer EVO X', 'Lancer EVO VIII', 'Lancer EVO VI']
 
 interface SearchResults {
   last: string
@@ -24,12 +25,14 @@ interface SearchResults {
 }
 
 export function Search() {
+  const { handleWithCarsFilter, carsFilter } = useListing()
+
   const [input, setInput] = useState('')
   const [inputSearchResults, setInputSearchResults] = useState(false)
   const [searchResults, setSearchResults] = useState<SearchResults[]>([])
 
   const handleInputChangeText = useCallback(
-    (text: string) => {
+    async (text: string) => {
       const textInput = capitalize(text.trim())
 
       if (textInput.length >= 1 && !inputSearchResults) {
@@ -38,18 +41,26 @@ export function Search() {
         setInputSearchResults(false)
       }
 
+      setInput(textInput)
+
       if (textInput.length >= 1) {
-        const data = searchData.map((result) => {
+        const carsSearchData = await handleWithCarsFilter(textInput)
+
+        if (!carsSearchData) return
+
+        const data = carsSearchData.map((result) => {
+          const name = `${result.brand} ${result.model}`
+
           return {
-            last: result.substring(0, textInput.length),
-            now: result.substr(textInput.length),
+            last: name.substring(0, textInput.length),
+            now: name.substr(textInput.length),
           }
         })
 
         setSearchResults(data)
+      } else {
+        await handleWithCarsFilter('')
       }
-
-      setInput(textInput)
     },
     [inputSearchResults]
   )
@@ -61,13 +72,17 @@ export function Search() {
           placeholderTextColor="#A0A0B2"
           onChangeText={handleInputChangeText}
           searchMode={inputSearchResults}
+          value={input}
         />
 
         <ContentSearch searchMode={inputSearchResults}>
           {inputSearchResults ? (
-            <ContentSearchText>{`${searchData.length} ${
-              searchData.length === 1 ? 'result' : 'results'
-            }`}</ContentSearchText>
+            <ContentSearchText>
+              {carsFilter &&
+                `${carsFilter.length} ${
+                  carsFilter.length === 1 ? 'result' : 'results'
+                }`}
+            </ContentSearchText>
           ) : (
             <SearchIcon />
           )}
