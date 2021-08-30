@@ -124,7 +124,6 @@ const HomeProvider: React.FC = ({ children }) => {
 
   const handleSetTransmissionSelected = useCallback(
     (transmission: TransmissionSelected) => {
-      console.log('transmission', transmission)
       setTransmissionSelected(transmission)
     },
     []
