@@ -1,5 +1,5 @@
 <p align="center">
-   <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-logo.png" alt="RenteX" height="260"/>
+   <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/logo.png" alt="RenteX" height="260"/>
 </p>
 
 <p align="center">
