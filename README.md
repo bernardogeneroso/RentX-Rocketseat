@@ -1,7 +1,7 @@
 # RentX-App -> Expo with React Native
 
 <p align="center">
-   <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/rentx-app/src/assets/rentx.png" alt="RenteX" width="180"/>
+   <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-logo.png" alt="RenteX" height="260"/>
 </p>
 
 <p align="center">
