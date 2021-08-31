@@ -112,17 +112,14 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState)
   }, [])
 
-  const updateUser = useCallback(
-    async (user: User) => {
-      setData({
-        token: data.token,
-        user,
-      })
+  const updateUser = useCallback(async (user: User) => {
+    setData((state) => ({
+      token: state.token,
+      user,
+    }))
 
-      await AsyncStorage.setItem('RenteX:user', JSON.stringify(user))
-    },
-    [data.token]
-  )
+    await AsyncStorage.setItem('RenteX:user', JSON.stringify(user))
+  }, [])
 
   return (
     <AuthContext.Provider

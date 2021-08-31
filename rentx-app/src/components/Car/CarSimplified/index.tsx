@@ -1,7 +1,13 @@
 import React, { useMemo } from 'react'
 import { Alert } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { format, isAfter, isBefore, parseISO } from 'date-fns'
+import {
+  format,
+  isAfter,
+  isBefore,
+  parseISO,
+  differenceInCalendarDays,
+} from 'date-fns'
 
 import { Fuel } from '../../Fuel'
 import useHome from '../../../hooks/useHome'
@@ -80,6 +86,16 @@ export function CarSimplified({ car, scheduled }: CarSimplifiedProps) {
     )
   }, [scheduled])
 
+  const scheduledCountDays = useMemo(() => {
+    return (
+      scheduled &&
+      differenceInCalendarDays(
+        parseISO(scheduled.end_in),
+        parseISO(scheduled.start_in)
+      )
+    )
+  }, [])
+
   function handleNavigateToDetails() {
     if (!car) return
 
@@ -105,9 +121,17 @@ export function CarSimplified({ car, scheduled }: CarSimplifiedProps) {
 
           <ContentPerDay>
             <CarDetails>
-              <CarText>Per day</CarText>
+              <CarText>{`For ${scheduledCountDays} ${
+                scheduledCountDays === 1 ? 'day' : 'days'
+              }`}</CarText>
               <CarPrice>
-                {formatCurrent(car?.pricePerDay, 'pt-PT', 'EUR')}
+                {scheduled && car?.pricePerDay && scheduledCountDays
+                  ? formatCurrent(
+                      car?.pricePerDay * scheduledCountDays,
+                      'pt-PT',
+                      'EUR'
+                    )
+                  : formatCurrent(car?.pricePerDay, 'pt-PT', 'EUR')}
               </CarPrice>
             </CarDetails>
 
