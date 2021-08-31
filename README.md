@@ -1,4 +1,4 @@
-# RentX-App -> Expo with React Native
+# RentX-App -> Expo with React Native {{ctx.theme}}
 
 <p align="center">
    <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-logo.png" alt="RenteX" height="260"/>
