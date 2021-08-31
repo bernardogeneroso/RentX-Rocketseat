@@ -45,6 +45,21 @@
       <td>
          <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-carlisting.png" width="260px;" alt="App -> TabMenu -> Car listing"/>
       </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-carlisting-search.png" width="260px;" alt="App -> TabMenu -> Car listing search"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-schedules.png" width="260px;" alt="App -> TabMenu -> Schedules"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-profile.png" width="260px;" alt="App -> TabMenu -> Profile"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/editprofile.png" width="260px;" alt="App -> Edit profile"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/modalstatus.png" width="260px;" alt="App -> Modal status"/>
+      </td>
    </tr>
 </table>
 
