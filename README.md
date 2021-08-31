@@ -31,6 +31,22 @@
       </td>
    </tr>
 </table>
+<table border="0" cellpadding="0" cellspacing="0">
+   <tr>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/app-datepicker.png" width="260px;" alt="App datepicker"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-home.png" width="260px;" alt="App -> TabMenu -> Home"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-home-filter.png" width="260px;" alt="App -> TabMenu -> Home filter"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/tabmenu-carlisting.png" width="260px;" alt="App -> TabMenu -> Car listing"/>
+      </td>
+   </tr>
+</table>
 
 # :computer: Authors
 
