@@ -18,7 +18,16 @@
 <table border="0" cellpadding="0" cellspacing="0">
    <tr>
       <td>
-         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/auth-show-1.png" width="260px;" alt="Bernardo Generoso"/>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/auth-show-1.png" width="260px;" alt="Auth onboard page 1"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/auth-show-2.png" width="260px;" alt="Auth onboard page of redirections"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/auth-signin.png" width="260px;" alt="Auth sign in page"/>
+      </td>
+      <td>
+         <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/auth-signup.png" width="260px;" alt="Auth sign up page"/>
       </td>
    </tr>
 </table>
