@@ -9,7 +9,7 @@
       <img alt="Bernardo Generoso" src="https://img.shields.io/badge/-Bernardo%20Generoso-DC1637?style=flat&logo=Linkedin&logoColor=white" />
    </a>
 
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-01B755">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-DC1637">
 </p>
 
 > Content developed by [Rocketseat](https://github.com/Rocketseat);
