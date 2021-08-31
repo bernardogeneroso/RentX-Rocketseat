@@ -1,7 +1,5 @@
-# RentX-App -> Expo with React Native
-
 <p align="center">
-   <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/rentx-app/src/assets/rentx.png" alt="RenteX" width="180"/>
+   <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-logo.png" alt="RenteX" height="260"/>
 </p>
 
 <p align="center">
@@ -9,13 +7,14 @@
       <img alt="Bernardo Generoso" src="https://img.shields.io/badge/-Bernardo%20Generoso-DC1637?style=flat&logo=Linkedin&logoColor=white" />
    </a>
 
-  <img alt="License" src="https://img.shields.io/badge/license-MIT-01B755">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-DC1637">
 </p>
 
-> Content developed by [Rocketseat](https://github.com/Rocketseat);
+> Content created by [Rocketseat](https://github.com/Rocketseat);
+> Mobile application with React Native Expo;
 > Application design available on [Figma](https://www.figma.com/file/7Ro0D8mdcX36qWnSBhWaXF/RentX?node-id=0%3A1).
 
-# :computer: Autores
+# :computer: Authors
 
 <table>
   <tr>
@@ -48,6 +47,6 @@
   </tr>
 </table>
 
-# :closed_book: Licença
+# :closed_book: License
 
 This project is under a license [MIT](./LICENSE).
