@@ -15,7 +15,7 @@
 > Application design available on [Figma](https://www.figma.com/file/7Ro0D8mdcX36qWnSBhWaXF/RentX?node-id=0%3A1).
 
 # 📱 Application
-<table cellspacing="0" cellpadding="0">
+<table border="0" cellpadding="0" cellspacing="0">
    <tr>
       <td>
          <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-assets/auth-show-1.png" width="260px;" alt="Bernardo Generoso"/>
