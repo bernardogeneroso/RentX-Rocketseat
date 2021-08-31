@@ -28,13 +28,13 @@
         </sub>
        </a>
        <br />
-       <a href="https://www.linkedin.com/in/bernardo-generoso-829ba81b0" title="Linkedin">@tavareshenrique</a>
+       <a href="https://www.linkedin.com/in/bernardo-generoso-829ba81b0" title="Linkedin">@bernardogeneroso</a>
        <br />
        <a href="https://github.com/bernardogeneroso/RentX-Rocketseat/commits/main" title="Code">💻</a>
     </td>
     <td align="center">
       <a href="https://github.com/Rocketseat">
-        <img src="https://avatars0.githubusercontent.com/u/28929274?s=200&v=4" width="100px;" alt="Bernardo Generoso"/>
+        <img src="https://avatars0.githubusercontent.com/u/28929274?s=200&v=4" width="100px;" alt="Rocketseat"/>
         <br />
         <sub>
           <b>Rocketseat</b>
