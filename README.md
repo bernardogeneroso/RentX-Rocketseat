@@ -34,7 +34,7 @@
     </td>
     <td align="center">
       <a href="https://github.com/Rocketseat">
-        <img src="https://avatars0.githubusercontent.com/u/28929274?s=200&v=4" width="100px;" alt="Henrique Tavares"/>
+        <img src="https://avatars0.githubusercontent.com/u/28929274?s=200&v=4" width="100px;" alt="Bernardo Generoso"/>
         <br />
         <sub>
           <b>Rocketseat</b>
