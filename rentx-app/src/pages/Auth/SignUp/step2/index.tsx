@@ -107,11 +107,11 @@ export function Step2({ messageLeave, dataStep1, setPage }: Step2Props) {
       </Header>
       <Information>
         <TextAnimation isVisible={messageLeave}>
-          <Title>We are{'\n'}almost there.</Title>
+          <Title>Create your{'\n'}account.</Title>
         </TextAnimation>
 
         <TextAnimation>
-          <Subtitle>Login to get started{'\n'}an amazing experience.</Subtitle>
+          <Subtitle>Register for quickly{'\n'}and easily.</Subtitle>
         </TextAnimation>
       </Information>
       <Form>
