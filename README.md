@@ -1,5 +1,3 @@
-# RentX-App -> Expo with React Native
-
 <p align="center">
    <img src="https://raw.githubusercontent.com/bernardogeneroso/RentX-Rocketseat/main/readme-logo.png" alt="RenteX" height="260"/>
 </p>
@@ -12,7 +10,8 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-DC1637">
 </p>
 
-> Content developed by [Rocketseat](https://github.com/Rocketseat);
+> Content created by [Rocketseat](https://github.com/Rocketseat);
+> Mobile application with React Native Expo;
 > Application design available on [Figma](https://www.figma.com/file/7Ro0D8mdcX36qWnSBhWaXF/RentX?node-id=0%3A1).
 
 # :computer: Authors
