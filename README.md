@@ -14,6 +14,8 @@
 > Mobile application with React Native Expo;
 > Application design available on [Figma](https://www.figma.com/file/7Ro0D8mdcX36qWnSBhWaXF/RentX?node-id=0%3A1).
 
+# 📱 Application
+
 # :computer: Authors
 
 <table>
