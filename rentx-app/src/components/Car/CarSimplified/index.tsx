@@ -121,9 +121,13 @@ export function CarSimplified({ car, scheduled }: CarSimplifiedProps) {
 
           <ContentPerDay>
             <CarDetails>
-              <CarText>{`For ${scheduledCountDays} ${
-                scheduledCountDays === 1 ? 'day' : 'days'
-              }`}</CarText>
+              <CarText>
+                {scheduled
+                  ? `For ${scheduledCountDays} ${
+                      scheduledCountDays === 1 ? 'day' : 'days'
+                    }`
+                  : 'Per day'}
+              </CarText>
               <CarPrice>
                 {scheduled && car?.pricePerDay && scheduledCountDays
                   ? formatCurrent(
