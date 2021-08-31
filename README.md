@@ -48,6 +48,6 @@
   </tr>
 </table>
 
-# :closed_book: Licença
+# :closed_book: License
 
 This project is under a license [MIT](./LICENSE).
