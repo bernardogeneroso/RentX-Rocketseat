@@ -3,5 +3,6 @@ export const priceFormatter = (price: number): string => {
     style: 'currency',
     currency: 'EUR',
     maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
   }).format(price)
 }

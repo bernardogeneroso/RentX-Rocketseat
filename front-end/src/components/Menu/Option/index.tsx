@@ -6,11 +6,13 @@ import { Container } from './styles'
 
 interface OptionProps extends HTMLAttributes<HTMLDivElement> {
   isActive?: boolean
+  title: string
   icon: React.FC<React.SVGProps<SVGSVGElement>>
 }
 
 export default function Option({
   isActive = false,
+  title,
   icon: Icon,
   ...rest
 }: OptionProps) {
@@ -23,7 +25,7 @@ export default function Option({
   })
 
   return (
-    <Container style={optionStyle} {...rest}>
+    <Container style={optionStyle} title={title} {...rest}>
       <Icon />
     </Container>
   )

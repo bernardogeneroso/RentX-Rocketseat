@@ -20,7 +20,7 @@ export default function Car({
   styles,
 }: CarProps) {
   return (
-    <Container style={styles}>
+    <Container style={styles} title={`${brand} - ${model}`}>
       <div className="container-image">
         <ImageCar />
       </div>
@@ -42,11 +42,11 @@ export default function Car({
         </div>
 
         {fuel === 'electric' ? (
-          <Electric />
+          <Electric title="Electric" />
         ) : fuel === 'gasoline' ? (
-          <Gasoline />
+          <Gasoline title="Gasoline" />
         ) : (
-          <Alcohol />
+          <Alcohol title="Alcohol" />
         )}
       </Footer>
     </Container>
