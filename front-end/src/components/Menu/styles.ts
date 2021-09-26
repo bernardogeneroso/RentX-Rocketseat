@@ -22,4 +22,21 @@ export const Container = styled.div`
     align-items: center;
     background-color: ${(props) => props.theme.colors.black100};
   }
+
+  @media screen and (max-width: 535px) {
+    margin-bottom: 0.1rem;
+    flex-direction: row;
+    height: fit-content;
+
+    div.logo {
+      padding: 4rem;
+    }
+
+    div.content {
+      padding: 1rem 2rem;
+      width: 100%;
+      flex-direction: row;
+      justify-content: baseline;
+    }
+  }
 `

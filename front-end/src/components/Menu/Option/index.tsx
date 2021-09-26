@@ -18,12 +18,12 @@ export default function Option({
 
   const optionStyle = useSpring({
     backgroundColor: isActive ? theme.colors.black : 'transparent',
-    borderLeftColor: isActive ? theme.colors.primary : 'transparent',
+    borderColor: isActive ? theme.colors.primary : 'transparent',
     config: config.wobbly,
   })
 
   return (
-    <Container style={optionStyle} isActive={isActive} {...rest}>
+    <Container style={optionStyle} {...rest}>
       <Icon />
     </Container>
   )

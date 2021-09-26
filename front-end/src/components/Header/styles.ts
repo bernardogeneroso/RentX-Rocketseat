@@ -43,5 +43,13 @@ export const Container = styled.div`
         }
       }
     }
+
+    @media screen and (max-width: 750px) {
+      padding: 1.8rem 5rem;
+    }
+
+    @media screen and (max-width: 535px) {
+      padding: 1.8rem 3rem;
+    }
   }
 `
