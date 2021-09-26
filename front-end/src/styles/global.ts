@@ -12,12 +12,11 @@ export default createGlobalStyle`
   }
 
   #__next {
-    display: flex;
     height: 100vh;
   }
 
   body {
-    background: #fff;
+    background: #f1f1f1;
     color: #47474D;
     -webkit-font-smoothing: antialiased;
   }

@@ -2,8 +2,8 @@ import { animated } from 'react-spring'
 import styled from 'styled-components'
 
 export const Container = styled.div`
+  height: 100%;
   overflow: hidden;
-  flex: 1;
   background: ${(props) => props.theme.colors.black100};
   color: ${(props) => props.theme.colors.white};
   display: flex;
