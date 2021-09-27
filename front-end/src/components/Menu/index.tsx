@@ -60,7 +60,7 @@ export default function Menu() {
             icon={menuOption.icon}
             title={`${menuOption.name
               .charAt(0)
-              .toUpperCase()}  ${menuOption.name.slice(1)}`}
+              .toUpperCase()}${menuOption.name.slice(1)}`}
             isActive={option === menuOption.name}
             onClick={() => handleSetOption(menuOption.name)}
           />

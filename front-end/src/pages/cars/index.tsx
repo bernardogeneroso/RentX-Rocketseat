@@ -28,7 +28,7 @@ export interface ICar {
 }
 
 interface CarsProps {
-  cars: ICar[]
+  cars: ICar[] | null
 }
 
 export default function Cars({ cars }: CarsProps) {
@@ -49,11 +49,19 @@ export default function Cars({ cars }: CarsProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const { data } = await api.get('/cars')
+  try {
+    const { data } = await api.get('/cars')
 
-  return {
-    props: {
-      cars: data,
-    },
+    return {
+      props: {
+        cars: data,
+      },
+    }
+  } catch {
+    return {
+      props: {
+        cars: null,
+      },
+    }
   }
 }
