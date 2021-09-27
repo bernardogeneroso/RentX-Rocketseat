@@ -6,8 +6,32 @@ import Menu from '../../components/Menu'
 import CarsList from '../../components/app/CarsList'
 
 import { Container } from '../../styles/pages/cars'
+import { GetServerSideProps } from 'next'
+import { api } from '../../services/api'
 
-export default function Cars() {
+export interface ICar {
+  plate: string
+  brand: string
+  model: string
+  colour: string
+  fuel: 'electric' | 'gasoline' | 'alcohol'
+  transmission: 'manual' | 'auto'
+  pricePerDay: number
+  created_at: Date
+  updated_at: Date
+  used: number
+  daysUsed: number
+  carsImages: {
+    url: string
+    carId: string
+  }[]
+}
+
+interface CarsProps {
+  cars: ICar[]
+}
+
+export default function Cars({ cars }: CarsProps) {
   return (
     <>
       <Head>
@@ -18,8 +42,18 @@ export default function Cars() {
         <Header text="Home" />
         <Menu />
 
-        <CarsList />
+        <CarsList {...{ cars }} />
       </Container>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const { data } = await api.get('/cars')
+
+  return {
+    props: {
+      cars: data,
+    },
+  }
 }

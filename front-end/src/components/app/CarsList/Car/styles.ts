@@ -17,8 +17,19 @@ export const Container = styled(animated.div)`
   }
 
   div.container-image {
+    width: 100%;
     padding: 1rem;
-    height: 160px;
+
+    > div {
+      position: unset !important;
+    }
+
+    .image-car {
+      object-fit: contain;
+      width: 100% !important;
+      position: relative !important;
+      height: unset !important;
+    }
   }
 
   div.line {
@@ -36,6 +47,7 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 
   div.car-info {
     display: flex;

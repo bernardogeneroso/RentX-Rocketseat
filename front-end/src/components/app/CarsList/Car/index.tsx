@@ -1,6 +1,8 @@
 import React from 'react'
+import { useRouter } from 'next/router'
+import Image from 'next/image'
 
-import { ICar } from '../'
+import { ICar } from '../../../../pages/cars'
 import { priceFormatter } from '../../../../utils/priceFormatter'
 
 import { Container, Footer } from './styles'
@@ -15,14 +17,28 @@ interface CarProps {
   styles: any
 }
 
-export default function Car({
-  car: { brand, model, fuel, pricePerDay, imageCar: ImageCar },
-  styles,
-}: CarProps) {
+export default function Car({ car, styles }: CarProps) {
+  const router = useRouter()
+
+  function handleRedirectToPageCarDetails() {
+    router.push(`/cars/${car.plate}`)
+  }
+
   return (
-    <Container style={styles} title={`${brand} - ${model}`}>
+    <Container
+      style={styles}
+      title={`${car.brand} - ${car.model}`}
+      onClick={handleRedirectToPageCarDetails}
+    >
       <div className="container-image">
-        <ImageCar />
+        {car.carsImages[0]?.url && (
+          <Image
+            src={car.carsImages[0]?.url}
+            alt={`${car.brand} - ${car.model}`}
+            layout="fill"
+            className="image-car"
+          />
+        )}
       </div>
 
       <div className="line" />
@@ -30,20 +46,20 @@ export default function Car({
       <Footer>
         <div className="car-info">
           <div className="car-info-first">
-            <span className="info">{brand}</span>
-            <span className="info-result">{model}</span>
+            <span className="info">{car.brand}</span>
+            <span className="info-result">{car.model}</span>
           </div>
           <div className="car-info-last">
             <span className="info">Per day</span>
             <span className="info-result price">
-              {priceFormatter(pricePerDay)}
+              {priceFormatter(car.pricePerDay)}
             </span>
           </div>
         </div>
 
-        {fuel === 'electric' ? (
+        {car.fuel === 'electric' ? (
           <Electric title="Electric" />
-        ) : fuel === 'gasoline' ? (
+        ) : car.fuel === 'gasoline' ? (
           <Gasoline title="Gasoline" />
         ) : (
           <Alcohol title="Alcohol" />

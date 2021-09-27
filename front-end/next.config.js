@@ -2,6 +2,9 @@
 /** @type {import('next').NextConfig} */
 
 module.exports = {
+  images: {
+    domains: ['192.168.1.72'],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,

@@ -19,7 +19,6 @@ carsRouter.use("/appointments", ensureAuthenticated, appointmentsRouter);
 
 carsRouter.get(
   "/",
-  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       search: Yup.string(),
@@ -57,7 +56,6 @@ carsRouter.get("/schedules", ensureAuthenticated, carsController.userSchedules);
 carsRouter.get("/favorite", ensureAuthenticated, carsController.favoriteCar);
 carsRouter.get(
   "/details/:plate",
-  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       plate: Yup.string().length(6).required(),
