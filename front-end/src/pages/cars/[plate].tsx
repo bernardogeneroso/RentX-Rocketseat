@@ -68,16 +68,23 @@ export default function CarId({ car }: CarIdProps) {
 
           <ContainerDetails>
             {car && (
-              <CarSlide
-                images={car.carsImages}
-                car={{
-                  brand: car.brand,
-                  model: car.model,
-                }}
-              />
+              <>
+                <CarSlide
+                  images={car.carsImages}
+                  car={{
+                    brand: car.brand,
+                    model: car.model,
+                  }}
+                />
+                <CarDetails
+                  details={{
+                    ...car.carDetail,
+                    fuel: car.fuel,
+                    transmission: car.transmission,
+                  }}
+                />
+              </>
             )}
-
-            <CarDetails />
           </ContainerDetails>
         </Content>
       </Container>

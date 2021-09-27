@@ -18,6 +18,7 @@ export const Container = styled(animated.div)`
 
   div.container-image {
     width: 100%;
+    max-height: 260px;
     padding: 1rem;
 
     > div {

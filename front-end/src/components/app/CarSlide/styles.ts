@@ -37,12 +37,14 @@ export const ContentCar = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  user-select: none;
 
   > div {
     position: unset !important;
   }
 
   .image-car {
+    pointer-events: none;
     transform: scaleX(-1);
     object-fit: contain;
     width: 100% !important;

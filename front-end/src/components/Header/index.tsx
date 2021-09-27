@@ -22,7 +22,7 @@ export default function Header({ text }: HeaderProps) {
         <h3>{text}</h3>
 
         <div className="content" onClick={handleRedirectToSignInPage}>
-          <h3>Make sign in</h3>
+          <h3>Sign in</h3>
 
           <div className="perfil">
             <Perfil />

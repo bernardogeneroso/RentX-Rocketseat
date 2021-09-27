@@ -31,8 +31,6 @@ export default function CarSlide({ images, car }: CarSlideProps) {
   const [slides, api] = useSprings(
     images.length,
     (i) => ({
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       x: i * width,
       display: i === 0 ? 'block' : 'none',
       opacity: i === 0 ? 1 : 0,
@@ -76,7 +74,7 @@ export default function CarSlide({ images, car }: CarSlideProps) {
   function handleSetPageAboutYou(pageOption: number) {
     api.start((i) => {
       if (pageOption < i || pageOption > i) {
-        const x = window.innerWidth
+        const x = width
 
         if (pageOption < i) {
           return { x: x / 2, display: 'none', opacity: 0 }
@@ -111,6 +109,7 @@ export default function CarSlide({ images, car }: CarSlideProps) {
                 alt={`${car.brand} - ${car.model}`}
                 layout="fill"
                 className="image-car"
+                priority
               />
             </ContentCar>
           </ContainerCar>
