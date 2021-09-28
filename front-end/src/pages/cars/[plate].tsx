@@ -1,6 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
-import { GetServerSideProps } from 'next'
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { FaChevronLeft } from 'react-icons/fa'
 
@@ -76,6 +76,7 @@ export default function CarId({ car }: CarIdProps) {
                     model: car.model,
                   }}
                 />
+
                 <CarDetails
                   details={{
                     ...car.carDetail,
@@ -92,14 +93,34 @@ export default function CarId({ car }: CarIdProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { plate } = context.query
+export const getStaticPaths: GetStaticPaths = () => {
+  return {
+    paths: [
+      { params: { plate: '01AB02' } },
+      { params: { plate: '10ZB52' } },
+      { params: { plate: '25HH65' } },
+      { params: { plate: '50LV65' } },
+      { params: { plate: 'GF85JU' } },
+      { params: { plate: 'LE88FF' } },
+      { params: { plate: 'PF58LB' } },
+    ],
+    fallback: true,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (
+  context: GetStaticPropsContext
+) => {
+  // eslint-disable-next-line
+  // @ts-ignore
+  const { plate } = context.params
 
   try {
     const { data } = await api.get(`/cars/details/${plate}`)
 
     return {
       props: { car: data },
+      revalidate: 1 * 60, // 1 hour
     }
   } catch {
     return {

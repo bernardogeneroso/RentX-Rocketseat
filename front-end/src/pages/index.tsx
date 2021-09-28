@@ -19,7 +19,6 @@ import AudiA1 from './assets/cars/audi_a1.svg'
 
 const Home = () => {
   const router = useRouter()
-
   const stylesResumeRentX = useSpring({
     from: {
       opacity: 0,

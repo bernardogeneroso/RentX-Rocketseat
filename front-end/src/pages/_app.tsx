@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components'
 import light from '../styles/themes/light'
 import GlobalStyle from '../styles/global'
 
+import 'react-spring-modal/styles.css'
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>

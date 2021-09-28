@@ -1,10 +1,13 @@
 import styled, { css } from 'styled-components'
 import { lighten, shade } from 'polished'
 
-export const Container = styled.button`
+interface ContainerProps {
+  backgroundColor: string
+}
+
+export const Container = styled.button<ContainerProps>`
   padding: 2.9rem 8rem;
   border: 0;
-  background-color: ${(props) => props.theme.colors.primary};
   color: ${(props) => props.theme.colors.white};
   font-size: 18px;
   font-weight: 500;
@@ -12,7 +15,8 @@ export const Container = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${(props) => shade(0.2, props.theme.colors.primary)};
+    background-color: ${(props) =>
+      shade(0.2, props.backgroundColor)} !important;
   }
 
   ${(props) =>

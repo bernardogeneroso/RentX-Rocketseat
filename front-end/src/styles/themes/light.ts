@@ -14,7 +14,9 @@ export default {
 
     white: '#ffffff',
     white100: '#f1f1f1',
+    white200: '#F4F5F6',
     white300: '#ebebf0',
+    white350: '#ebebeb',
     white400: '#dedee3',
 
     green: '#03B252',

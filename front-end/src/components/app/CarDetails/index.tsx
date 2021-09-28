@@ -1,5 +1,7 @@
 import React from 'react'
 
+import CarRental from './CarRental'
+
 import { Container, ContainerDetails, Content } from './styles'
 
 import Speed from '../../../pages/assets/speed.svg'
@@ -31,11 +33,11 @@ export default function CarDetails({ details }: CarDetailsProps) {
   const carDetails: ICarDetails[] = [
     {
       Icon: Speed,
-      value: details.maxSpeed,
+      value: `${details.maxSpeed}km/h`,
     },
     {
       Icon: TopSpeed,
-      value: details.topSpeed,
+      value: `${details.topSpeed}s`,
     },
     {
       Icon:
@@ -52,11 +54,11 @@ export default function CarDetails({ details }: CarDetailsProps) {
     },
     {
       Icon: Perfil,
-      value: details.people,
+      value: `${details.people} persons`,
     },
     {
       Icon: StrongHp,
-      value: details.hp,
+      value: `${details.hp} HP`,
     },
   ]
 
@@ -69,10 +71,12 @@ export default function CarDetails({ details }: CarDetailsProps) {
               <detail.Icon />
             </div>
 
-            <span>{detail.value}</span>
+            <div className="value">{detail.value}</div>
           </Content>
         ))}
       </ContainerDetails>
+
+      <CarRental />
     </Container>
   )
 }

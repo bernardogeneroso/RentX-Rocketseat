@@ -82,4 +82,8 @@ export const Footer = styled.div`
       margin-left: 2.4rem;
     }
   }
+
+  svg {
+    fill: ${(props) => props.theme.colors.grey50};
+  }
 `
