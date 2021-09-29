@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useTransition, config } from 'react-spring'
 
 import AboutCar from './AboutCar'
@@ -7,22 +7,29 @@ import ContentAboutCar from './ContentAboutCar'
 
 import { Container, ContainerAboutCar, ContainerInfo } from './styles'
 
-type InfoProps = 'AboutCar' | 'RentalPeriod'
+export type InfoCarProps = 'AboutCar' | 'RentalPeriod'
 
-export default function CarRental() {
-  const [info, setInfo] = useState<InfoProps>('AboutCar')
+interface RentalProps {
+  carInfo: {
+    plate: string
+    pricePerDay: number
+  }
+}
+
+export default function CarRental({ carInfo }: RentalProps) {
+  const [info, setInfo] = useState<InfoCarProps>('AboutCar')
 
   const transitions = useTransition(info, {
     from: { opacity: 0, translateY: -50 },
     enter: { opacity: 1, translateY: 0 },
-    leave: { opacity: 0, translateY: 100 },
+    leave: { opacity: 0, translateY: 0 },
     delay: 200,
     config: config.gentle,
   })
 
-  function handleSetInfo(newInfo: InfoProps) {
+  const handleSetInfoCar = useCallback((newInfo: InfoCarProps) => {
     setInfo(newInfo)
-  }
+  }, [])
 
   return (
     <Container>
@@ -30,13 +37,13 @@ export default function CarRental() {
         <header>
           <ContentAboutCar
             isActive={info === 'AboutCar'}
-            onClick={() => handleSetInfo('AboutCar')}
+            onClick={() => handleSetInfoCar('AboutCar')}
           >
             About the car
           </ContentAboutCar>
           <ContentAboutCar
             isActive={info === 'RentalPeriod'}
-            onClick={() => handleSetInfo('RentalPeriod')}
+            onClick={() => handleSetInfoCar('RentalPeriod')}
           >
             Rental period
           </ContentAboutCar>
@@ -45,9 +52,12 @@ export default function CarRental() {
         <ContainerInfo>
           {transitions((styles, item) =>
             item === 'AboutCar' ? (
-              <AboutCar styles={styles} />
+              <AboutCar {...{ styles, handleSetInfoCar }} />
             ) : (
-              <RentalPeriod styles={styles} />
+              <RentalPeriod
+                isActive={item === 'RentalPeriod'}
+                {...{ styles, carInfo }}
+              />
             )
           )}
         </ContainerInfo>

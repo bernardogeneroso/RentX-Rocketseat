@@ -83,6 +83,10 @@ export default function CarId({ car }: CarIdProps) {
                     fuel: car.fuel,
                     transmission: car.transmission,
                   }}
+                  carInfo={{
+                    plate: car.plate,
+                    pricePerDay: car.pricePerDay,
+                  }}
                 />
               </>
             )}

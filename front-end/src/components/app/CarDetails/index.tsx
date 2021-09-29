@@ -22,6 +22,10 @@ interface CarDetailsProps {
     hp: number
     people: number
   }
+  carInfo: {
+    plate: string
+    pricePerDay: number
+  }
 }
 
 interface ICarDetails {
@@ -29,7 +33,7 @@ interface ICarDetails {
   value: string | number
 }
 
-export default function CarDetails({ details }: CarDetailsProps) {
+export default function CarDetails({ details, carInfo }: CarDetailsProps) {
   const carDetails: ICarDetails[] = [
     {
       Icon: Speed,
@@ -68,7 +72,7 @@ export default function CarDetails({ details }: CarDetailsProps) {
         {carDetails.map((detail) => (
           <Content key={detail.value}>
             <div className="icon">
-              <detail.Icon />
+              <detail.Icon width={32} height={32} />
             </div>
 
             <div className="value">{detail.value}</div>
@@ -76,7 +80,7 @@ export default function CarDetails({ details }: CarDetailsProps) {
         ))}
       </ContainerDetails>
 
-      <CarRental />
+      <CarRental {...{ carInfo }} />
     </Container>
   )
 }

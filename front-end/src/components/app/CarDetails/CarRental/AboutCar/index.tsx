@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { InfoCarProps } from '..'
 import { Button } from '../../../../Button'
 
 import { Container } from './styles'
@@ -7,9 +8,10 @@ import { Container } from './styles'
 interface AboutCarProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   styles: any
+  handleSetInfoCar: (newInfo: InfoCarProps) => void
 }
 
-export default function AboutCar({ styles }: AboutCarProps) {
+export default function AboutCar({ styles, handleSetInfoCar }: AboutCarProps) {
   return (
     <Container
       style={{
@@ -23,7 +25,10 @@ export default function AboutCar({ styles }: AboutCarProps) {
         videntes.
       </div>
 
-      <Button text="Choose rental period" />
+      <Button
+        text="Choose rental period"
+        onClick={() => handleSetInfoCar('RentalPeriod')}
+      />
     </Container>
   )
 }

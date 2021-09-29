@@ -5,6 +5,8 @@ import light from '../styles/themes/light'
 import GlobalStyle from '../styles/global'
 
 import 'react-spring-modal/styles.css'
+import 'react-calendar/dist/Calendar.css'
+import '@reach/dialog/styles.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
