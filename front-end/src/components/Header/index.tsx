@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 
 import { Container } from './styles'
 
-import Perfil from '../../pages/assets/perfil.svg'
+import Profile from '../../pages/assets/profile.svg'
 
 interface HeaderProps {
   text: string
@@ -13,7 +13,7 @@ export default function Header({ text }: HeaderProps) {
   const router = useRouter()
 
   function handleRedirectToSignInPage() {
-    router.push('/perfil/signin')
+    router.push('/profile/signin')
   }
 
   return (
@@ -25,7 +25,7 @@ export default function Header({ text }: HeaderProps) {
           <h3>Sign in</h3>
 
           <div className="perfil">
-            <Perfil />
+            <Profile />
           </div>
         </div>
       </nav>

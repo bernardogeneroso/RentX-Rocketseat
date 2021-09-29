@@ -8,28 +8,32 @@ import { Container } from './styles'
 
 import Home from '../../pages/assets/home.svg'
 import Car from '../../pages/assets/car.svg'
-import Perfil from '../../pages/assets/perfil.svg'
+import Profile from '../../pages/assets/profile.svg'
 import RentxWhite from '../../pages/assets/rentxWhite.svg'
 
-type Option = 'home' | 'car' | 'perfil'
+type Option = 'home' | 'car' | 'profile'
 
 interface Options {
   name: Option
   icon: React.FC<React.SVGProps<SVGSVGElement>>
+  link: string
 }
 
 const options: Options[] = [
   {
     name: 'home',
     icon: Home,
+    link: '/cars',
   },
   {
     name: 'car',
     icon: Car,
+    link: '/cars/filter-dates',
   },
   {
-    name: 'perfil',
-    icon: Perfil,
+    name: 'profile',
+    icon: Profile,
+    link: '/profile',
   },
 ]
 
@@ -58,6 +62,7 @@ export default function Menu() {
           <OptionComponent
             key={menuOption.name}
             icon={menuOption.icon}
+            link={menuOption.link}
             title={`${menuOption.name
               .charAt(0)
               .toUpperCase()}${menuOption.name.slice(1)}`}

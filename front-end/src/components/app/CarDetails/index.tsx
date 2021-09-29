@@ -10,7 +10,7 @@ import Gasoline from '../../../pages/assets/cars/fuels/gasoline.svg'
 import Electric from '../../../pages/assets/cars/fuels/electric.svg'
 import Alcohol from '../../../pages/assets/cars/fuels/alcohol.svg'
 import GearShift from '../../../pages/assets/gear-shift.svg'
-import Perfil from '../../../pages/assets/perfil.svg'
+import Profile from '../../../pages/assets/profile.svg'
 import StrongHp from '../../../pages/assets/strong-hp.svg'
 
 interface CarDetailsProps {
@@ -57,7 +57,7 @@ export default function CarDetails({ details, carInfo }: CarDetailsProps) {
       value: details.transmission,
     },
     {
-      Icon: Perfil,
+      Icon: Profile,
       value: `${details.people} persons`,
     },
     {

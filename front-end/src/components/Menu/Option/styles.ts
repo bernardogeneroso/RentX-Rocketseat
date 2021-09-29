@@ -10,27 +10,31 @@ export const Container = styled(animated.div)<ContainerProps>`
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 1.5rem;
   border-left-width: 0.3rem;
   border-left-style: solid;
 
   transition: background-color 0.2s;
 
-  svg {
-    fill: ${(props) => props.theme.colors.grey400};
-  }
+  div.content {
+    background-color: transparent;
+    padding: 1.5rem;
 
-  &:hover {
-    background-color: ${(props) => props.theme.colors.black};
-  }
+    svg {
+      fill: ${(props) => props.theme.colors.grey400};
+    }
 
-  ${(props) =>
-    props.isActive &&
-    css`
-      svg {
-        fill: ${(props) => props.theme.colors.white};
-      }
-    `}
+    &:hover {
+      background-color: ${(props) => props.theme.colors.black};
+    }
+
+    ${(props) =>
+      props.isActive &&
+      css`
+        svg {
+          fill: ${(props) => props.theme.colors.white};
+        }
+      `}
+  }
 
   @media screen and (max-width: 535px) {
     border-left-width: 0;

@@ -29,7 +29,7 @@ interface ICarWithDetails extends ICar {
 }
 
 interface CarIdProps {
-  car: ICarWithDetails | undefined
+  car: ICarWithDetails | null
 }
 
 export default function CarId({ car }: CarIdProps) {
