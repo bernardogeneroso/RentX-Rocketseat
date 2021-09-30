@@ -24,10 +24,6 @@ export const ContainerAboutCar = styled(animated.div)`
     flex: auto;
     height: inherit;
     overflow: unset;
-
-    header {
-      margin-top: 4rem;
-    }
   }
 `
 

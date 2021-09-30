@@ -6,6 +6,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 3rem;
 
   @media screen and (max-width: 975px) {
     max-width: unset;
