@@ -119,7 +119,7 @@ export const Container = styled.div`
           margin-top: 0.8rem;
           color: ${(props) => props.theme.colors.grey700};
           font-weight: 500;
-          font-size: 1.6rem;
+          font-size: 2.6rem;
         }
 
         div.line {
@@ -157,7 +157,7 @@ export const Container = styled.div`
         gap: 4rem;
 
         div.each {
-          width: 120px;
+          width: 160px;
 
           & + div {
             margin: 0;
