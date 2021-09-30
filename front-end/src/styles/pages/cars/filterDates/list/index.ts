@@ -26,25 +26,4 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   grid-area: content;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  h1 {
-    color: ${(props) => props.theme.colors.grey700};
-    font-family: Archivo;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 2.6rem;
-    padding: 0rem 5rem;
-    margin: -3rem 5rem;
-    text-align: center;
-  }
-
-  @media screen and (max-width: 535px) {
-    h1 {
-      margin: 0 5rem;
-    }
-  }
 `

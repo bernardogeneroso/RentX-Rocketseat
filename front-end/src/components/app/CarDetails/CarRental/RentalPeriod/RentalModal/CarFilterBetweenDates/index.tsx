@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { useRouter } from 'next/router'
 import Calendar from 'react-calendar'
 import { format } from 'date-fns'
 import { ModalCloseTarget } from 'react-spring-modal'
@@ -21,11 +22,21 @@ export default function CarFilterBetweenDates({
   dates,
   handleChangeDatesModal,
 }: CarFilterBetweenDatesProps) {
+  const router = useRouter()
+
   const datesValidation = useMemo(() => {
     if (!dates[0] || !dates[1]) return new Date()
 
     return dates
   }, [dates])
+
+  function handleRedirectCarsFiltered() {
+    if (!dates[0] || !dates[1]) return
+
+    router.push(
+      `/cars/filter-dates/list?startDate=${dates[0].toString()}&endDate=${dates[1].toString()}`
+    )
+  }
 
   return (
     <Container className="container-filterBetweenDates">
@@ -71,7 +82,7 @@ export default function CarFilterBetweenDates({
             <Button text="Continuar" />
           </ModalCloseTarget>
         ) : (
-          <Button text="Continuar" />
+          <Button text="Continuar" onClick={handleRedirectCarsFiltered} />
         )}
       </div>
     </Container>

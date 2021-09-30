@@ -29,7 +29,6 @@ carsRouter.get(
 );
 carsRouter.post(
   "/between-dates",
-  ensureAuthenticated,
   schemaValidation({
     schema: Yup.object({
       dates: Yup.object({

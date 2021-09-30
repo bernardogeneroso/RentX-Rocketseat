@@ -3,15 +3,23 @@ import { useTransition, config } from 'react-spring'
 
 import Car from './Car'
 import { ICar } from '../../../pages/cars'
+import CarHeader from './CarHeader'
+import CarHeaderFilter from './CarHeaderFilter'
 
-import { Container, Header, Content } from './styles'
+import { Container, Content } from './styles'
 
 interface CarsListProps {
   cars: ICar[] | null
+  dates?: [Date, Date] | null
+  filterMode?: boolean
 }
 
-export default function CarsList(data: CarsListProps) {
-  const [cars] = useState(data.cars)
+export default function CarsList({
+  cars: carsReceived,
+  dates = null,
+  filterMode = false,
+}: CarsListProps) {
+  const [cars] = useState(carsReceived)
 
   const transitionsCars = useTransition(cars || [], {
     keys: (item) => item.plate,
@@ -24,15 +32,14 @@ export default function CarsList(data: CarsListProps) {
 
   return (
     <Container>
-      <Header>
-        <h1>{cars ? 'Available cars' : 'No cars available'}</h1>
-
-        {cars && (
-          <span>
-            Total {`${cars.length} ${cars.length === 1 ? 'car' : 'cars'}`}
-          </span>
-        )}
-      </Header>
+      {filterMode && dates ? (
+        <CarHeaderFilter
+          cars={cars && cars.length ? cars.length : null}
+          dates={dates}
+        />
+      ) : (
+        <CarHeader cars={cars && cars.length ? cars.length : null} />
+      )}
 
       <Content>
         {transitionsCars((styles, item) => (

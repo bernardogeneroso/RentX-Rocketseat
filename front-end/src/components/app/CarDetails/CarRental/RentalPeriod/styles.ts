@@ -54,6 +54,9 @@ export const Header = styled.div`
   }
 
   button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     padding: 1rem;
     border: 0;
     background-color: ${(props) => props.theme.colors.primary};

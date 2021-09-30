@@ -5,13 +5,13 @@ import { FaChevronRight } from 'react-icons/fa'
 
 import { Button } from '../../../../Button'
 import ModalStatus from '../../../ModalStatus'
+import RentalModal from './RentalModal'
 import { priceFormatter } from '../../../../../utils/priceFormatter'
 import { api } from '../../../../../services/api'
 
 import { Container, Header, Content, ContentTotal } from './styles'
 
 import Calendar from '../../../../../pages/assets/calendar.svg'
-import RentalModal from './RentalModal'
 
 interface RentalPeriodProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

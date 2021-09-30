@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useTheme } from 'styled-components'
 import { useSpring, config } from 'react-spring'
 
@@ -20,7 +20,6 @@ export default function Option({
   ...rest
 }: OptionProps) {
   const theme = useTheme()
-  const router = useRouter()
 
   const optionStyle = useSpring({
     backgroundColor: isActive ? theme.colors.black : 'transparent',
@@ -28,15 +27,13 @@ export default function Option({
     config: config.wobbly,
   })
 
-  function handleRedirectToLink() {
-    router.push(link)
-  }
-
   return (
-    <Container style={optionStyle} title={title} {...rest}>
-      <div className="content" onClick={handleRedirectToLink}>
-        <Icon />
-      </div>
-    </Container>
+    <Link href={link} passHref>
+      <Container style={optionStyle} title={title} {...rest}>
+        <div className="content">
+          <Icon />
+        </div>
+      </Container>
+    </Link>
   )
 }
