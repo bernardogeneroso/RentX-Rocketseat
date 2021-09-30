@@ -11,11 +11,13 @@ import ArrowLeft from '../../../../../../../pages/assets/arrowLeft.svg'
 import ArrowRight from '../../../../../../../pages/assets/arrowRight.svg'
 
 interface CarFilterBetweenDatesProps {
+  modal?: boolean
   dates: [Date | null, Date | null]
   handleChangeDatesModal: (newDates: [Date, Date]) => void
 }
 
 export default function CarFilterBetweenDates({
+  modal = false,
   dates,
   handleChangeDatesModal,
 }: CarFilterBetweenDatesProps) {
@@ -26,7 +28,7 @@ export default function CarFilterBetweenDates({
   }, [dates])
 
   return (
-    <Container>
+    <Container className="container-filterBetweenDates">
       <Calendar
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         onChange={(value: any) => {
@@ -64,9 +66,13 @@ export default function CarFilterBetweenDates({
           </div>
         </div>
 
-        <ModalCloseTarget>
-          <Button text="Confirm" />
-        </ModalCloseTarget>
+        {modal ? (
+          <ModalCloseTarget>
+            <Button text="Continuar" />
+          </ModalCloseTarget>
+        ) : (
+          <Button text="Continuar" />
+        )}
       </div>
     </Container>
   )

@@ -37,11 +37,15 @@ const options: Options[] = [
   },
 ]
 
-export default function Menu() {
+interface HomeProps {
+  menuOption?: Option
+}
+
+export default function Menu({ menuOption = 'home' }: HomeProps) {
   const router = useRouter()
   const theme = useTheme()
 
-  const [option, setOption] = useState<Option>('home')
+  const [option, setOption] = useState<Option>(menuOption)
 
   const handleSetOption = useCallback((newOption: Option) => {
     setOption(newOption)

@@ -18,11 +18,9 @@ export const Container = styled.div`
 `
 
 export const ContainerSlide = styled.div`
+  width: 100%;
   overflow: hidden;
   flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   touch-action: pan-y;
 `
 
@@ -45,6 +43,7 @@ export const ContentCar = styled.div`
   user-select: none;
 
   > div {
+    flex: 1;
     position: unset !important;
   }
 
@@ -57,12 +56,12 @@ export const ContentCar = styled.div`
     height: unset !important;
   }
 
-  @media screen and (max-width: 751px) {
-    transform: scale(1.2);
+  @media screen and (max-width: 975px) {
+    transform: scale(0.8);
   }
 
-  @media screen and (max-width: 550px) {
-    transform: scale(1.4);
+  @media screen and (max-width: 800px) {
+    transform: scale(1);
   }
 `
 

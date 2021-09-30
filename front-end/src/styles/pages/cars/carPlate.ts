@@ -96,6 +96,12 @@ export const Header = styled.div`
       margin-left: 4.8rem;
     }
   }
+
+  @media screen and (max-width: 450px) {
+    div.car-info {
+      margin-left: 2rem;
+    }
+  }
 `
 
 export const ContainerDetails = styled.div`
