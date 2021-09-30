@@ -6,6 +6,11 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media screen and (max-width: 975px) {
+    max-width: unset;
+    flex: 1;
+  }
 `
 
 export const ContainerDetails = styled.div`

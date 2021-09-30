@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { animated } from 'react-spring'
 
 export const Container = styled(animated.div)`
+  height: 100%;
   color: ${(props) => props.theme.colors.grey400};
   font-size: 1.6rem;
   font-weight: 400;

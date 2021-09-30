@@ -1,15 +1,11 @@
 import React from 'react'
-import Calendar from 'react-calendar'
-import { format } from 'date-fns'
 import { CenterModal, ModalCloseTarget } from 'react-spring-modal'
 
-import { Button } from '../../../../../Button'
+import CarFilterBetweenDates from './CarFilterBetweenDates'
 
-import { Container, Header, Content } from './styles'
+import { Container, Header } from './styles'
 
 import Close from '../../../../../../pages/assets/close.svg'
-import ArrowLeft from '../../../../../../pages/assets/arrowLeft.svg'
-import ArrowRight from '../../../../../../pages/assets/arrowRight.svg'
 
 interface RentalModalProps {
   modal: boolean
@@ -33,6 +29,9 @@ export default function RentalModal({
         enter: { opacity: 1, transform: 'translateY(0) scale(1)' },
         leave: { opacity: 0, transform: 'translateY(-100%) scale(0)' },
       }}
+      overlayProps={{
+        className: 'modalFilterBetweenDatesContent',
+      }}
       contentProps={{
         style: {
           width: '100%',
@@ -50,44 +49,7 @@ export default function RentalModal({
           </ModalCloseTarget>
         </Header>
 
-        <Content>
-          <Calendar
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            onChange={(value: any) => {
-              handleChangeDatesModal(value)
-            }}
-            value={dates}
-            calendarType="ISO 8601"
-            className="calendar"
-            returnValue="range"
-            minDate={new Date()}
-            prevLabel={<ArrowLeft className="arrow-left" />}
-            nextLabel={<ArrowRight className="arrow-right" />}
-            selectRange
-          />
-
-          <div className="time">
-            <div className="content">
-              <div className="each">
-                <div className="between">To</div>
-                {dates && dates[0] && (
-                  <div className="time">{format(dates[0], 'd LLL yyyy')}</div>
-                )}
-              </div>
-
-              <div className="each">
-                <div className="between">Until</div>
-                {dates && dates[1] && (
-                  <div className="time">{format(dates[1], 'd LLL yyyy')}</div>
-                )}
-              </div>
-            </div>
-
-            <ModalCloseTarget>
-              <Button text="Confirm" />
-            </ModalCloseTarget>
-          </div>
-        </Content>
+        <CarFilterBetweenDates {...{ dates, handleChangeDatesModal }} />
       </Container>
     </CenterModal>
   )

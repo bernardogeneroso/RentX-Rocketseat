@@ -1,4 +1,4 @@
-import { HTMLAttributes, useEffect } from 'react'
+import { HTMLAttributes } from 'react'
 import { useRouter } from 'next/router'
 import { useTheme } from 'styled-components'
 import { useSpring, config } from 'react-spring'

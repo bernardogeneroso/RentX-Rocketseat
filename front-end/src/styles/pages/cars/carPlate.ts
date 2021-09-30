@@ -11,6 +11,17 @@ export const Container = styled.div`
     'menu content content content'
     'menu content content content'
     'menu content content content';
+
+  @media screen and (max-width: 535px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px 1fr;
+
+    grid-template-areas:
+      'menu menu menu menu'
+      'content content content content'
+      'content content content content'
+      'content content content content';
+  }
 `
 
 export const Content = styled.div`
@@ -18,6 +29,19 @@ export const Content = styled.div`
   grid-area: content;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+
+  @media screen and (max-width: 1120px) {
+    padding: 5rem;
+  }
+
+  @media screen and (max-width: 750px) {
+    padding: 4rem;
+  }
+
+  @media screen and (max-width: 535px) {
+    padding: 3rem;
+  }
 `
 
 export const Header = styled.div`
@@ -81,4 +105,8 @@ export const ContainerDetails = styled.div`
   flex-direction: row;
   justify-content: space-between;
   gap: 8rem;
+
+  @media screen and (max-width: 975px) {
+    flex-direction: column;
+  }
 `

@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: 400px;
 `
 
 export const ContainerAboutCar = styled(animated.div)`
@@ -18,10 +19,20 @@ export const ContainerAboutCar = styled(animated.div)`
     display: flex;
     flex-direction: row;
   }
+
+  @media screen and (max-width: 975px) {
+    flex: auto;
+    height: inherit;
+    overflow: unset;
+
+    header {
+      margin-top: 4rem;
+    }
+  }
 `
 
 export const ContainerInfo = styled.div`
   position: relative;
   margin-top: 2.8rem;
-  height: 100%;
+  height: inherit;
 `

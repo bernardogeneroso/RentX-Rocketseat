@@ -48,4 +48,14 @@ export default createGlobalStyle`
     color: inherit;
     text-decoration: none;
   }
+
+  div.modalFilterBetweenDatesContent {
+    padding: 4rem;
+  }
+
+  @media screen and (max-width: 751px) {
+    div.modalFilterBetweenDatesContent {
+      padding: 2rem;
+    }
+  }
 `
