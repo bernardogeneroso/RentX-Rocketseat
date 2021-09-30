@@ -121,6 +121,13 @@ export const Container = styled.div`
           font-weight: 500;
           font-size: 1.6rem;
         }
+
+        div.line {
+          margin-top: 4rem;
+          width: 100%;
+          height: 0.1rem;
+          background-color: ${(props) => props.theme.colors.grey50};
+        }
       }
     }
 
@@ -150,6 +157,8 @@ export const Container = styled.div`
         gap: 4rem;
 
         div.each {
+          width: 120px;
+
           & + div {
             margin: 0;
           }

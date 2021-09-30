@@ -40,9 +40,11 @@ export default function RentalPeriod({
   const [modalStatus, setModalStatus] = useState(false)
   const [modalStatusContent, setModalStatusContent] =
     useState<ModalStatusContent>({} as ModalStatusContent)
-  const [dates, setDates] = useState<[Date, Date]>([new Date(), new Date()])
+  const [dates, setDates] = useState<[Date | null, Date | null]>([null, null])
 
   const daysBetweenDates = useMemo(() => {
+    if (!dates[0] || !dates[1]) return 1
+
     const days = differenceInDays(dates[1], dates[0])
 
     return days === 0 ? 1 : days + 1
@@ -66,6 +68,8 @@ export default function RentalPeriod({
 
   async function handleRental() {
     // Todo: must be logged in to access, verification
+
+    if (!dates[0] || !dates[1]) return 1
 
     try {
       await api.post('/cars/appointments', {
@@ -112,8 +116,10 @@ export default function RentalPeriod({
           <div className="content">
             <div className="each">
               <div className="between">To</div>
-              {dates && dates[0] && (
+              {dates && dates[0] ? (
                 <div className="time">{format(dates[0], 'd LLL yyyy')}</div>
+              ) : (
+                <div>--</div>
               )}
             </div>
 
@@ -121,8 +127,10 @@ export default function RentalPeriod({
 
             <div className="each">
               <div className="between">Until</div>
-              {dates && dates[1] && (
+              {dates && dates[1] ? (
                 <div className="time">{format(dates[1], 'd LLL yyyy')}</div>
+              ) : (
+                <div>--</div>
               )}
             </div>
           </div>

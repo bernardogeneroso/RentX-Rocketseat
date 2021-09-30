@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Calendar from 'react-calendar'
 import { format } from 'date-fns'
 import { ModalCloseTarget } from 'react-spring-modal'
@@ -11,7 +11,7 @@ import ArrowLeft from '../../../../../../../pages/assets/arrowLeft.svg'
 import ArrowRight from '../../../../../../../pages/assets/arrowRight.svg'
 
 interface CarFilterBetweenDatesProps {
-  dates: [Date, Date]
+  dates: [Date | null, Date | null]
   handleChangeDatesModal: (newDates: [Date, Date]) => void
 }
 
@@ -19,6 +19,12 @@ export default function CarFilterBetweenDates({
   dates,
   handleChangeDatesModal,
 }: CarFilterBetweenDatesProps) {
+  const datesValidation = useMemo(() => {
+    if (!dates[0] || !dates[1]) return new Date()
+
+    return dates
+  }, [dates])
+
   return (
     <Container>
       <Calendar
@@ -26,7 +32,8 @@ export default function CarFilterBetweenDates({
         onChange={(value: any) => {
           handleChangeDatesModal(value)
         }}
-        value={dates}
+        // @ts-ignore
+        value={datesValidation}
         calendarType="ISO 8601"
         className="calendar"
         returnValue="range"
@@ -40,15 +47,19 @@ export default function CarFilterBetweenDates({
         <div className="content">
           <div className="each">
             <div className="between">To</div>
-            {dates && dates[0] && (
+            {dates && dates[0] ? (
               <div className="time">{format(dates[0], 'd LLL yyyy')}</div>
+            ) : (
+              <div className="line" />
             )}
           </div>
 
           <div className="each">
             <div className="between">Until</div>
-            {dates && dates[1] && (
+            {dates && dates[1] ? (
               <div className="time">{format(dates[1], 'd LLL yyyy')}</div>
+            ) : (
+              <div className="line" />
             )}
           </div>
         </div>

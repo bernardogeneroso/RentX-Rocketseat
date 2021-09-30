@@ -10,6 +10,11 @@ export const Container = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 975px) {
+    flex: auto;
+    height: 280px;
+  }
 `
 
 export const ContainerSlide = styled.div`
@@ -50,6 +55,14 @@ export const ContentCar = styled.div`
     width: 100% !important;
     position: relative !important;
     height: unset !important;
+  }
+
+  @media screen and (max-width: 751px) {
+    transform: scale(1.2);
+  }
+
+  @media screen and (max-width: 550px) {
+    transform: scale(1.4);
   }
 `
 

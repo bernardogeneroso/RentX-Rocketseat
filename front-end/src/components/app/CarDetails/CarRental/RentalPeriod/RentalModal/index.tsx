@@ -9,7 +9,7 @@ import Close from '../../../../../../pages/assets/close.svg'
 
 interface RentalModalProps {
   modal: boolean
-  dates: [Date, Date]
+  dates: [Date | null, Date | null]
   handleToggleModal: () => void
   handleChangeDatesModal: (newDates: [Date, Date]) => void
 }

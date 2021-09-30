@@ -107,6 +107,7 @@ export const ContainerDetails = styled.div`
   gap: 8rem;
 
   @media screen and (max-width: 975px) {
+    gap: 4rem;
     flex-direction: column;
   }
 `
