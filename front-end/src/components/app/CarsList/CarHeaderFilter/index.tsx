@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
+import Link from 'next/link'
 import { format } from 'date-fns'
 import { FaChevronRight } from 'react-icons/fa'
 
@@ -6,6 +7,7 @@ import { Container, Content } from './styles'
 
 import Calendar from '../../../../pages/assets/calendar.svg'
 import Menu from '../../../../pages/assets/menu.svg'
+import ModalFilter from './ModalFilter'
 
 interface CarHeaderFilterProps {
   cars: number | null
@@ -13,6 +15,12 @@ interface CarHeaderFilterProps {
 }
 
 export default function CarHeaderFilter({ cars, dates }: CarHeaderFilterProps) {
+  const [modalFilter, setModalFilter] = useState(false)
+
+  const handleToggleModalFilter = useCallback(() => {
+    setModalFilter((state) => !state)
+  }, [])
+
   return (
     <Container>
       <h1>
@@ -47,19 +55,23 @@ export default function CarHeaderFilter({ cars, dates }: CarHeaderFilterProps) {
         </div>
 
         <div className="optionFilter">
-          <button>
-            <Calendar />
-          </button>
+          <Link href="/cars/filter-dates/" passHref>
+            <button>
+              <Calendar />
+            </button>
+          </Link>
 
           <div className="line">
             <span />
           </div>
 
-          <button>
+          <button onClick={handleToggleModalFilter}>
             <Menu />
           </button>
         </div>
       </Content>
+
+      <ModalFilter {...{ modalFilter, handleToggleModalFilter }} />
     </Container>
   )
 }
