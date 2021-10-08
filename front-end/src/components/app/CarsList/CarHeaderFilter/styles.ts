@@ -13,6 +13,14 @@ export const Container = styled.div`
     font-weight: 600;
     font-size: 3.6rem;
   }
+
+  @media screen and (max-width: 975px) {
+    flex-direction: column;
+
+    h1 {
+      margin-bottom: 1rem;
+    }
+  }
 `
 
 export const Content = styled.div`
@@ -78,6 +86,24 @@ export const Content = styled.div`
       height: 24px;
 
       background-color: ${(props) => props.theme.colors.white400};
+    }
+  }
+
+  @media screen and (max-width: 975px) {
+    margin: 0 auto;
+
+    div.dates div.each {
+      text-align: center;
+    }
+
+    div.optionFilter {
+      gap: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 430px) {
+    div.dates {
+      gap: 1rem;
     }
   }
 `

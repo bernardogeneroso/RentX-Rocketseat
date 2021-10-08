@@ -12,9 +12,14 @@ export const Input = styled.input`
   padding: 2.2rem 1.6rem;
   background-color: ${(props) => props.theme.colors.white};
   border: 1px solid ${(props) => props.theme.colors.white300};
-  color: ${(props) => props.theme.colors.grey50};
+  color: ${(props) => props.theme.colors.grey700};
+  font-weight: 400;
   font-size: 1.6rem;
   outline: 0;
+
+  &::placeholder {
+    color: ${(props) => props.theme.colors.grey50};
+  }
 `
 
 export const ContainerSearch = styled(animated.div)`

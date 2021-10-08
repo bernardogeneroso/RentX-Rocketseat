@@ -1,10 +1,13 @@
 import styled from 'styled-components'
+import { shade } from 'polished'
 
 export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   padding: 8rem 4rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 `
 
 export const Header = styled.div`
@@ -36,4 +39,28 @@ export const Header = styled.div`
 export const Content = styled.div`
   flex: 1;
   padding-top: 3.2rem;
+
+  div.actions {
+    button {
+      margin-top: 3.2rem;
+      width: 100%;
+    }
+
+    button:first-child {
+      padding: 2.2rem 0;
+    }
+  }
+`
+
+export const ButtonClearData = styled.button`
+  outline: 0;
+  border: 0;
+  background-color: transparent;
+  color: ${(props) => props.theme.colors.grey50};
+
+  transition: color 0.2s;
+
+  &:hover {
+    color: ${(props) => shade(0.1, props.theme.colors.grey50)};
+  }
 `

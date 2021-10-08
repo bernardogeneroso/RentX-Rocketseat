@@ -10,9 +10,9 @@ export default function Search() {
   const [modalSearch, setModalSearch] = useState(false)
 
   const transitions = useTransition(modalSearch, {
-    from: { opacity: 0, zIndex: -1, translateY: -50 },
-    enter: { opacity: 1, zIndex: 1, translateY: 0 },
-    leave: { opacity: 0, zIndex: -1, translateY: -50 },
+    from: { opacity: 0, translateY: -50 },
+    enter: { opacity: 1, translateY: 0 },
+    leave: { opacity: 0, translateY: -50 },
     config: config.gentle,
   })
 
@@ -38,7 +38,12 @@ export default function Search() {
       {transitions(
         (styles, item) =>
           item && (
-            <ContainerSearch style={styles}>
+            <ContainerSearch
+              style={{
+                ...styles,
+                zIndex: modalSearch ? 1 : -1,
+              }}
+            >
               <Content>
                 <div className="text">Lancer EVO X</div>
                 <div className="text">Lancer EVO VIII</div>

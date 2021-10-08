@@ -3,8 +3,12 @@ import { useTheme } from 'styled-components'
 import { BaseModal, ModalCloseTarget } from 'react-spring-modal'
 
 import Search from './Search'
+import PricePerDay from './PricePerDay'
+import Fuel from './Fuel'
+import Transmission from './Transmission'
+import { Button } from '../../../../Button'
 
-import { Container, Header, Content } from './styles'
+import { Container, Header, Content, ButtonClearData } from './styles'
 
 import Close from '../../../../../pages/assets/close.svg'
 
@@ -54,6 +58,14 @@ export default function ModalFilter({
 
         <Content>
           <Search />
+          <PricePerDay />
+          <Fuel />
+          <Transmission />
+
+          <div className="actions">
+            <Button text="Filter results" />
+            <ButtonClearData>Clear data</ButtonClearData>
+          </div>
         </Content>
       </Container>
     </BaseModal>
