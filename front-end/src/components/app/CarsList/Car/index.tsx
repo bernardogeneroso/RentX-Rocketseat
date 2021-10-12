@@ -15,13 +15,14 @@ interface CarProps {
   car: ICar
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   styles: any
+  isAllowGoBack: boolean
 }
 
-export default function Car({ car, styles }: CarProps) {
+export default function Car({ car, styles, isAllowGoBack = false }: CarProps) {
   const router = useRouter()
 
   function handleRedirectToPageCarDetails() {
-    router.push(`/cars/${car.plate}`)
+    router.push(`/cars/${car.plate}?goBack=${isAllowGoBack}`)
   }
 
   return (

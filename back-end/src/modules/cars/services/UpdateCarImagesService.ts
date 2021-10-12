@@ -3,6 +3,7 @@ import { injectable, inject } from "tsyringe";
 import CarsImagesRepository from "../infra/prisma/repositories/CarsImagesRepository";
 import ICarsImagesRepository from "../repositories/ICarsImagesRepository";
 import IStorageProvider from "@shared/container/providers/StorageProvider/models/IStorageProvider";
+import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 import { ICreateCarImagesDTO } from "../dtos/ICreateCarImagesDTO";
 import AppError from "@shared/errors/AppError";
 
@@ -15,7 +16,8 @@ class ScheduledCarsByUser {
   private carsImagesRepository: ICarsImagesRepository;
 
   constructor(
-    @inject("StorageProvider") private storageProvider: IStorageProvider
+    @inject("StorageProvider") private storageProvider: IStorageProvider,
+    @inject("CacheProvider") private cacheProvider: ICacheProvider
   ) {
     this.carsImagesRepository = new CarsImagesRepository();
   }
@@ -48,6 +50,9 @@ class ScheduledCarsByUser {
         carId,
       });
 
+      await this.cacheProvider.invalidate("all-cars");
+      await this.cacheProvider.invalidatePrefix("all-cars");
+
       return {
         url,
       };
@@ -78,6 +83,9 @@ class ScheduledCarsByUser {
         oldUrl,
         carId,
       });
+
+      await this.cacheProvider.invalidate("all-cars");
+      await this.cacheProvider.invalidatePrefix("all-cars");
 
       return {
         url: oldUrl,

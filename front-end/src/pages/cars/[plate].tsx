@@ -36,7 +36,11 @@ export default function CarId({ car }: CarIdProps) {
   const router = useRouter()
 
   function handleRedirectBack() {
-    router.push('/cars')
+    if (router.query.goBack) {
+      router.back()
+    } else {
+      router.push('/cars')
+    }
   }
 
   return (

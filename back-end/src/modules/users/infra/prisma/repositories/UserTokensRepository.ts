@@ -1,8 +1,7 @@
-import { PrismaClient, UsersTokens as UserToken } from "@prisma/client";
+import { UsersTokens as UserToken } from "@prisma/client";
 
 import IUserTokensRepository from "../../../repositories/IUserTokensRepository";
-
-const prisma = new PrismaClient();
+import { prisma } from "@shared/services/prisma";
 
 class UserTokensRepository implements IUserTokensRepository {
   public async generate(user_id: string, token: string): Promise<UserToken> {

@@ -23,9 +23,9 @@ export default function CarsList({
 
   const transitionsCars = useTransition(cars || [], {
     keys: (item) => item.plate,
-    from: { opacity: 0, translateY: 100, scale: 0.6 },
-    enter: { opacity: 1, translateY: 0, scale: 1 },
-    leave: { opacity: 0, translateY: -100, scale: 0 },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
     config: config.gentle,
     delay: 200,
   })
@@ -43,7 +43,10 @@ export default function CarsList({
 
       <Content>
         {transitionsCars((styles, item) => (
-          <Car key={item.plate} {...{ car: item, styles }} />
+          <Car
+            key={item.plate}
+            {...{ car: item, styles, isAllowGoBack: filterMode }}
+          />
         ))}
       </Content>
     </Container>

@@ -22,7 +22,7 @@ class AllCarsService {
       search ? `all-cars:${search}` : `all-cars`
     );
 
-    if (!allCars) {
+    if (!allCars || allCars.length === 0) {
       const findAllCars = await this.carsRepository.findAllCars(search);
 
       await this.cacheProvider.save(
