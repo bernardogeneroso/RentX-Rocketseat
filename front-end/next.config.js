@@ -3,7 +3,7 @@
 
 module.exports = {
   images: {
-    domains: ['192.168.1.72'],
+    domains: ['rentx-backend-bernardogeneroso.herokuapp.com', 'localhost'],
   },
   webpack(config) {
     config.module.rules.push({
