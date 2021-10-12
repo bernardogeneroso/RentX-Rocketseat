@@ -24,6 +24,7 @@ class UsersController {
 
   async update(request: Request, response: Response): Promise<Response> {
     const { name, email } = request.body;
+    // @ts-ignore
     const { id: userId } = request.user;
 
     const authenticateUpdateUserService = container.resolve(
@@ -44,6 +45,7 @@ class UsersController {
 
     if (!avatar) throw new AppError("Avatar file is required!");
 
+    // @ts-ignore
     const { id: userId } = request.user;
 
     const updateUserAvatarService = container.resolve(UpdateUserAvatarService);

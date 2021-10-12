@@ -32,8 +32,6 @@ app.use(
       });
     }
 
-    console.log(error.message); /* eslint-disable-line */
-
     return response.status(500).send({
       status: "error",
       message: "Internal server error",

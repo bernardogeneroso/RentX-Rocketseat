@@ -53,8 +53,10 @@ export default {
         destination: path.resolve(tmpFolder),
         filename: (request, file, callback) => {
           const fileHash = crypto.randomBytes(10).toString("hex");
-          const fileName = `${fileHash}-${file.originalname}`;
-
+          const fileName = `${fileHash}-${file.originalname}`.replace(
+            /\s/g,
+            ""
+          );
           return callback(null, fileName);
         },
       }),
@@ -82,8 +84,10 @@ export default {
         destination: path.resolve(tmpFolder),
         filename: (request, file, callback) => {
           const fileHash = crypto.randomBytes(10).toString("hex");
-          const fileName = `${fileHash}-${file.originalname}`;
-
+          const fileName = `${fileHash}-${file.originalname}`.replace(
+            /\s/g,
+            ""
+          );
           return callback(null, fileName);
         },
       }),

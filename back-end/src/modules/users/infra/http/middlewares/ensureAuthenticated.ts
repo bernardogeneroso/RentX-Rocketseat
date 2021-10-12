@@ -25,6 +25,7 @@ const ensureAuthenticated = (
     const decoded = verify(token, authConfig.jwt.secret);
     const { sub } = decoded as ITokenPayload;
 
+    // @ts-ignore
     request.user = { id: sub };
 
     return next();

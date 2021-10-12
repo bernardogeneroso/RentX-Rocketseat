@@ -20,6 +20,7 @@ class ResetPasswordController {
     response: Response
   ): Promise<Response> {
     const { actual_password, password } = request.body;
+    // @ts-ignore
     const { id: userId } = request.user;
 
     const authenticateResetPasswordService = container.resolve(

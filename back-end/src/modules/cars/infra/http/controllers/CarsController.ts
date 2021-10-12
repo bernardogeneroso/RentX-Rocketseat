@@ -38,6 +38,7 @@ class CarsController {
       MostRentedCarByUserService
     );
 
+    // @ts-ignore
     const userId = request.user.id;
 
     const carData = await mostRentedCarByUserService.execute(userId);
@@ -51,6 +52,7 @@ class CarsController {
   async userSchedules(request: Request, response: Response): Promise<Response> {
     const scheduledCarsByUser = container.resolve(ScheduledCarsByUser);
 
+    // @ts-ignore
     const userId = request.user.id;
 
     const carsSchedules = await scheduledCarsByUser.execute(userId);
@@ -63,7 +65,7 @@ class CarsController {
       plate,
       brand,
       model,
-      colour,
+      color,
       fuel,
       transmission,
       pricePerDay,
@@ -76,7 +78,7 @@ class CarsController {
       plate,
       brand,
       model,
-      colour,
+      color,
       fuel,
       transmission,
       pricePerDay,

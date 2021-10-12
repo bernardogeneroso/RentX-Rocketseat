@@ -7,6 +7,7 @@ class CarsAppointmentsController {
   async create(request: Request, response: Response): Promise<Response> {
     const { carId, start_in, end_in } = request.body;
 
+    // @ts-ignore
     const userId = request.user.id;
 
     const createCarAppointmentService = container.resolve(

@@ -36,7 +36,7 @@ model Cars {
   carDetailId      String             @db.Uuid
   brand            String             @db.VarChar
   model            String             @unique @db.VarChar
-  colour           String             @db.VarChar
+  color           String             @db.VarChar
   fuel             FuelRoles          @default(gasoline)
   transmission     TransmissionRoles  @default(auto)
   pricePerDay      Int                @db.Integer

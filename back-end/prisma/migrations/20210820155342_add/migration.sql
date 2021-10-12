@@ -9,7 +9,7 @@ CREATE TABLE "Cars" (
     "plate" VARCHAR NOT NULL,
     "brand" VARCHAR NOT NULL,
     "model" VARCHAR NOT NULL,
-    "colour" VARCHAR NOT NULL,
+    "color" VARCHAR NOT NULL,
     "fuel" "FuelRoles" NOT NULL DEFAULT E'gasoline',
     "transmission" "TransmissionRoles" NOT NULL DEFAULT E'auto',
     "pricePerDay" INTEGER NOT NULL,

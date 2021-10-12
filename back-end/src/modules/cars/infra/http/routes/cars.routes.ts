@@ -72,7 +72,7 @@ carsRouter.post(
       plate: Yup.string().length(6).required(),
       brand: Yup.string().required(),
       model: Yup.string().required(),
-      colour: Yup.string().required(),
+      color: Yup.string().required(),
       fuel: Yup.mixed<"gasoline" | "electric" | "alcohol">()
         .oneOf(["gasoline", "electric", "alcohol"])
         .required(),

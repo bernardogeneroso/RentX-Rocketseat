@@ -1,21 +1,39 @@
+import { inject, injectable } from "tsyringe";
 import { Cars as Car } from "@prisma/client";
 
 import CarsRepository from "../infra/prisma/repositories/CarsRepository";
 import ICarsRepository from "../repositories/ICarsRepository";
+import ICacheProvider from "@shared/container/providers/CacheProvider/models/ICacheProvider";
 
 interface IResponse {
   search: string | null;
 }
 
+@injectable()
 class AllCarsService {
   private carsRepository: ICarsRepository;
 
-  constructor() {
+  constructor(@inject("CacheProvider") private cacheProvider: ICacheProvider) {
     this.carsRepository = new CarsRepository();
   }
 
   async execute({ search }: IResponse): Promise<Car[] | null> {
-    return await this.carsRepository.findAllCars(search);
+    let allCars = await this.cacheProvider.recover<Car[]>(
+      search ? `all-cars:${search}` : `all-cars`
+    );
+
+    if (!allCars) {
+      const findAllCars = await this.carsRepository.findAllCars(search);
+
+      await this.cacheProvider.save(
+        search ? `all-cars:${search}` : `all-cars`,
+        findAllCars
+      );
+
+      return findAllCars;
+    }
+
+    return allCars;
   }
 }
 

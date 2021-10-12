@@ -4,7 +4,7 @@ export interface ICreateCarDTO {
   plate: string;
   brand: string;
   model: string;
-  colour: string;
+  color: string;
   fuel: "gasoline" | "electric" | "alcohol";
   transmission: "auto" | "manual";
   pricePerDay: number;
