@@ -8,6 +8,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string
   backgroundColor?: string
   loading?: boolean
+  reverse?: boolean
 }
 
 export const Button = ({
@@ -15,6 +16,7 @@ export const Button = ({
   backgroundColor,
   style,
   loading = false,
+  reverse = false,
   ...props
 }: ButtonProps) => {
   const theme = useTheme()
@@ -27,7 +29,7 @@ export const Button = ({
         ...style,
         backgroundColor,
       }}
-      {...{ backgroundColor }}
+      {...{ backgroundColor, reverse }}
       {...props}
     >
       {loading ? <BeatLoader color={theme.colors.white} /> : text}

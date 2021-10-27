@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -9,13 +8,15 @@ import { Input } from '../../Input'
 
 import { Container, Form } from './styles'
 
-export interface FormDataSignIn {
+export interface FormDataSignUp {
+  name: string
   email: string
   password: string
 }
 
 const schema = yup
   .object({
+    name: yup.string().required('Name is a required field'),
     email: yup
       .string()
       .email('E-mail must be a valid')
@@ -27,28 +28,33 @@ const schema = yup
   })
   .required()
 
-export default function SignIn() {
+export default function SignUp() {
   const {
     register,
     handleSubmit: onSubmit,
     formState: { errors },
-  } = useForm<FormDataSignIn>({
+  } = useForm<FormDataSignUp>({
     resolver: yupResolver(schema),
   })
 
-  const handleSubmit = onSubmit(async (data) => {
-    console.log(data)
-  })
+  const handleSubmit = onSubmit((data) => console.log(data))
 
   return (
     <Container>
       <h2>We are almost there.</h2>
 
       <div className="moreInformation">
-        Sign in to start a amazing experience.
+        Sign up to start a amazing experience.
       </div>
 
       <Form onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          typeForm="name"
+          placeholder="Name"
+          error={errors.name}
+          register={register}
+        />
         <Input
           type="email"
           typeForm="email"
@@ -64,12 +70,7 @@ export default function SignIn() {
           register={register}
         />
 
-        <p className="forgetPassword">Forget my password</p>
-
-        <Button type="submit" text="Sign In" />
-        <Link href="/profile/signup" passHref>
-          <Button type="button" text="Create account" reverse />
-        </Link>
+        <Button type="submit" text="Create account free" reverse />
       </Form>
     </Container>
   )

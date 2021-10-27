@@ -3,6 +3,7 @@ import { lighten, shade } from 'polished'
 
 interface ContainerProps {
   backgroundColor: string
+  reverse: boolean
 }
 
 export const Container = styled.button<ContainerProps>`
@@ -12,12 +13,25 @@ export const Container = styled.button<ContainerProps>`
   font-size: 18px;
   font-weight: 500;
 
-  transition: background-color 0.2s;
+  transition: background-color opacity 0.2s;
 
   &:hover {
     background-color: ${(props) =>
       shade(0.2, props.backgroundColor)} !important;
   }
+
+  ${(props) =>
+    props.reverse &&
+    css`
+      background-color: transparent !important;
+      color: ${(props) => props.theme.colors.grey700};
+      border: 0.1rem solid ${(props) => props.theme.colors.white400};
+
+      &:hover {
+        background-color: unset !important;
+        opacity: 0.9;
+      }
+    `}
 
   ${(props) =>
     props.disabled &&

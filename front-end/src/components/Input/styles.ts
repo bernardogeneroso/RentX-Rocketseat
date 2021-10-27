@@ -10,9 +10,6 @@ export const Container = styled.div`
     margin-top: 0;
     margin-bottom: 0.8rem;
     color: ${(props) => transparentize(0.2, props.theme.colors.primary)};
-
-    &:hover {
-    }
   }
 
   & + div {

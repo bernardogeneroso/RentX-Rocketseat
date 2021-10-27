@@ -1,18 +1,20 @@
 import React, { useState, InputHTMLAttributes } from 'react'
-import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
+import { FiMail, FiUser, FiLock, FiEye, FiEyeOff } from 'react-icons/fi'
 import { FaCar } from 'react-icons/fa'
 import { FieldError, UseFormRegister } from 'react-hook-form'
 
 import { Container, Content } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  typeForm: 'name' | 'email' | 'password'
   error: FieldError | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>
 }
 
 export function Input({
-  type = 'text',
+  typeForm,
+  type,
   error,
   register,
   ...props
@@ -27,27 +29,30 @@ export function Input({
     <Container>
       <Content>
         <div className="icon">
-          {type === 'email' ? (
+          {typeForm === 'email' ? (
             <FiMail size={20} />
-          ) : type === 'password' ? (
+          ) : typeForm === 'password' ? (
             <FiLock size={20} />
+          ) : typeForm === 'name' ? (
+            <FiUser size={20} />
           ) : (
             <FaCar size={20} />
           )}
         </div>
 
         <input
-          type={type === 'password' ? (password ? 'text' : type) : type}
-          {...register(type)}
+          type={typeForm === 'password' ? (password ? 'text' : type) : type}
+          {...register(typeForm)}
           {...props}
         />
 
-        {type === 'password' && (
+        {typeForm === 'password' && (
           <div className="password" onClick={handleTogglePassword}>
             {password ? <FiEye size={20} /> : <FiEyeOff size={20} />}
           </div>
         )}
       </Content>
+
       {error?.message && <p className="error">{error.message}</p>}
     </Container>
   )
