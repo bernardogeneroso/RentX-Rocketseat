@@ -3,18 +3,21 @@ import Link from 'next/link'
 import { format } from 'date-fns'
 import { FaChevronRight } from 'react-icons/fa'
 
-import { Container, Content } from './styles'
-
 import Calendar from '../../../../pages/assets/calendar.svg'
 import Menu from '../../../../pages/assets/menu.svg'
 import ModalFilter from './ModalFilter'
 
+import { Container, Content } from './styles'
+
 interface CarHeaderFilterProps {
-  cars: number | null
+  carsLength: number | null
   dates: [Date, Date]
 }
 
-export default function CarHeaderFilter({ cars, dates }: CarHeaderFilterProps) {
+export default function CarHeaderFilter({
+  carsLength,
+  dates,
+}: CarHeaderFilterProps) {
   const [modalFilter, setModalFilter] = useState(false)
 
   const handleToggleModalFilter = useCallback(() => {
@@ -24,10 +27,10 @@ export default function CarHeaderFilter({ cars, dates }: CarHeaderFilterProps) {
   return (
     <Container>
       <h1>
-        {cars
-          ? cars > 1
-            ? `${cars} cars found`
-            : `${cars} car found`
+        {carsLength
+          ? carsLength > 1
+            ? `${carsLength} cars found`
+            : `${carsLength} car found`
           : 'No cars available'}
       </h1>
 

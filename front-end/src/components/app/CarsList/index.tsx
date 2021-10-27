@@ -1,44 +1,52 @@
-import React, { useState } from 'react'
+import React, { useMemo } from 'react'
 import { useTransition, config } from 'react-spring'
 
-import Car from './Car'
 import { ICar } from '../../../pages/cars'
+import Car from './Car'
 import CarHeader from './CarHeader'
 import CarHeaderFilter from './CarHeaderFilter'
+import useFilterCars from '../../../hooks/useFilterCars'
 
 import { Container, Content } from './styles'
 
 interface CarsListProps {
-  cars: ICar[] | null
-  dates?: [Date, Date] | null
+  cars?: ICar[] | null
   filterMode?: boolean
 }
 
 export default function CarsList({
-  cars: carsReceived,
-  dates = null,
+  cars = null,
   filterMode = false,
 }: CarsListProps) {
-  const [cars] = useState(carsReceived)
+  const { cars: carsBetweenDates, dates, carsFilter } = useFilterCars()
 
-  const transitionsCars = useTransition(cars || [], {
-    keys: (item) => item.plate,
-    from: { opacity: 0 },
-    enter: { opacity: 1 },
-    leave: { opacity: 0 },
-    config: config.gentle,
-    delay: 200,
-  })
+  const carsLength = useMemo(() => {
+    if (carsFilter) return carsFilter.length ? carsFilter.length : null
+    if (cars) return cars.length ? cars.length : null
+
+    return carsBetweenDates && carsBetweenDates.length
+      ? carsBetweenDates.length
+      : null
+  }, [carsFilter, cars, carsBetweenDates])
+
+  const transitionsCars = useTransition(
+    carsFilter || cars || carsBetweenDates || [],
+    {
+      keys: (item) => item.plate,
+      from: { opacity: 0 },
+      enter: { opacity: 1 },
+      leave: { opacity: 0 },
+      config: config.gentle,
+      delay: 200,
+    }
+  )
 
   return (
     <Container>
       {filterMode && dates ? (
-        <CarHeaderFilter
-          cars={cars && cars.length ? cars.length : null}
-          dates={dates}
-        />
+        <CarHeaderFilter {...{ carsLength, dates }} />
       ) : (
-        <CarHeader cars={cars && cars.length ? cars.length : null} />
+        <CarHeader {...{ carsLength }} />
       )}
 
       <Content>

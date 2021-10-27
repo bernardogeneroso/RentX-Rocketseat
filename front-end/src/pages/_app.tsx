@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import NProgress from 'nprogress'
 import { ThemeProvider } from 'styled-components'
 
+import AppProvider from '../hooks'
 import light from '../styles/themes/light'
 import GlobalStyle from '../styles/global'
 
@@ -37,9 +38,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={light}>
-      <GlobalStyle />
+      <AppProvider>
+        <GlobalStyle />
 
-      <Component {...pageProps} />
+        <Component {...pageProps} />
+      </AppProvider>
     </ThemeProvider>
   )
 }

@@ -1,12 +1,15 @@
 import React, { useRef, useState } from 'react'
 import { useTransition, config } from 'react-spring'
 
+import { ICar } from '../../../../../../pages/cars'
+import { api } from '../../../../../../services/api'
+
 import { Container, Input, ContainerSearch, Content } from './styles'
 
 export default function Search() {
   const inputRef = useRef<HTMLInputElement>(null)
-
   const [value, setValue] = useState('')
+  const [searchResult, setSearchResult] = useState<string[] | null>(null)
   const [modalSearch, setModalSearch] = useState(false)
 
   const transitions = useTransition(modalSearch, {
@@ -16,7 +19,7 @@ export default function Search() {
     config: config.gentle,
   })
 
-  function handleAddText(text: string) {
+  async function handleAddText(text: string) {
     if (text.length > 0 && !modalSearch) {
       setModalSearch(true)
     } else if (text.length === 0) {
@@ -24,6 +27,16 @@ export default function Search() {
     }
 
     setValue(text)
+
+    if (text.length > 0) {
+      const { data } = await api.get<ICar[]>(`cars?search=${text}`)
+
+      setSearchResult(
+        data.map((value) => {
+          return `${value.brand} - ${value.model}`
+        })
+      )
+    }
   }
 
   return (
@@ -45,9 +58,11 @@ export default function Search() {
               }}
             >
               <Content>
-                <div className="text">Lancer EVO X</div>
-                <div className="text">Lancer EVO VIII</div>
-                <div className="text">Lancer EVO Z</div>
+                {searchResult?.map((value) => (
+                  <div key={value} className="text">
+                    {value}
+                  </div>
+                ))}
               </Content>
             </ContainerSearch>
           )

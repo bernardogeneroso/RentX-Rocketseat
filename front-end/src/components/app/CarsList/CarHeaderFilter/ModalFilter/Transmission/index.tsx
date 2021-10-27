@@ -1,10 +1,12 @@
-import React, { HTMLAttributes, useState } from 'react'
+import React, { HTMLAttributes } from 'react'
 import { useTheme } from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
+import { ITransmission } from '../../../../../../hooks/contexts/FilterCars'
+import useFilterCars from '../../../../../../hooks/useFilterCars'
+
 import { Container, Header, Content, TransmissionOption } from './styles'
 
-type ITransmission = 'Automatic' | 'Manual'
 type ITransmissions = {
   name: ITransmission
 }
@@ -46,8 +48,7 @@ function TransmissionContent({
 }
 
 export default function Transmission() {
-  const [transmissionOption, setTransmissionOption] =
-    useState<ITransmission>('Automatic')
+  const { transmission, handleSetTransmission } = useFilterCars()
 
   return (
     <Container>
@@ -60,8 +61,8 @@ export default function Transmission() {
           <TransmissionContent
             key={name}
             name={name}
-            isActive={transmissionOption === name}
-            onClick={() => setTransmissionOption(name)}
+            isActive={transmission === name}
+            onClick={() => handleSetTransmission(name)}
           />
         ))}
       </Content>

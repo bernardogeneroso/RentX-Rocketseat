@@ -5,7 +5,8 @@ export const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 8rem 4rem;
+  justify-content: center;
+  padding: 0 4rem;
   overflow-y: auto;
   overflow-x: hidden;
 `
@@ -37,7 +38,6 @@ export const Header = styled.div`
 `
 
 export const Content = styled.div`
-  flex: 1;
   padding-top: 3.2rem;
 
   div.actions {

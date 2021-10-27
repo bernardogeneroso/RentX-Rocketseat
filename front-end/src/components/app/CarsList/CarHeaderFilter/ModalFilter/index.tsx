@@ -8,6 +8,8 @@ import Fuel from './Fuel'
 import Transmission from './Transmission'
 import { Button } from '../../../../Button'
 
+import useFilterCars from '../../../../../hooks/useFilterCars'
+
 import { Container, Header, Content, ButtonClearData } from './styles'
 
 import Close from '../../../../../pages/assets/close.svg'
@@ -22,6 +24,15 @@ export default function ModalFilter({
   handleToggleModalFilter,
 }: ModalFilter) {
   const theme = useTheme()
+  const { handleSetCarsFilter } = useFilterCars()
+
+  function handleFilterCars() {
+    handleSetCarsFilter()
+  }
+
+  function handleCleanFilterCars() {
+    handleSetCarsFilter(true)
+  }
 
   return (
     <BaseModal
@@ -63,8 +74,10 @@ export default function ModalFilter({
           <Transmission />
 
           <div className="actions">
-            <Button text="Filter results" />
-            <ButtonClearData>Clear data</ButtonClearData>
+            <Button text="Filter results" onClick={handleFilterCars} />
+            <ButtonClearData onClick={handleCleanFilterCars}>
+              Clear data
+            </ButtonClearData>
           </div>
         </Content>
       </Container>

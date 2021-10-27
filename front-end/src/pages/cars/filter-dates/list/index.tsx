@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 import { GetServerSideProps } from 'next'
 
@@ -7,16 +7,22 @@ import { api } from '../../../../services/api'
 import Header from '../../../../components/Header'
 import Menu from '../../../../components/Menu'
 import CarsList from '../../../../components/app/CarsList'
+import useFilterCars from '../../../../hooks/useFilterCars'
 
 import { Container } from '../../../../styles/pages/cars/filterDates/list'
 
-interface CarsListFilterProps {
+interface ListProps {
   cars: ICar[] | null
   dates: [string, string]
 }
 
-export default function List({ cars = null, dates }: CarsListFilterProps) {
-  const datesTransform: [Date, Date] = [new Date(dates[0]), new Date(dates[1])]
+export default function List({ cars = null, dates }: ListProps) {
+  const { handleSetCars, handleSetDates } = useFilterCars()
+
+  useEffect(() => {
+    handleSetCars(cars)
+    handleSetDates([new Date(dates[0]), new Date(dates[1])])
+  }, [cars, dates, handleSetCars, handleSetDates])
 
   return (
     <>
@@ -28,7 +34,7 @@ export default function List({ cars = null, dates }: CarsListFilterProps) {
         <Menu menuOption="car" />
         <Header text="Filter cars" />
 
-        <CarsList {...{ cars, dates: datesTransform, filterMode: true }} />
+        <CarsList {...{ filterMode: true }} />
       </Container>
     </>
   )

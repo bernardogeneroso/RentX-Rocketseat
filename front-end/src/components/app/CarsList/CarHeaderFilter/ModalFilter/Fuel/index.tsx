@@ -1,14 +1,16 @@
-import React, { HTMLAttributes, useState } from 'react'
+import React, { HTMLAttributes } from 'react'
 import { useTheme } from 'styled-components'
 import { useSpring, animated } from 'react-spring'
 
-import { Container, Header, Content, FuelOption } from './styles'
+import { IFuel } from '../../../../../../hooks/contexts/FilterCars'
+import useFilterCars from '../../../../../../hooks/useFilterCars'
 
 import Gasoline from '../../../../../../pages/assets/cars/fuels/gasoline.svg'
 import Electric from '../../../../../../pages/assets/cars/fuels/electric.svg'
 import Alcohol from '../../../../../../pages/assets/cars/fuels/alcohol.svg'
 
-type IFuel = 'Gasoline' | 'Electric' | 'Alcohol'
+import { Container, Header, Content, FuelOption } from './styles'
+
 type IFuels = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   icon: any
@@ -62,7 +64,7 @@ function FuelContent({
 }
 
 export default function Fuel() {
-  const [fuelOption, setFuelOption] = useState<IFuel>('Gasoline')
+  const { fuel, handleSetFuel } = useFilterCars()
 
   return (
     <Container>
@@ -76,8 +78,8 @@ export default function Fuel() {
             key={name}
             name={name}
             icon={icon}
-            isActive={fuelOption === name}
-            onClick={() => setFuelOption(name)}
+            isActive={fuel === name}
+            onClick={() => handleSetFuel(name)}
           />
         ))}
       </Content>

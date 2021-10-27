@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useTheme } from 'styled-components'
 import { Range, getTrackBackground } from 'react-range'
 
 import { priceFormatter } from '../../../../../../utils/priceFormatter'
+import useFilterCars from '../../../../../../hooks/useFilterCars'
 
 import { Container, Header, Content } from './styles'
 
 export default function PricePerDay() {
   const theme = useTheme()
-  const [values, setValues] = useState([350, 900])
+  const { pricePerDay, handleSetPricePerDay } = useFilterCars()
 
   return (
     <Container>
@@ -16,21 +17,20 @@ export default function PricePerDay() {
         <h3>Price per day</h3>
 
         <div className="prices">
-          <span className="price">{priceFormatter(values[0])}</span>
+          <span className="price">{priceFormatter(pricePerDay[0])}</span>
           {'-'}
-          <span className="price">{priceFormatter(values[1])}</span>
+          <span className="price">{priceFormatter(pricePerDay[1])}</span>
         </div>
       </Header>
 
       <Content>
         <Range
-          values={values}
+          values={pricePerDay}
           step={10}
           min={100}
-          max={1600}
-          onChange={(values) => setValues(values)}
+          max={3600}
+          onChange={(values) => handleSetPricePerDay(values)}
           renderTrack={({ props, children }) => (
-            // eslint-disable-next-line jsx-a11y/no-static-element-interactions
             <div
               onMouseDown={props.onMouseDown}
               onTouchStart={props.onTouchStart}
@@ -48,7 +48,7 @@ export default function PricePerDay() {
                   width: '100%',
                   borderRadius: '4px',
                   background: getTrackBackground({
-                    values,
+                    values: pricePerDay,
                     colors: [
                       theme.colors.white400,
                       theme.colors.primary,

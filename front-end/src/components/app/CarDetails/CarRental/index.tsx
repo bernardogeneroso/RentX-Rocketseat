@@ -12,7 +12,7 @@ export type InfoCarProps = 'AboutCar' | 'RentalPeriod'
 interface RentalProps {
   carInfo: {
     plate: string
-    pricePerDay: number
+    PerDay: number
   }
 }
 
