@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -6,6 +7,7 @@ import * as yup from 'yup'
 
 import { Button } from '../../Button'
 import { Input } from '../../Input'
+import useAuth from '../../../hooks/useAuth'
 
 import { Container, Form } from './styles'
 
@@ -28,6 +30,8 @@ const schema = yup
   .required()
 
 export default function SignIn() {
+  const router = useRouter()
+  const { signIn } = useAuth()
   const {
     register,
     handleSubmit: onSubmit,
@@ -37,7 +41,18 @@ export default function SignIn() {
   })
 
   const handleSubmit = onSubmit(async (data) => {
-    console.log(data)
+    const { email, password } = data
+
+    try {
+      await signIn({
+        email,
+        password,
+      })
+
+      router.push('/profile')
+    } catch (err) {
+      console.log(err)
+    }
   })
 
   return (

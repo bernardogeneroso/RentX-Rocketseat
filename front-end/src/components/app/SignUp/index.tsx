@@ -1,10 +1,12 @@
 import React from 'react'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
 import { Button } from '../../Button'
 import { Input } from '../../Input'
+import useAuth from '../../../hooks/useAuth'
 
 import { Container, Form } from './styles'
 
@@ -29,6 +31,8 @@ const schema = yup
   .required()
 
 export default function SignUp() {
+  const router = useRouter()
+  const { signUp } = useAuth()
   const {
     register,
     handleSubmit: onSubmit,
@@ -37,7 +41,21 @@ export default function SignUp() {
     resolver: yupResolver(schema),
   })
 
-  const handleSubmit = onSubmit((data) => console.log(data))
+  const handleSubmit = onSubmit(async (data) => {
+    const { name, email, password } = data
+
+    try {
+      await signUp({
+        name,
+        email,
+        password,
+      })
+
+      router.push('/profile/signin')
+    } catch (err) {
+      console.log(err)
+    }
+  })
 
   return (
     <Container>
