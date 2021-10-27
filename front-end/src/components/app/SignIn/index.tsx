@@ -8,6 +8,7 @@ import * as yup from 'yup'
 import { Button } from '../../Button'
 import { Input } from '../../Input'
 import useAuth from '../../../hooks/useAuth'
+import useToast from '../../../hooks/useToast'
 
 import { Container, Form } from './styles'
 
@@ -32,6 +33,8 @@ const schema = yup
 export default function SignIn() {
   const router = useRouter()
   const { signIn } = useAuth()
+  const { addToast } = useToast()
+
   const {
     register,
     handleSubmit: onSubmit,
@@ -51,7 +54,12 @@ export default function SignIn() {
 
       router.push('/profile')
     } catch (err) {
-      console.log(err)
+      addToast({
+        type: 'error',
+        title: 'Authentication error',
+        // @ts-ignore
+        description: err.response.data.message,
+      })
     }
   })
 

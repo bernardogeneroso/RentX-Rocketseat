@@ -1,3 +1,5 @@
+import { GetServerSideProps } from 'next'
+import { parseCookies } from 'nookies'
 import React from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -7,6 +9,7 @@ import * as yup from 'yup'
 import { Button } from '../../Button'
 import { Input } from '../../Input'
 import useAuth from '../../../hooks/useAuth'
+import useToast from '../../../hooks/useToast'
 
 import { Container, Form } from './styles'
 
@@ -32,6 +35,7 @@ const schema = yup
 
 export default function SignUp() {
   const router = useRouter()
+  const { addToast } = useToast()
   const { signUp } = useAuth()
   const {
     register,
@@ -51,9 +55,19 @@ export default function SignUp() {
         password,
       })
 
+      addToast({
+        type: 'success',
+        title: 'Account has been created',
+      })
+
       router.push('/profile/signin')
     } catch (err) {
-      console.log(err)
+      addToast({
+        type: 'error',
+        title: 'Authentication error',
+        // @ts-ignore
+        description: err.response.data.message,
+      })
     }
   })
 
@@ -92,4 +106,21 @@ export default function SignUp() {
       </Form>
     </Container>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['rentxauth.userCredentials']: userData } = parseCookies(ctx)
+
+  if (userData) {
+    return {
+      redirect: {
+        destination: '/profile',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }

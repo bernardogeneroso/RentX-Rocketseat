@@ -1,4 +1,4 @@
-import { parseCookies, setCookie } from 'nookies'
+import { parseCookies, destroyCookie, setCookie } from 'nookies'
 import React, { useState, useCallback, useEffect } from 'react'
 import { createContext } from 'use-context-selector'
 
@@ -95,6 +95,10 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const signOut = useCallback(() => {
     api.defaults.headers['Authorization'] = ''
+
+    destroyCookie(undefined, 'rentxauth.userCredentials', {
+      path: '/profile',
+    })
 
     setUser(null)
   }, [])

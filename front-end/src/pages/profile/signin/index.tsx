@@ -1,3 +1,5 @@
+import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
 import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -71,4 +73,21 @@ export default function SignIn() {
       </Container>
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const { ['rentxauth.userCredentials']: userData } = parseCookies(ctx)
+
+  if (userData) {
+    return {
+      redirect: {
+        destination: '/profile',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
 }
