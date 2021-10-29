@@ -27,6 +27,7 @@ export default function Header({ text }: HeaderProps) {
   function handleSignOut() {
     signOut()
 
+    console.log('aqui')
     router.push('/profile/signin')
   }
 

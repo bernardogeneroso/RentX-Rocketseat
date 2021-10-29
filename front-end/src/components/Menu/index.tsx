@@ -5,6 +5,7 @@ import { useTheme } from 'styled-components'
 import OptionComponent from './Option'
 
 import { Container } from './styles'
+import useAuth from '../../hooks/useAuth'
 
 import Home from '../../pages/assets/home.svg'
 import Car from '../../pages/assets/car.svg'
@@ -43,6 +44,7 @@ interface HomeProps {
 
 export default function Menu({ menuOption = 'home' }: HomeProps) {
   const router = useRouter()
+  const { isAuthenticated } = useAuth()
   const theme = useTheme()
 
   const [option, setOption] = useState<Option>(menuOption)
@@ -66,7 +68,13 @@ export default function Menu({ menuOption = 'home' }: HomeProps) {
           <OptionComponent
             key={menuOption.name}
             icon={menuOption.icon}
-            link={menuOption.link}
+            link={
+              menuOption.link === '/profile'
+                ? isAuthenticated
+                  ? menuOption.link
+                  : '/profile/signin'
+                : menuOption.link
+            }
             title={`${menuOption.name
               .charAt(0)
               .toUpperCase()}${menuOption.name.slice(1)}`}
