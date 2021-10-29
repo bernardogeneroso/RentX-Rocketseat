@@ -1,7 +1,11 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { animated } from 'react-spring'
 
 import { ContainerCarMostRented as CarMostRented } from '../../../../styles/pages'
+
+interface ContentProps {
+  reverseCars?: boolean
+}
 
 export const Container = styled.div`
   width: 100%;
@@ -17,6 +21,7 @@ export const Container = styled.div`
 
   @media screen and (max-width: 535px) {
     grid-template-columns: 1fr;
+    grid-template-rows: 80px 80px 1fr;
 
     grid-template-areas:
       'header header header header'
@@ -26,14 +31,23 @@ export const Container = styled.div`
   }
 `
 
-export const Content = styled.div`
+export const Content = styled.div<ContentProps>`
   grid-area: content;
 
   display: grid;
   gap: 6rem;
   grid-template-columns: 1fr 460px;
   grid-template-rows: 1fr;
-  grid-template-areas: 'carMostRented signin';
+  ${(props) =>
+    props.reverseCars
+      ? css`
+          grid-template-columns: 460px 1fr;
+          grid-template-areas: 'signin carMostRented';
+        `
+      : css`
+          grid-template-columns: 1fr 460px;
+          grid-template-areas: 'carMostRented signin';
+        `}
 
   @media screen and (max-width: 1038px) {
     display: flex;

@@ -94,6 +94,7 @@ export default function SignUp() {
           error={errors.email}
           register={register}
         />
+        {/* // TODO: Add one more input for password validation */}
         <Input
           type="password"
           typeForm="password"
@@ -102,6 +103,7 @@ export default function SignUp() {
           register={register}
         />
 
+        {/* // TODO: Button keep disabled until form has corrected */}
         <Button type="submit" text="Create account free" reverse />
       </Form>
     </Container>

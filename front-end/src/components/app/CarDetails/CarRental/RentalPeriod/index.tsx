@@ -7,11 +7,13 @@ import { Button } from '../../../../Button'
 import ModalStatus from '../../../ModalStatus'
 import RentalModal from './RentalModal'
 import { priceFormatter } from '../../../../../utils/priceFormatter'
+import useAuth from '../../../../../hooks/useAuth'
 import { api } from '../../../../../services/api'
 
 import { Container, Header, Content, ContentTotal } from './styles'
 
 import Calendar from '../../../../../pages/assets/calendar.svg'
+import Link from 'next/link'
 
 interface RentalPeriodProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -34,6 +36,7 @@ export default function RentalPeriod({
   isActive,
   carInfo: { plate, pricePerDay },
 }: RentalPeriodProps) {
+  const { isAuthenticated } = useAuth()
   const theme = useTheme()
 
   const [modal, setModal] = useState(false)
@@ -67,8 +70,7 @@ export default function RentalPeriod({
   }, [])
 
   async function handleRental() {
-    // Todo: must be logged in to access, verification
-
+    if (!isAuthenticated) return
     if (!dates[0] || !dates[1]) return 1
 
     try {
@@ -148,15 +150,22 @@ export default function RentalPeriod({
             )} x ${daysBetweenDates} per day`}</div>
           </div>
 
-          <div className="rentalTotal">{priceFormatter(totalPrice)}</div>
+          {/* // TODO: If authenticated show class adjust */}
+          <div className="rentalTotal adjust">{priceFormatter(totalPrice)}</div>
         </ContentTotal>
       </Content>
 
-      <Button
-        text="Rental now"
-        onClick={handleRental}
-        backgroundColor={theme.colors.green}
-      />
+      {isAuthenticated ? (
+        <Button
+          text="Rental now"
+          onClick={handleRental}
+          backgroundColor={theme.colors.green}
+        />
+      ) : (
+        <Link href="/profile/signin" passHref>
+          <Button text="Has necessary to Sign In" className="adjust" />
+        </Link>
+      )}
 
       <RentalModal
         {...{ modal, handleToggleModal, dates, handleChangeDatesModal }}

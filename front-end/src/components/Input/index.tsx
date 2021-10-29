@@ -12,6 +12,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   register: UseFormRegister<any>
 }
 
+// TODO: Has necessary to keep icon red when value exist, and redesign value field
 export function Input({
   typeForm,
   type,

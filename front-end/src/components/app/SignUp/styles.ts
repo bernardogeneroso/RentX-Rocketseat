@@ -21,7 +21,12 @@ export const Container = styled.div`
   }
 
   @media screen and (max-width: 1038px) {
-    max-width: 540px;
+    max-width: 535px;
+  }
+
+  @media screen and (max-width: 535px) {
+    padding: 1rem;
+    max-width: unset;
   }
 `
 

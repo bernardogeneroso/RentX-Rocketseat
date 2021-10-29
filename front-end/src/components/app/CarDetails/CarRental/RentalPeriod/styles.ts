@@ -13,6 +13,10 @@ export const Container = styled(animated.div)`
   bottom: 0;
   display: flex;
   flex-direction: column;
+
+  button.adjust {
+    padding: 2.9rem 5rem;
+  }
 `
 
 export const Content = styled.div`
@@ -100,5 +104,9 @@ export const ContentTotal = styled.div`
     font-family: Archivo;
     font-weight: 500;
     font-size: 36px;
+
+    &.adjust {
+      color: ${(props) => props.theme.colors.primary};
+    }
   }
 `

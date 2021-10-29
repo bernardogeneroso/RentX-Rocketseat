@@ -1,5 +1,5 @@
-import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
+import { GetServerSideProps } from 'next'
 import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -7,10 +7,10 @@ import { useSpring, config } from 'react-spring'
 
 import Header from '../../../components/Header'
 import Menu from '../../../components/Menu'
-import SignUpComp from '../../../components/app/SignUp'
+import ForgetPasswordComp from '../../../components/app/ForgetPassword'
 
 import bowsGrey from '../../assets/bowsGrey.png'
-import Mustang from '../../assets/cars/mustang.svg'
+import AudiA1 from '../../assets/cars/audi_a1.svg'
 
 import { ContentCar } from '../../../styles/pages'
 import {
@@ -20,7 +20,7 @@ import {
   CarBows,
 } from '../../../styles/pages/profile/signin'
 
-export default function SignUp() {
+export default function ForgetPassword() {
   const stylesBows = useSpring({
     from: {
       rotate: 45,
@@ -50,25 +50,25 @@ export default function SignUp() {
   return (
     <>
       <Head>
-        <title>RentX - SignUp</title>
+        <title>RentX - Forgot password</title>
       </Head>
 
       <Container>
         <Menu menuOption="profile" />
         <Header text="Profile" />
 
-        <Content reverseCars>
+        <Content>
           <ContainerCarMostRented>
             <CarBows style={stylesBows}>
               <Image src={bowsGrey} alt="RentX" width="470" />
             </CarBows>
 
             <ContentCar style={stylesCar}>
-              <Mustang className="car-most-popular" />
+              <AudiA1 className="car-most-popular" />
             </ContentCar>
           </ContainerCarMostRented>
 
-          <SignUpComp />
+          <ForgetPasswordComp />
         </Content>
       </Container>
     </>

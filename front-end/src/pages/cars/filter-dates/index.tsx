@@ -1,7 +1,5 @@
 import React from 'react'
 import Head from 'next/head'
-/*import { GetServerSideProps } from 'next'
-import { parseCookies } from 'nookies'*/
 
 import Header from '../../../components/Header'
 import Menu from '../../../components/Menu'
@@ -21,7 +19,7 @@ export default function FilterDates() {
         <Header text="Filter cars" />
 
         <Content>
-          <h1>Choose a date of start and end of the rent</h1>
+          <span>Choose a date of start and end of the rent</span>
 
           <CarFilterDates />
         </Content>
@@ -29,26 +27,3 @@ export default function FilterDates() {
     </>
   )
 }
-
-/*export const getServerSideProps: GetServerSideProps = async (context) => {
-  try {
-    const { 'RentX.filterDates': dates } = parseCookies(context)
-
-    const datesParse = JSON.parse(dates)
-
-    console.log(!!datesParse)
-
-    if (datesParse) {
-      return {
-        redirect: {
-          destination: '/cars/filter-dates/list',
-          permanent: false,
-        },
-      }
-    }
-  } catch {}
-
-  return {
-    props: {},
-  }
-}*/

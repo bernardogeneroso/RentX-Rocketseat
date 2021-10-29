@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -11,9 +10,8 @@ import useToast from '../../../hooks/useToast'
 
 import { Container, Form } from './styles'
 
-export interface FormDataSignIn {
+export interface FormDataForgetPassword {
   email: string
-  password: string
 }
 
 const schema = yup
@@ -22,37 +20,30 @@ const schema = yup
       .string()
       .email('E-mail must be a valid')
       .required('E-mail is a required field'),
-    password: yup
-      .string()
-      .min(6, 'Password must be at least 6 characters')
-      .required('Password is a required field'),
   })
   .required()
 
-export default function SignIn() {
-  const { signIn } = useAuth()
+export default function ForgetPassword() {
+  const {} = useAuth()
   const { addToast } = useToast()
 
   const {
     register,
     handleSubmit: onSubmit,
     formState: { errors },
-  } = useForm<FormDataSignIn>({
+  } = useForm<FormDataForgetPassword>({
     resolver: yupResolver(schema),
   })
 
   const handleSubmit = onSubmit(async (data) => {
-    const { email, password } = data
+    const { email } = data
 
     try {
-      await signIn({
-        email,
-        password,
-      })
+      console.log(email)
     } catch (err) {
       addToast({
         type: 'error',
-        title: 'Authentication error',
+        title: 'E-mail not valid',
         // @ts-ignore
         description: err.response.data.message,
       })
@@ -61,10 +52,10 @@ export default function SignIn() {
 
   return (
     <Container>
-      <h2>We are almost there.</h2>
+      <h2>Recovery password</h2>
 
       <div className="moreInformation">
-        Sign in to start a amazing experience.
+        Insert your e-mail to receive a link to change your password
       </div>
 
       <Form onSubmit={handleSubmit}>
@@ -75,23 +66,9 @@ export default function SignIn() {
           error={errors.email}
           register={register}
         />
-        <Input
-          type="password"
-          typeForm="password"
-          placeholder="Password"
-          error={errors.password}
-          register={register}
-        />
 
-        <Link href="/profile/forget-password" passHref>
-          <p className="forgetPassword">Forget my password</p>
-        </Link>
-
-        {/* // TODO: Button keep disabled until form has corrected */}
-        <Button type="submit" text="Sign In" />
-        <Link href="/profile/signup" passHref>
-          <Button type="button" text="Create account" reverse />
-        </Link>
+        {/* // TODO: Button keep disabled until input has a valid email */}
+        <Button type="submit" text="Next step" />
       </Form>
     </Container>
   )

@@ -14,7 +14,6 @@ export const Container = styled.div`
 
   @media screen and (max-width: 535px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 80px 80px 1fr;
 
     grid-template-areas:
       'header header header header'
@@ -31,19 +30,18 @@ export const Content = styled.div`
   justify-content: center;
   align-items: center;
 
-  h1 {
+  span {
     color: ${(props) => props.theme.colors.grey700};
     font-family: Archivo;
     font-style: normal;
     font-weight: 600;
     font-size: 2.6rem;
-    padding: 0rem 5rem;
-    margin: -3rem 5rem;
+    margin-top: 1rem;
     text-align: center;
   }
 
   @media screen and (max-width: 535px) {
-    h1 {
+    span {
       margin: 0 5rem;
     }
   }
