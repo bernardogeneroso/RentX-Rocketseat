@@ -39,8 +39,6 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const isAuthenticated = !!user
 
-  console.log(isAuthenticated)
-
   useEffect(() => {
     const { 'rentxauth.userCredentials': userData } = parseCookies()
 
