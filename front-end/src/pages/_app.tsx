@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleStart = (url: any) => {
-      console.log(`Loading: ${url}`)
+      //console.log(`Loading: ${url}`)
       NProgress.start()
     }
     const handleStop = () => {

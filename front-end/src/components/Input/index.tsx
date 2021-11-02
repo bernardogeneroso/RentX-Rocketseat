@@ -81,7 +81,7 @@ export function Input({
           <animated.input
             style={springInputStyle}
             type={
-              typeForm === ('password' || 'password_confirmation')
+              typeForm === 'password' || typeForm === 'password_confirmation'
                 ? password
                   ? 'text'
                   : type
@@ -94,7 +94,27 @@ export function Input({
           />
         </ContentInput>
 
-        {typeForm === ('password' || 'password_confirmation') &&
+        {typeForm === 'password' &&
+          transitionPasswordStyle((styles, item) =>
+            item ? (
+              <animated.div
+                style={styles}
+                className="password"
+                onClick={handleTogglePassword}
+              >
+                <FiEye size={20} />
+              </animated.div>
+            ) : (
+              <animated.div
+                style={styles}
+                className="password"
+                onClick={handleTogglePassword}
+              >
+                <FiEyeOff size={20} />
+              </animated.div>
+            )
+          )}
+        {typeForm === 'password_confirmation' &&
           transitionPasswordStyle((styles, item) =>
             item ? (
               <animated.div

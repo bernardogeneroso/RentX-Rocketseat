@@ -121,7 +121,7 @@ export default function SignUp() {
         <Input
           type="password"
           typeForm="password_confirmation"
-          placeholder="Password"
+          placeholder="Password confirmation"
           icon={FiLock}
           error={errors.password_confirmation}
           register={register}

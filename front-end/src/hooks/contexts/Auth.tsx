@@ -36,7 +36,8 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 const AuthProvider: React.FC = ({ children }) => {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
-  const [isAuthenticated] = useState(!!user)
+
+  const isAuthenticated = !!user
 
   useEffect(() => {
     const { 'rentxauth.userCredentials': userData } = parseCookies()

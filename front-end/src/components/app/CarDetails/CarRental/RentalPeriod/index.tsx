@@ -169,7 +169,7 @@ export default function RentalPeriod({
         />
       ) : (
         <Link href="/profile/signin" passHref>
-          <Button text="Has necessary to sign In" className="adjust" />
+          <Button text="Has necessary to sign in" className="adjust" />
         </Link>
       )}
 
