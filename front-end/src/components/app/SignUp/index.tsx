@@ -3,6 +3,7 @@ import { parseCookies } from 'nookies'
 import React from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { FiMail, FiUser, FiLock } from 'react-icons/fi'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 
@@ -84,6 +85,7 @@ export default function SignUp() {
           type="text"
           typeForm="name"
           placeholder="Name"
+          icon={FiUser}
           error={errors.name}
           register={register}
         />
@@ -91,6 +93,7 @@ export default function SignUp() {
           type="email"
           typeForm="email"
           placeholder="E-mail"
+          icon={FiMail}
           error={errors.email}
           register={register}
         />
@@ -99,6 +102,7 @@ export default function SignUp() {
           type="password"
           typeForm="password"
           placeholder="Password"
+          icon={FiLock}
           error={errors.password}
           register={register}
         />

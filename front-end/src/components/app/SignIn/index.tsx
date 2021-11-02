@@ -1,5 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
+import { FiMail, FiLock } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -72,6 +73,7 @@ export default function SignIn() {
           type="email"
           typeForm="email"
           placeholder="E-mail"
+          icon={FiMail}
           error={errors.email}
           register={register}
         />
@@ -79,6 +81,7 @@ export default function SignIn() {
           type="password"
           typeForm="password"
           placeholder="Password"
+          icon={FiLock}
           error={errors.password}
           register={register}
         />

@@ -1,4 +1,5 @@
 import React from 'react'
+import { FiMail } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
@@ -63,6 +64,7 @@ export default function ForgetPassword() {
           type="email"
           typeForm="email"
           placeholder="E-mail"
+          icon={FiMail}
           error={errors.email}
           register={register}
         />
