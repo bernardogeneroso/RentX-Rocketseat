@@ -1,6 +1,6 @@
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
-import React from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { FiMail, FiUser, FiLock } from 'react-icons/fi'
@@ -42,6 +42,9 @@ export default function SignUp() {
   const router = useRouter()
   const { addToast } = useToast()
   const { signUp } = useAuth()
+
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit: onSubmit,
@@ -54,11 +57,15 @@ export default function SignUp() {
     const { name, email, password } = data
 
     try {
+      setLoading(true)
+
       await signUp({
         name,
         email,
         password,
       })
+
+      setLoading(false)
 
       addToast({
         type: 'success',
@@ -71,8 +78,10 @@ export default function SignUp() {
         type: 'error',
         title: 'Authentication error',
         // @ts-ignore
-        description: err.response.data.message,
+        description: err.response?.data.message,
       })
+
+      setLoading(false)
     }
   })
 
@@ -118,7 +127,11 @@ export default function SignUp() {
           register={register}
         />
 
-        <Button type="submit" text="Create account free" reverse />
+        <Button
+          type="submit"
+          text="Create account free"
+          {...{ loading, reverse: true }}
+        />
       </Form>
     </Container>
   )

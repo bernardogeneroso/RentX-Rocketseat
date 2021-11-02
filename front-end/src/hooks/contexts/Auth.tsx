@@ -26,7 +26,7 @@ interface SignUpCredentials {
 export interface AuthContextData {
   isAuthenticated: boolean
   user: User | null
-  signIn(credentials: SignInCredentials): Promise<void>
+  signIn(credentials: SignInCredentials): Promise<User>
   signUp(credentials: SignUpCredentials): Promise<void>
   signOut(): void
 }
@@ -37,8 +37,6 @@ const AuthProvider: React.FC = ({ children }) => {
   const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [isAuthenticated] = useState(!!user)
-
-  console.log(isAuthenticated)
 
   useEffect(() => {
     const { 'rentxauth.userCredentials': userData } = parseCookies()
@@ -94,6 +92,8 @@ const AuthProvider: React.FC = ({ children }) => {
       setUser(user)
 
       router.push('/profile')
+
+      return user
     },
     [router]
   )

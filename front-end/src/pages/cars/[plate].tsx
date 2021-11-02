@@ -1,6 +1,6 @@
+import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import React from 'react'
 import Head from 'next/head'
-import { GetStaticPaths, GetStaticProps, GetStaticPropsContext } from 'next'
 import { useRouter } from 'next/router'
 import { FaChevronLeft } from 'react-icons/fa'
 

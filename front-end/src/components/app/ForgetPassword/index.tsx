@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FiMail } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -28,6 +28,8 @@ export default function ForgetPassword() {
   const {} = useAuth()
   const { addToast } = useToast()
 
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit: onSubmit,
@@ -40,14 +42,20 @@ export default function ForgetPassword() {
     const { email } = data
 
     try {
+      setLoading(true)
+
       console.log(email)
+
+      setLoading(false)
     } catch (err) {
       addToast({
         type: 'error',
         title: 'E-mail not valid',
         // @ts-ignore
-        description: err.response.data.message,
+        description: err.response?.data.message,
       })
+
+      setLoading(false)
     }
   })
 
@@ -69,7 +77,7 @@ export default function ForgetPassword() {
           register={register}
         />
 
-        <Button type="submit" text="Next step" />
+        <Button type="submit" text="Next step" {...{ loading }} />
       </Form>
     </Container>
   )

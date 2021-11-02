@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { FiMail, FiLock } from 'react-icons/fi'
 import { useForm } from 'react-hook-form'
@@ -34,6 +34,8 @@ export default function SignIn() {
   const { signIn } = useAuth()
   const { addToast } = useToast()
 
+  const [loading, setLoading] = useState(false)
+
   const {
     register,
     handleSubmit: onSubmit,
@@ -46,17 +48,28 @@ export default function SignIn() {
     const { email, password } = data
 
     try {
-      await signIn({
+      setLoading(true)
+
+      const user = await signIn({
         email,
         password,
+      })
+
+      setLoading(false)
+
+      addToast({
+        type: 'success',
+        title: `Welcome ${user.name}!`,
       })
     } catch (err) {
       addToast({
         type: 'error',
         title: 'Authentication error',
         // @ts-ignore
-        description: err.response.data.message,
+        description: err.response?.data.message,
       })
+
+      setLoading(false)
     }
   })
 
@@ -90,7 +103,7 @@ export default function SignIn() {
           <p className="forgetPassword">Forget my password</p>
         </Link>
 
-        <Button type="submit" text="Sign In" />
+        <Button type="submit" text="Sign In" {...{ loading }} />
         <Link href="/profile/signup" passHref>
           <Button type="button" text="Create account" reverse />
         </Link>
