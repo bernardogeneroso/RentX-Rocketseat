@@ -90,7 +90,6 @@ export default function SignIn() {
           <p className="forgetPassword">Forget my password</p>
         </Link>
 
-        {/* // TODO: Button keep disabled until form has corrected */}
         <Button type="submit" text="Sign In" />
         <Link href="/profile/signup" passHref>
           <Button type="button" text="Create account" reverse />

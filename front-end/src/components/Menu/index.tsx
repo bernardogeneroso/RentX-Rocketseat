@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useTheme } from 'styled-components'
 
 import OptionComponent from './Option'
@@ -43,7 +43,6 @@ interface HomeProps {
 }
 
 export default function Menu({ menuOption = 'home' }: HomeProps) {
-  const router = useRouter()
   const { isAuthenticated } = useAuth()
   const theme = useTheme()
 
@@ -53,15 +52,13 @@ export default function Menu({ menuOption = 'home' }: HomeProps) {
     setOption(newOption)
   }, [])
 
-  function handleRedirectToHomePage() {
-    router.push('/')
-  }
-
   return (
     <Container>
-      <div className="logo" onClick={handleRedirectToHomePage}>
-        <RentxWhite color={theme.colors.white} />
-      </div>
+      <Link href="/" passHref>
+        <div className="logo">
+          <RentxWhite color={theme.colors.white} />
+        </div>
+      </Link>
 
       <div className="content">
         {options.map((menuOption) => (

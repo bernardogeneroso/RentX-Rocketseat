@@ -18,6 +18,7 @@ export interface FormDataSignUp {
   name: string
   email: string
   password: string
+  password_confirmation: string
 }
 
 const schema = yup
@@ -31,6 +32,9 @@ const schema = yup
       .string()
       .min(6, 'Password must be at least 6 characters')
       .required('Password is a required field'),
+    password_confirmation: yup
+      .string()
+      .oneOf([yup.ref('password'), null], 'Passwords must match'),
   })
   .required()
 
@@ -97,7 +101,6 @@ export default function SignUp() {
           error={errors.email}
           register={register}
         />
-        {/* // TODO: Add one more input for password validation */}
         <Input
           type="password"
           typeForm="password"
@@ -106,8 +109,15 @@ export default function SignUp() {
           error={errors.password}
           register={register}
         />
+        <Input
+          type="password"
+          typeForm="password_confirmation"
+          placeholder="Password"
+          icon={FiLock}
+          error={errors.password_confirmation}
+          register={register}
+        />
 
-        {/* // TODO: Button keep disabled until form has corrected */}
         <Button type="submit" text="Create account free" reverse />
       </Form>
     </Container>

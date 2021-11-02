@@ -69,7 +69,6 @@ export default function ForgetPassword() {
           register={register}
         />
 
-        {/* // TODO: Button keep disabled until input has a valid email */}
         <Button type="submit" text="Next step" />
       </Form>
     </Container>

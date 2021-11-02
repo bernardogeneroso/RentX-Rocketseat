@@ -7,7 +7,7 @@ import { FieldError, UseFormRegister } from 'react-hook-form'
 import { Container, Content, ContentIcon, ContentInput } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  typeForm: 'name' | 'email' | 'password'
+  typeForm: 'name' | 'email' | 'password' | 'password_confirmation'
   error: FieldError | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>
@@ -80,7 +80,13 @@ export function Input({
 
           <animated.input
             style={springInputStyle}
-            type={typeForm === 'password' ? (password ? 'text' : type) : type}
+            type={
+              typeForm === ('password' || 'password_confirmation')
+                ? password
+                  ? 'text'
+                  : type
+                : type
+            }
             {...register(typeForm)}
             {...props}
             placeholder={placeholder}
@@ -88,7 +94,7 @@ export function Input({
           />
         </ContentInput>
 
-        {typeForm === 'password' &&
+        {typeForm === ('password' || 'password_confirmation') &&
           transitionPasswordStyle((styles, item) =>
             item ? (
               <animated.div

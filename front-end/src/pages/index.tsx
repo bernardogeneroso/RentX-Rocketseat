@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useSpring, animated, config } from 'react-spring'
 
 import { Button } from '../components/Button'
@@ -18,7 +18,6 @@ import bows from './assets/bows.png'
 import AudiA1 from './assets/cars/audi_a1.svg'
 
 const Home = () => {
-  const router = useRouter()
   const stylesResumeRentX = useSpring({
     from: {
       opacity: 0,
@@ -57,10 +56,6 @@ const Home = () => {
     config: config.gentle,
   })
 
-  function handleRedirectToCarsPage() {
-    router.push('/cars')
-  }
-
   return (
     <>
       <Head>
@@ -82,7 +77,9 @@ const Home = () => {
             </span>
           </div>
 
-          <Button text="Start now" onClick={handleRedirectToCarsPage} />
+          <Link href="/cars" passHref>
+            <Button text="Start now" />
+          </Link>
         </ContainerResumeRentX>
 
         <ContainerCarMostRented>

@@ -1,6 +1,6 @@
 import React from 'react'
+import Link from 'next/link'
 import { FiPower } from 'react-icons/fi'
-import { useRouter } from 'next/router'
 
 import useAuth from '../../hooks/useAuth'
 
@@ -13,16 +13,7 @@ interface HeaderProps {
 }
 
 export default function Header({ text }: HeaderProps) {
-  const router = useRouter()
   const { isAuthenticated, user, signOut } = useAuth()
-
-  function handleRedirectToSignInPage() {
-    router.push('/profile/signin')
-  }
-
-  function handleRedirectToProfilePage() {
-    router.push('/profile')
-  }
 
   function handleSignOut() {
     signOut()
@@ -34,19 +25,23 @@ export default function Header({ text }: HeaderProps) {
         <h3>{text}</h3>
 
         {user && isAuthenticated ? (
-          <div className="content">
-            <h3 onClick={handleRedirectToProfilePage}>{user.name}</h3>
+          <Link href="/profile" passHref>
+            <div className="content">
+              <h3>{user.name}</h3>
 
-            <FiPower size={20} onClick={handleSignOut} />
-          </div>
-        ) : (
-          <div className="content" onClick={handleRedirectToSignInPage}>
-            <h3>Sign in</h3>
-
-            <div className="perfil">
-              <Profile />
+              <FiPower size={20} onClick={handleSignOut} />
             </div>
-          </div>
+          </Link>
+        ) : (
+          <Link href="/profile/signin" passHref>
+            <div className="content">
+              <h3>Sign in</h3>
+
+              <div className="perfil">
+                <Profile />
+              </div>
+            </div>
+          </Link>
         )}
       </nav>
     </Container>
