@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   } catch {
     return {
       redirect: {
-        destination: '/cars/filter-dates',
+        destination: '/cars/filter-dates?error=true',
         permanent: false,
       },
     }

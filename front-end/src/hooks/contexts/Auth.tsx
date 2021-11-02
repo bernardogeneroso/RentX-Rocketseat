@@ -39,6 +39,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const isAuthenticated = !!user
 
+  console.log(user)
+
   useEffect(() => {
     const { 'rentxauth.userCredentials': userData } = parseCookies()
 
@@ -104,7 +106,9 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     api.defaults.headers['Authorization'] = ''
 
-    destroyCookie(undefined, 'rentxauth.userCredentials')
+    destroyCookie(undefined, 'rentxauth.userCredentials', {
+      path: '/',
+    })
 
     setUser(null)
 

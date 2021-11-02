@@ -17,6 +17,8 @@ export const Button = ({
   style,
   loading = false,
   reverse = false,
+  onClick,
+  disabled,
   ...props
 }: ButtonProps) => {
   const theme = useTheme()
@@ -29,8 +31,9 @@ export const Button = ({
         ...style,
         backgroundColor,
       }}
-      {...{ backgroundColor, reverse }}
+      {...{ backgroundColor, reverse, disabled }}
       {...props}
+      onClick={(event) => !disabled && onClick && onClick(event)}
     >
       {loading ? <BeatLoader color={theme.colors.white} /> : text}
     </Container>

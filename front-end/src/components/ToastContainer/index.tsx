@@ -19,7 +19,7 @@ const ToastContainer: React.FC<ToastContainerProps> = ({ messages }) => {
   })
 
   return (
-    <Container zIndexMessageShow={messages.length !== 0 ? true : false}>
+    <Container isVisible={messages.length !== 0 ? true : false}>
       {messagesWithTransitions((props, item) => (
         <Toast key={item.id} style={props} message={item} />
       ))}

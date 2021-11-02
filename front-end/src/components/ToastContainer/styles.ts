@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface ContainerProps {
-  zIndexMessageShow: boolean
+  isVisible: boolean
 }
 
 export const Container = styled.div<ContainerProps>`
@@ -10,5 +10,6 @@ export const Container = styled.div<ContainerProps>`
   top: 0;
   padding: 2rem;
   overflow: hidden;
-  z-index: ${(props) => (props.zIndexMessageShow ? 99999 : -1)};
+  pointer-events: ${(props) => (props.isVisible ? 'auto' : 'none')};
+  z-index: 9999;
 `

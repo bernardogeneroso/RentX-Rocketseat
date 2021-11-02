@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { lighten, shade } from 'polished'
+import { shade } from 'polished'
 
 interface ContainerProps {
   backgroundColor: string
@@ -17,7 +17,7 @@ export const Container = styled.button<ContainerProps>`
 
   &:hover {
     background-color: ${(props) =>
-      shade(0.2, props.backgroundColor)} !important;
+      shade(0.1, props.backgroundColor)} !important;
   }
 
   ${(props) =>
@@ -37,6 +37,6 @@ export const Container = styled.button<ContainerProps>`
     props.disabled &&
     css`
       pointer-events: none;
-      background-color: ${(props) => lighten(0.2, props.theme.colors.primary)};
+      filter: brightness(0.9);
     `}
 `

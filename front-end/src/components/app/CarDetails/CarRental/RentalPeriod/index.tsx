@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useTheme } from 'styled-components'
 import { format, differenceInDays } from 'date-fns'
 import { FaChevronRight } from 'react-icons/fa'
+import classnames from 'classnames'
 
 import { Button } from '../../../../Button'
 import ModalStatus from '../../../ModalStatus'
@@ -150,8 +151,13 @@ export default function RentalPeriod({
             )} x ${daysBetweenDates} per day`}</div>
           </div>
 
-          {/* // TODO: If authenticated show class adjust */}
-          <div className="rentalTotal adjust">{priceFormatter(totalPrice)}</div>
+          <div
+            className={classnames('rentalTotal', {
+              adjust: !isAuthenticated,
+            })}
+          >
+            {priceFormatter(totalPrice)}
+          </div>
         </ContentTotal>
       </Content>
 
@@ -163,7 +169,7 @@ export default function RentalPeriod({
         />
       ) : (
         <Link href="/profile/signin" passHref>
-          <Button text="Has necessary to Sign In" className="adjust" />
+          <Button text="Has necessary to sign In" className="adjust" />
         </Link>
       )}
 
