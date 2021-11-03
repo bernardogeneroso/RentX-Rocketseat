@@ -64,6 +64,7 @@ export const ContentInput = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.6rem 0 2rem;
+  flex-grow: 1;
 
   label {
     position: absolute;

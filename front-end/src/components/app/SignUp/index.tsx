@@ -69,7 +69,7 @@ export default function SignUp() {
 
       addToast({
         type: 'success',
-        title: 'Account has been created',
+        title: 'Account is been created',
       })
 
       router.push('/profile/signin')

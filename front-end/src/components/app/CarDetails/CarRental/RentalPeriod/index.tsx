@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
+import { parseCookies, destroyCookie } from 'nookies'
 import { useTheme } from 'styled-components'
 import { format, differenceInDays } from 'date-fns'
 import { FaChevronRight } from 'react-icons/fa'
@@ -44,7 +45,17 @@ export default function RentalPeriod({
   const [modalStatus, setModalStatus] = useState(false)
   const [modalStatusContent, setModalStatusContent] =
     useState<ModalStatusContent>({} as ModalStatusContent)
-  const [dates, setDates] = useState<[Date | null, Date | null]>([null, null])
+  const [dates, setDates] = useState<[Date | null, Date | null]>(() => {
+    const { ['rentxauth.saveDatesOfFilter']: datesFilter } = parseCookies()
+
+    if (datesFilter) {
+      const { startDate, endDate } = JSON.parse(datesFilter)
+
+      return [new Date(startDate), new Date(endDate)]
+    }
+
+    return [null, null]
+  })
 
   const daysBetweenDates = useMemo(() => {
     if (!dates[0] || !dates[1]) return 1
@@ -89,7 +100,7 @@ export default function RentalPeriod({
       })
     } catch {
       setModalStatusContent({
-        done: true,
+        done: false,
         title: 'Car not available to rent!',
         subtitle: `Try another dates, because you chose it is busy. Unavailable dates between ${format(
           dates[0],
@@ -97,6 +108,10 @@ export default function RentalPeriod({
         )} and ${format(dates[1], 'd LLL yyyy')}`,
       })
     }
+
+    destroyCookie(null, 'rentxauth.saveDatesOfFilter', {
+      path: '/',
+    })
 
     handleToggleModalStatus()
   }
@@ -169,7 +184,7 @@ export default function RentalPeriod({
         />
       ) : (
         <Link href="/profile/signin" passHref>
-          <Button text="Has necessary to sign in" className="adjust" />
+          <Button text="Is necessary to sign in" className="adjust" />
         </Link>
       )}
 

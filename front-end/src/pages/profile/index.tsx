@@ -5,6 +5,7 @@ import Head from 'next/head'
 
 import Header from '../../components/Header'
 import Menu from '../../components/Menu'
+import ProfileComp from '../../components/app/Profile'
 
 import { Container, Content } from '../../styles/pages/profile'
 
@@ -19,7 +20,9 @@ export default function Profile() {
         <Menu menuOption="profile" />
         <Header text="Profile" />
 
-        <Content>Content</Content>
+        <Content>
+          <ProfileComp />
+        </Content>
       </Container>
     </>
   )

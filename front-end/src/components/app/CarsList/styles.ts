@@ -4,6 +4,7 @@ export const Container = styled.div`
   grid-area: content;
   padding: 4rem 11.6rem 4rem;
   overflow: auto;
+  background-color: ${(props) => props.theme.colors.grey25};
 
   @media screen and (max-width: 750px) {
     padding: 5rem;

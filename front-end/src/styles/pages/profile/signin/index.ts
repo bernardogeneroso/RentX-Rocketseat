@@ -33,23 +33,25 @@ export const Container = styled.div`
 
 export const Content = styled.div<ContentProps>`
   grid-area: content;
-
   display: grid;
   gap: 6rem;
-  grid-template-columns: 1fr 460px;
+  grid-template-columns: 1fr 500px;
   grid-template-rows: 1fr;
+  padding: 1.8rem 11.6rem;
+  background-color: ${(props) => props.theme.colors.grey25};
+
   ${(props) =>
     props.reverseCars
       ? css`
-          grid-template-columns: 460px 1fr;
+          grid-template-columns: 500px 1fr;
           grid-template-areas: 'signin carMostRented';
         `
       : css`
-          grid-template-columns: 1fr 460px;
+          grid-template-columns: 1fr 500px;
           grid-template-areas: 'carMostRented signin';
         `}
 
-  @media screen and (max-width: 1038px) {
+  @media screen and (max-width: 1310px) {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -63,7 +65,7 @@ export const ContainerCarMostRented = styled(CarMostRented)`
   grid-area: carMostRented;
   margin: 2rem;
 
-  @media screen and (max-width: 1038px) {
+  @media screen and (max-width: 1310px) {
     display: none;
   }
 `

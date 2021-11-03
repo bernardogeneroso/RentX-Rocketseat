@@ -6,6 +6,7 @@ export default {
     black100: '#1B1B1F',
     black200: '#29292E',
 
+    grey25: '#E5E5E5',
     grey50: '#AEAEB3',
     grey100: '#A8A8B3',
     grey400: '#7A7A80',

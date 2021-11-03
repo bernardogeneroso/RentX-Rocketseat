@@ -25,4 +25,6 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   grid-area: content;
+  padding: 1.8rem 11.6rem;
+  background-color: ${(props) => props.theme.colors.grey25};
 `

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react'
+import { setCookie } from 'nookies'
 import Link from 'next/link'
 import Calendar from 'react-calendar'
 import { format } from 'date-fns'
@@ -27,6 +28,19 @@ export default function CarFilterBetweenDates({
 
     return dates
   }, [dates])
+
+  function handleSaveDatesOfFilter() {
+    if (!dates[0] || !dates[1]) return
+
+    const datesStringify = JSON.stringify({
+      startDate: dates[0],
+      endDate: dates[1],
+    })
+
+    setCookie(null, 'rentxauth.saveDatesOfFilter', datesStringify, {
+      path: '/',
+    })
+  }
 
   return (
     <Container className="container-filterBetweenDates">
@@ -78,7 +92,7 @@ export default function CarFilterBetweenDates({
             href={`/cars/filter-dates/list?startDate=${dates[0].toString()}&endDate=${dates[1].toString()}`}
             passHref
           >
-            <Button text="Continuar" />
+            <Button text="Continuar" onClick={handleSaveDatesOfFilter} />
           </Link>
         )}
       </div>

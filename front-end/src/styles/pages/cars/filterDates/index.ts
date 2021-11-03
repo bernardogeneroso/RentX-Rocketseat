@@ -29,6 +29,7 @@ export const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: ${(props) => props.theme.colors.grey25};
 
   span {
     color: ${(props) => props.theme.colors.grey700};
