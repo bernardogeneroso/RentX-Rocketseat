@@ -7,7 +7,12 @@ import { FieldError, UseFormRegister } from 'react-hook-form'
 import { Container, Content, ContentIcon, ContentInput } from './styles'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  typeForm: 'name' | 'email' | 'password' | 'password_confirmation'
+  typeForm:
+    | 'name'
+    | 'email'
+    | 'password'
+    | 'password_confirmation'
+    | 'password_active'
   error: FieldError | undefined
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>
@@ -115,6 +120,26 @@ export function Input({
             )
           )}
         {typeForm === 'password_confirmation' &&
+          transitionPasswordStyle((styles, item) =>
+            item ? (
+              <animated.div
+                style={styles}
+                className="password"
+                onClick={handleTogglePassword}
+              >
+                <FiEye size={20} />
+              </animated.div>
+            ) : (
+              <animated.div
+                style={styles}
+                className="password"
+                onClick={handleTogglePassword}
+              >
+                <FiEyeOff size={20} />
+              </animated.div>
+            )
+          )}
+        {typeForm === 'password_active' &&
           transitionPasswordStyle((styles, item) =>
             item ? (
               <animated.div

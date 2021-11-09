@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
-import { parseCookies, destroyCookie } from 'nookies'
+import { parseCookies, destroyCookie, setCookie } from 'nookies'
+import Link from 'next/link'
 import { useTheme } from 'styled-components'
 import { format, differenceInDays } from 'date-fns'
 import { FaChevronRight } from 'react-icons/fa'
@@ -15,7 +16,6 @@ import { api } from '../../../../../services/api'
 import { Container, Header, Content, ContentTotal } from './styles'
 
 import Calendar from '../../../../../pages/assets/calendar.svg'
-import Link from 'next/link'
 
 interface RentalPeriodProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,6 +79,15 @@ export default function RentalPeriod({
 
   const handleChangeDatesModal = useCallback((newDates: [Date, Date]) => {
     setDates(newDates)
+
+    const datesStringify = JSON.stringify({
+      startDate: newDates[0],
+      endDate: newDates[1],
+    })
+
+    setCookie(null, 'rentxauth.saveDatesOfFilter', datesStringify, {
+      path: '/',
+    })
   }, [])
 
   async function handleRental() {
@@ -117,10 +126,10 @@ export default function RentalPeriod({
   }
 
   useEffect(() => {
-    if (isActive) {
+    if (isActive && !dates[0] && !dates[1]) {
       handleToggleModal()
     }
-  }, [isActive, handleToggleModal])
+  }, [isActive, handleToggleModal, dates])
 
   return (
     <Container

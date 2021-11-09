@@ -30,7 +30,7 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
-  background-color: ${(props) => props.theme.colors.grey25};
+  background-color: ${(props) => props.theme.colors.white};
 
   @media screen and (max-width: 1120px) {
     padding: 5rem;
