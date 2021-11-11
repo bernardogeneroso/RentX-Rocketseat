@@ -13,7 +13,8 @@
 > Content created by [Rocketseat](https://github.com/Rocketseat);
 > Mobile application with React Native [Expo](https://expo.dev);
 > Application design available on [Figma](https://www.figma.com/file/7Ro0D8mdcX36qWnSBhWaXF/RentX?node-id=0%3A1).
-> Werb app demo [app](https://rentx.vercel.app/).
+
+> Web app demo [app](https://rentx.vercel.app/).
 
 # 📱 Application
 <table border="0" cellpadding="0" cellspacing="0">
