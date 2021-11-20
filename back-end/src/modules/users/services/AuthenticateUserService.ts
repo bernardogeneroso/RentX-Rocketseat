@@ -1,11 +1,11 @@
 import { injectable, inject } from "tsyringe";
-import { Users as User } from "@prisma/client";
-import { sign } from "jsonwebtoken";
+import { RefreshTokens, Users as User } from "@prisma/client";
 
 import UsersRepository from "../infra/prisma/repositories/UsersRepository";
 import IUsersRepository from "../repositories/IUsersRepository";
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
-import authConfig from "@config/auth";
+import GenerateRefreshTokenProvider from "../providers/Token/GenerateRefreshTokenProvider";
+import GenerateTokenProvider from "../providers/Token/GenerateTokenProvider";
 import AppError from "@shared/errors/AppError";
 
 interface IRequest {
@@ -16,6 +16,7 @@ interface IRequest {
 interface IResponse {
   user: Omit<User, "password">;
   token: string;
+  refreshToken: RefreshTokens;
 }
 
 @injectable()
@@ -40,11 +41,15 @@ class AuthenticateUserService {
     if (!isPasswordMatch)
       throw new AppError("Incorrect email or password combination", 401);
 
-    const { secret, expiresIn } = authConfig.jwt;
+    const generateTokenProvider = new GenerateTokenProvider();
+    const token = generateTokenProvider.execute(userFind.id);
 
-    const token = sign({}, secret, { subject: userFind.id, expiresIn });
+    const generateRefreshTokenProvider = new GenerateRefreshTokenProvider();
+    const refreshToken = await generateRefreshTokenProvider.execute(
+      userFind.id
+    );
 
-    return { user: userFind, token };
+    return { user: userFind, token, refreshToken };
   }
 }
 
