@@ -18,8 +18,16 @@ model Users {
   avatar           String?            @db.VarChar
   created_at       DateTime           @default(now())
   updated_at       DateTime           @updatedAt
+  refreshTokens    RefreshTokens?
   usersTokens      UsersTokens[]
   carsAppointments CarsAppointments[]
+}
+
+model RefreshTokens {
+  id        String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  expiresIn Int
+  user      Users  @relation(fields: [userId], references: [id])
+  userId    String @db.Uuid@unique
 }
 
 model UsersTokens {
@@ -33,10 +41,10 @@ model UsersTokens {
 
 model Cars {
   plate            String             @id @db.VarChar
-  carDetailId      String             @db.Uuid
+  carDetailId      String             @unique @db.Uuid
   brand            String             @db.VarChar
   model            String             @unique @db.VarChar
-  color           String             @db.VarChar
+  color            String             @db.VarChar
   fuel             FuelRoles          @default(gasoline)
   transmission     TransmissionRoles  @default(auto)
   pricePerDay      Int                @db.Integer
@@ -68,8 +76,8 @@ model CarsAppointments {
   id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   carId       String   @db.VarChar
   userId      String   @db.Uuid
-  start_in    DateTime @db.Timestamptz() @default(now())
-  end_in      DateTime @db.Timestamptz()
+  start_in    DateTime @default(now()) @db.Timestamptz
+  end_in      DateTime @db.Timestamptz
   rentalPrice Int      @db.Integer
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt

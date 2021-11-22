@@ -14,6 +14,8 @@
 > Mobile application with React Native [Expo](https://expo.dev);
 > Application design available on [Figma](https://www.figma.com/file/7Ro0D8mdcX36qWnSBhWaXF/RentX?node-id=0%3A1).
 
+> Web app [demo](https://rentx.vercel.app/).
+
 # 📱 Application
 <table border="0" cellpadding="0" cellspacing="0">
    <tr>
