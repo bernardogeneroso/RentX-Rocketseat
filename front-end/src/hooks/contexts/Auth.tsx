@@ -40,21 +40,38 @@ const AuthProvider: React.FC = ({ children }) => {
   const isAuthenticated = !!user
 
   useEffect(() => {
-    const { 'rentxauth.userCredentials': userData } = parseCookies()
+    const { 'rentxauth.refreshToken': refreshToken, 'rentxauth.user': user } =
+      parseCookies()
 
-    if (userData) {
-      const { email, password } = JSON.parse(userData)
+    if (refreshToken && user) {
+      const refreshTokenParsed = JSON.parse(refreshToken)
 
       api
-        .post('/users/session', {
-          email,
-          password,
+        .post('/users/session/refresh-token', {
+          refresh_token: refreshTokenParsed.id,
         })
-        .then(({ data: { user } }) => {
-          setUser(user)
-        })
+        .then(
+          ({ data: { token: newToken, refreshToken: newRefreshToken } }) => {
+            setCookie(
+              null,
+              'rentxauth.refreshToken',
+              JSON.stringify(newRefreshToken),
+              {
+                path: '/',
+              }
+            )
+
+            api.defaults.headers['Authorization'] = `Bearer ${newToken}`
+
+            setUser(JSON.parse(user))
+          }
+        )
         .catch(() => {
-          destroyCookie(undefined, 'rentxauth.userCredentials', {
+          destroyCookie(null, 'rentxauth.refreshToken', {
+            path: '/',
+          })
+
+          destroyCookie(null, 'rentxauth.user', {
             path: '/',
           })
 
@@ -68,25 +85,21 @@ const AuthProvider: React.FC = ({ children }) => {
   const signIn = useCallback(
     async ({ email, password }: SignInCredentials) => {
       const {
-        data: { token, user },
+        data: { token, user, refreshToken },
       } = await api.post('/users/session', {
         email,
         password,
       })
 
-      // This is not correct
-      setCookie(
-        undefined,
-        'rentxauth.userCredentials',
-        JSON.stringify({
-          email,
-          password,
-        }),
-        {
-          path: '/',
-          maxAge: 60 * 60 * 60 * 7, // 7 day
-        }
-      )
+      setCookie(null, 'rentxauth.refreshToken', JSON.stringify(refreshToken), {
+        path: '/',
+        maxAge: 60 * 60 * 60 * 7, // 7 day
+      })
+
+      setCookie(null, 'rentxauth.user', JSON.stringify(user), {
+        path: '/',
+        maxAge: 60 * 60 * 60 * 7, // 7 day
+      })
 
       api.defaults.headers['Authorization'] = `Bearer ${token}`
 
@@ -113,7 +126,11 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     api.defaults.headers['Authorization'] = ''
 
-    destroyCookie(undefined, 'rentxauth.userCredentials', {
+    destroyCookie(null, 'rentxauth.refreshToken', {
+      path: '/',
+    })
+
+    destroyCookie(null, 'rentxauth.user', {
       path: '/',
     })
 

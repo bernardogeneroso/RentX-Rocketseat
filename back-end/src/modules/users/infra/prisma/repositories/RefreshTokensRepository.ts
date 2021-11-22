@@ -12,9 +12,19 @@ class RefreshTokensRepository implements IRefreshTokensRepository {
   }
 
   async remove(userId: string): Promise<void> {
-    await prisma.refreshTokens.delete({
-      where: { userId },
-    });
+    try {
+      await prisma.refreshTokens.delete({
+        where: { userId },
+      });
+    } catch {}
+  }
+
+  async removeAll(userId: string): Promise<void> {
+    try {
+      await prisma.refreshTokens.deleteMany({
+        where: { userId },
+      });
+    } catch {}
   }
 
   async verify(id: string): Promise<RefreshToken | null> {

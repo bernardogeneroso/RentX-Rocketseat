@@ -76,9 +76,9 @@ export default function SignIn() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const { ['rentxauth.userCredentials']: userData } = parseCookies(ctx)
+  const { ['rentxauth.user']: user } = parseCookies(ctx)
 
-  if (userData) {
+  if (user) {
     return {
       redirect: {
         destination: '/profile',
