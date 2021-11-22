@@ -75,6 +75,7 @@ export const ContentInput = styled.div`
   }
 
   input {
+    width: 100%;
     margin: auto 0;
     outline: 0;
     border: 0;

@@ -1,7 +1,13 @@
 import React from 'react'
 
-import { Container } from './styles'
+import { Container, Content } from './styles'
 
 export default function UserAppointments() {
-  return <Container>UserAppointments</Container>
+  return (
+    <Container>
+      <h1>Appointments made</h1>
+
+      <Content>Content</Content>
+    </Container>
+  )
 }
