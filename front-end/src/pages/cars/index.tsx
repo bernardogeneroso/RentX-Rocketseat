@@ -6,8 +6,6 @@ import Menu from '../../components/Menu'
 import CarsList from '../../components/app/CarsList'
 
 import { Container } from '../../styles/pages/cars'
-import { GetServerSideProps } from 'next'
-import { api } from '../../services/api'
 
 export interface ICar {
   plate: string
@@ -27,11 +25,7 @@ export interface ICar {
   }[]
 }
 
-interface CarsProps {
-  cars: ICar[] | null
-}
-
-export default function Cars({ cars }: CarsProps) {
+export default function Cars() {
   return (
     <>
       <Head>
@@ -42,26 +36,8 @@ export default function Cars({ cars }: CarsProps) {
         <Header text="Home" />
         <Menu />
 
-        <CarsList {...{ cars }} />
+        <CarsList />
       </Container>
     </>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const { data } = await api.get('/cars')
-
-    return {
-      props: {
-        cars: data,
-      },
-    }
-  } catch {
-    return {
-      props: {
-        cars: null,
-      },
-    }
-  }
 }
